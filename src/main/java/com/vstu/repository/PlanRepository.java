@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.vstu.entity.SubCompetence;
+import com.vstu.entity.Plan;
 
 @Repository
-public interface SubCompetenceRepository extends JpaRepository<SubCompetence, Long> {
+public interface PlanRepository extends JpaRepository<Plan, Long>{
 
-	@Query("SELECT s FROM SubCompetence s where s.subject.id = :id")
-	public List<SubCompetence> findAllBySubjectId(@Param("id") Long id);
-
+	@Query("SELECT p FROM Plan p WHERE p.speciality.id := id")
+	public List<Plan> findAllBySpecialityId(@Param("id") Long id);
 }

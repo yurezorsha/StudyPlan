@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.vstu.entity.SubCompetence;
+import com.vstu.entity.WeeksSemestr;
 
 @Repository
-public interface SubCompetenceRepository extends JpaRepository<SubCompetence, Long> {
-
-	@Query("SELECT s FROM SubCompetence s where s.subject.id = :id")
-	public List<SubCompetence> findAllBySubjectId(@Param("id") Long id);
+public interface WeeksSemestrRepository extends JpaRepository<WeeksSemestr, Long>{
+	
+	@Query("SELECT w FROM WeeksSemestr w where w.plan.id = :id")
+	public List<WeeksSemestr> findAllByPlanId(@Param("id") Long id);
 
 }

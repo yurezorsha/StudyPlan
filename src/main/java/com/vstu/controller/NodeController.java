@@ -30,8 +30,8 @@ public class NodeController {
 
 	@GetMapping("node/{id}")
 	public ResponseEntity<Node> getNodeById(@PathVariable("id") Long id) {
-		Node gr = nodeService.getNodeById(id);
-		return new ResponseEntity<Node>(gr, HttpStatus.OK);
+		Node n = nodeService.getNodeById(id);
+		return new ResponseEntity<Node>(n, HttpStatus.OK);
 	}
 
 	@GetMapping("nodes/{id}")

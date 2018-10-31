@@ -34,8 +34,8 @@ public class SemestrController {
 
 	@GetMapping("semestr/{id}")
 	public ResponseEntity<Semestr> getSemestrById(@PathVariable("id") Long id) {
-		Semestr gr = semestrService.getSemestrById(id);
-		return new ResponseEntity<Semestr>(gr, HttpStatus.OK);
+		Semestr s = semestrService.getSemestrById(id);
+		return new ResponseEntity<Semestr>(s, HttpStatus.OK);
 	}
 
 	@GetMapping("semestr/sum/{id}")
@@ -57,24 +57,24 @@ public class SemestrController {
 	}
 
 	@PostMapping("semestr")
-	public ResponseEntity<Void> addSemestr(@RequestBody Semestr gr, UriComponentsBuilder builder) {
-		boolean flag = semestrService.addSemestr(gr);
+	public ResponseEntity<Void> addSemestr(@RequestBody Semestr s, UriComponentsBuilder builder) {
+		boolean flag = semestrService.addSemestr(s);
 		if (flag == false) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/semestr/{id}").buildAndExpand(gr.getId()).toUri());
+		headers.setLocation(builder.path("/semestr/{id}").buildAndExpand(s.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 	@PutMapping("semestr")
-	public ResponseEntity<Semestr> updateSemestr(@RequestBody Semestr gr) {
-		if (semestrService.existsSemestr(gr.getId())) {
-			semestrService.updateSemestr(gr);
-			return new ResponseEntity<Semestr>(gr, HttpStatus.OK);
+	public ResponseEntity<Semestr> updateSemestr(@RequestBody Semestr s) {
+		if (semestrService.existsSemestr(s.getId())) {
+			semestrService.updateSemestr(s);
+			return new ResponseEntity<Semestr>(s, HttpStatus.OK);
 		} else {
-			gr = null;
-			return new ResponseEntity<Semestr>(gr, HttpStatus.CONFLICT);
+			s = null;
+			return new ResponseEntity<Semestr>(s, HttpStatus.CONFLICT);
 
 		}
 	}

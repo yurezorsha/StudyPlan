@@ -7,12 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.vstu.entity.SubCompetence;
+import com.vstu.entity.Certification;
+
 
 @Repository
-public interface SubCompetenceRepository extends JpaRepository<SubCompetence, Long> {
-
-	@Query("SELECT s FROM SubCompetence s where s.subject.id = :id")
-	public List<SubCompetence> findAllBySubjectId(@Param("id") Long id);
+public interface CertificationRepository extends JpaRepository<Certification, Long>{
+	
+	@Query("SELECT c FROM Certification c where c.plan.id = :id")
+	public List<Certification> findAllByPlanId(@Param("id") Long id);
 
 }

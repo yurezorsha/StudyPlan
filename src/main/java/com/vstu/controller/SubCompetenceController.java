@@ -29,8 +29,8 @@ public class SubCompetenceController {
 
 	@GetMapping("subcompetence/{id}")
 	public ResponseEntity<SubCompetence> getSubCompetenceById(@PathVariable("id") Long id) {
-		SubCompetence gr = subCompetenceService.getSubCompetenceById(id);
-		return new ResponseEntity<SubCompetence>(gr, HttpStatus.OK);
+		SubCompetence sb = subCompetenceService.getSubCompetenceById(id);
+		return new ResponseEntity<SubCompetence>(sb, HttpStatus.OK);
 	}
 
 	@GetMapping("subcompetences/{id}")
@@ -46,24 +46,24 @@ public class SubCompetenceController {
 	}
 
 	@PostMapping("subcompetence")
-	public ResponseEntity<Void> addSubCompetence(@RequestBody SubCompetence gr, UriComponentsBuilder builder) {
-		boolean flag = subCompetenceService.addSubCompetence(gr);
+	public ResponseEntity<Void> addSubCompetence(@RequestBody SubCompetence sb, UriComponentsBuilder builder) {
+		boolean flag = subCompetenceService.addSubCompetence(sb);
 		if (flag == false) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/subcompetence/{id}").buildAndExpand(gr.getId()).toUri());
+		headers.setLocation(builder.path("/subcompetence/{id}").buildAndExpand(sb.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 	@PutMapping("subcompetence")
-	public ResponseEntity<SubCompetence> updateSubCompetence(@RequestBody SubCompetence gr) {
-		if (subCompetenceService.existsSubCompetence(gr.getId())) {
-			subCompetenceService.updateSubCompetence(gr);
-			return new ResponseEntity<SubCompetence>(gr, HttpStatus.OK);
+	public ResponseEntity<SubCompetence> updateSubCompetence(@RequestBody SubCompetence sb) {
+		if (subCompetenceService.existsSubCompetence(sb.getId())) {
+			subCompetenceService.updateSubCompetence(sb);
+			return new ResponseEntity<SubCompetence>(sb, HttpStatus.OK);
 		} else {
-			gr = null;
-			return new ResponseEntity<SubCompetence>(gr, HttpStatus.CONFLICT);
+			sb = null;
+			return new ResponseEntity<SubCompetence>(sb, HttpStatus.CONFLICT);
 
 		}
 	}

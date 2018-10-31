@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.vstu.entity.SubCompetence;
+import com.vstu.entity.Fakultativ;
 
 @Repository
-public interface SubCompetenceRepository extends JpaRepository<SubCompetence, Long> {
-
-	@Query("SELECT s FROM SubCompetence s where s.subject.id = :id")
-	public List<SubCompetence> findAllBySubjectId(@Param("id") Long id);
+public interface FakultativRepository extends JpaRepository<Fakultativ, Long> {
+	
+	@Query("SELECT f FROM Fakultativ f where f.plan.id = :id")
+	public List<Fakultativ> findAllByPlanId(@Param("id") Long id);
 
 }

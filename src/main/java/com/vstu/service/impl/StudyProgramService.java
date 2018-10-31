@@ -27,18 +27,18 @@ public class StudyProgramService implements IStudyProgramService {
 	}
 
 	@Override
-	public boolean addStudyProgram(StudyProgramm c) {
-		if (studyProgramRepository.existsById(c.getId())) {
+	public boolean addStudyProgram(StudyProgramm s) {
+		if (studyProgramRepository.existsById(s.getId())) {
 			return false;
 		} else {
-			studyProgramRepository.save(c);
+			studyProgramRepository.save(s);
 			return true;
 		}
 	}
 
 	@Override
-	public void updateStudyProgram(StudyProgramm c) {
-		studyProgramRepository.save(c);
+	public void updateStudyProgram(StudyProgramm s) {
+		studyProgramRepository.save(s);
 	}
 
 	@Override

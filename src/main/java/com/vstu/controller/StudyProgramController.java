@@ -29,8 +29,8 @@ public class StudyProgramController {
 
 	@GetMapping("studyprogram/{id}")
 	public ResponseEntity<StudyProgramm> getStudyProgramById(@PathVariable("id") Long id) {
-		StudyProgramm creator = studyProgramService.getStudyProgramById(id);
-		return new ResponseEntity<StudyProgramm>(creator, HttpStatus.OK);
+		StudyProgramm st = studyProgramService.getStudyProgramById(id);
+		return new ResponseEntity<StudyProgramm>(st, HttpStatus.OK);
 	}
 
 	@GetMapping("studyprogram")
@@ -46,24 +46,24 @@ public class StudyProgramController {
 	}
 
 	@PostMapping("studyprogram")
-	public ResponseEntity<Void> addStudyProgram(@RequestBody StudyProgramm creator, UriComponentsBuilder builder) {
-		boolean flag = studyProgramService.addStudyProgram(creator);
+	public ResponseEntity<Void> addStudyProgram(@RequestBody StudyProgramm st, UriComponentsBuilder builder) {
+		boolean flag = studyProgramService.addStudyProgram(st);
 		if (flag == false) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/studyprogram/{id}").buildAndExpand(creator.getId()).toUri());
+		headers.setLocation(builder.path("/studyprogram/{id}").buildAndExpand(st.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 	@PutMapping("studyprogram")
-	public ResponseEntity<StudyProgramm> updateStudyProgram(@RequestBody StudyProgramm gr) {
-		if (studyProgramService.existsStudyProgram(gr.getId())) {
-			studyProgramService.updateStudyProgram(gr);
-			return new ResponseEntity<StudyProgramm>(gr, HttpStatus.OK);
+	public ResponseEntity<StudyProgramm> updateStudyProgram(@RequestBody StudyProgramm st) {
+		if (studyProgramService.existsStudyProgram(st.getId())) {
+			studyProgramService.updateStudyProgram(st);
+			return new ResponseEntity<StudyProgramm>(st, HttpStatus.OK);
 		} else {
-			gr = null;
-			return new ResponseEntity<StudyProgramm>(gr, HttpStatus.CONFLICT);
+			st = null;
+			return new ResponseEntity<StudyProgramm>(st, HttpStatus.CONFLICT);
 
 		}
 	}

@@ -27,36 +27,36 @@ public class SubCompetenceService implements ISubCompetenceService {
 	}
 
 	@Override
-	public SubCompetence getSubCompetenceById(Long idGr) {
+	public SubCompetence getSubCompetenceById(Long id) {
 
-		return subCompetenceRepository.findById(idGr).get();
+		return subCompetenceRepository.findById(id).get();
 	}
 
 	@Override
-	public boolean addSubCompetence(SubCompetence g) {
-		if (subCompetenceRepository.existsById(g.getId())) {
+	public boolean addSubCompetence(SubCompetence s) {
+		if (subCompetenceRepository.existsById(s.getId())) {
 			return false;
 		} else {
-			subCompetenceRepository.save(g);
+			subCompetenceRepository.save(s);
 			return true;
 		}
 	}
 
 	@Override
-	public void updateSubCompetence(SubCompetence g) {
-		subCompetenceRepository.save(g);
+	public void updateSubCompetence(SubCompetence s) {
+		subCompetenceRepository.save(s);
 
 	}
 
 	@Override
-	public void deleteSubCompetence(Long idGr) {
-		subCompetenceRepository.deleteById(idGr);
+	public void deleteSubCompetence(Long id) {
+		subCompetenceRepository.deleteById(id);
 
 	}
 
 	@Override
-	public boolean existsSubCompetence(Long idGr) {
-		return subCompetenceRepository.existsById(idGr);
+	public boolean existsSubCompetence(Long id) {
+		return subCompetenceRepository.existsById(id);
 	}
 
 }

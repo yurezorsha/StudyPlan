@@ -29,8 +29,8 @@ public class SubjectController {
 
 	@GetMapping("subject/{id}")
 	public ResponseEntity<Subject> getSubjectById(@PathVariable("id") Long id) {
-		Subject creator = subjectService.getSubjectById(id);
-		return new ResponseEntity<Subject>(creator, HttpStatus.OK);
+		Subject sb = subjectService.getSubjectById(id);
+		return new ResponseEntity<Subject>(sb, HttpStatus.OK);
 	}
 
 	@GetMapping("subject")
@@ -46,24 +46,24 @@ public class SubjectController {
 	}
 
 	@PostMapping("subject")
-	public ResponseEntity<Void> addSubject(@RequestBody Subject creator, UriComponentsBuilder builder) {
-		boolean flag = subjectService.addSubject(creator);
+	public ResponseEntity<Void> addSubject(@RequestBody Subject sb, UriComponentsBuilder builder) {
+		boolean flag = subjectService.addSubject(sb);
 		if (flag == false) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/subject/{id}").buildAndExpand(creator.getId()).toUri());
+		headers.setLocation(builder.path("/subject/{id}").buildAndExpand(sb.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 	@PutMapping("subject")
-	public ResponseEntity<Subject> updateSubject(@RequestBody Subject s) {
-		if (subjectService.existsSubject(s.getId())) {
-			subjectService.updateSubject(s);
-			return new ResponseEntity<Subject>(s, HttpStatus.OK);
+	public ResponseEntity<Subject> updateSubject(@RequestBody Subject sb) {
+		if (subjectService.existsSubject(sb.getId())) {
+			subjectService.updateSubject(sb);
+			return new ResponseEntity<Subject>(sb, HttpStatus.OK);
 		} else {
-			s = null;
-			return new ResponseEntity<Subject>(s, HttpStatus.CONFLICT);
+			sb = null;
+			return new ResponseEntity<Subject>(sb, HttpStatus.CONFLICT);
 
 		}
 	}
