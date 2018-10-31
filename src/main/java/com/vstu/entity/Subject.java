@@ -25,11 +25,17 @@ public class Subject implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private long id;
 
+	/*@OneToOne(mappedBy="semestr")
+	private Semestr semestr;*/
+	
 	private String name;
 
 	private String shifr;
+	
+	
 
 	// bi-directional many-to-one association to Node
 	@OneToMany(mappedBy = "subject")
@@ -50,6 +56,8 @@ public class Subject implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_unit")
 	private GroupUnit groupUnit;
+	
+	
 
 	public Subject() {
 	}
@@ -109,5 +117,9 @@ public class Subject implements Serializable {
 	public void setGroupUnit(GroupUnit groupUnit) {
 		this.groupUnit = groupUnit;
 	}
+
+
+	
+	
 
 }

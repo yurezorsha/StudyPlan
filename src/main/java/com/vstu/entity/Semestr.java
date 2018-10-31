@@ -22,6 +22,7 @@ public class Semestr implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private long id;
 
 	@Column(name = "cource_work_hours")
@@ -54,6 +55,20 @@ public class Semestr implements Serializable {
 	private String type;
 
 	private int ze;
+	
+	private int prac_hour;
+	
+	private int prac_ze;
+	
+	/*@OneToOne
+	@JoinColumn(name="id")
+	private Subject id_sub_prac_type;*/
+	
+	
+	
+	private int diplom_hour;
+	
+	private int diplom_ze;
 
 	// bi-directional many-to-one association to Node
 	@ManyToOne
@@ -182,5 +197,47 @@ public class Semestr implements Serializable {
 	public void setNode(Node node) {
 		this.node = node;
 	}
+
+	public int getPrac_hour() {
+		return prac_hour;
+	}
+
+	public void setPrac_hour(int prac_hour) {
+		this.prac_hour = prac_hour;
+	}
+
+	public int getPrac_ze() {
+		return prac_ze;
+	}
+
+	public void setPrac_ze(int prac_ze) {
+		this.prac_ze = prac_ze;
+	}
+
+	/*public Subject getId_sub_prac_type() {
+		return id_sub_prac_type;
+	}
+
+	public void setId_sub_prac_type(Subject id_sub_prac_type) {
+		this.id_sub_prac_type = id_sub_prac_type;
+	}*/
+
+	public int getDiplom_hour() {
+		return diplom_hour;
+	}
+
+	public void setDiplom_hour(int diplom_hour) {
+		this.diplom_hour = diplom_hour;
+	}
+
+	public int getDiplom_ze() {
+		return diplom_ze;
+	}
+
+	public void setDiplom_ze(int diplom_ze) {
+		this.diplom_ze = diplom_ze;
+	}
+	
+	
 
 }

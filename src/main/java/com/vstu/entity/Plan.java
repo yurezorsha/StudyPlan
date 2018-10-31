@@ -1,21 +1,42 @@
 package com.vstu.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+import com.vstu.entity.Certification;
+import com.vstu.entity.Fakultativ;
+import com.vstu.entity.Group;
+import com.vstu.entity.Node;
+import com.vstu.entity.Speciality;
+import com.vstu.entity.WeeksSemestr;
+ 
 
 
 /**
  * The persistent class for the plan database table.
  * 
- */
-@Entity
+ */ 
+@Entity 
 @NamedQuery(name="Plan.findAll", query="SELECT p FROM Plan p")
 public class Plan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
+	@Column(name="set_data_group")
+	private int set_data_group;
 
 	//bi-directional many-to-one association to Certification
 	@OneToMany(mappedBy="plan")
@@ -33,15 +54,10 @@ public class Plan implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_speciality")
 	private Speciality speciality;
-
-	//bi-directional one-to-one association to Diplom
-	@OneToOne
-	@JoinColumn(name="id")
-	private Diplom diplom;
-
-	//bi-directional many-to-one association to Practice
-	@OneToMany(mappedBy="plan")
-	private List<Practice> practices;
+	
+	//bi-directional many-to-one association to Group
+	@OneToMany(mappedBy="plan")	
+	private List<Group> group;
 
 	//bi-directional many-to-one association to WeeksSemestr
 	@OneToMany(mappedBy="plan")
@@ -50,11 +66,11 @@ public class Plan implements Serializable {
 	public Plan() {
 	}
 
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -66,19 +82,7 @@ public class Plan implements Serializable {
 		this.certifications = certifications;
 	}
 
-	public Certification addCertification(Certification certification) {
-		getCertifications().add(certification);
-		certification.setPlan(this);
 
-		return certification;
-	}
-
-	public Certification removeCertification(Certification certification) {
-		getCertifications().remove(certification);
-		certification.setPlan(null);
-
-		return certification;
-	}
 
 	public List<Fakultativ> getFakultativs() {
 		return this.fakultativs;
@@ -88,19 +92,7 @@ public class Plan implements Serializable {
 		this.fakultativs = fakultativs;
 	}
 
-	public Fakultativ addFakultativ(Fakultativ fakultativ) {
-		getFakultativs().add(fakultativ);
-		fakultativ.setPlan(this);
-
-		return fakultativ;
-	}
-
-	public Fakultativ removeFakultativ(Fakultativ fakultativ) {
-		getFakultativs().remove(fakultativ);
-		fakultativ.setPlan(null);
-
-		return fakultativ;
-	}
+	
 
 	public List<Node> getNodes() {
 		return this.nodes;
@@ -110,19 +102,7 @@ public class Plan implements Serializable {
 		this.nodes = nodes;
 	}
 
-	public Node addNode(Node node) {
-		getNodes().add(node);
-		node.setPlan(this);
 
-		return node;
-	}
-
-	public Node removeNode(Node node) {
-		getNodes().remove(node);
-		node.setPlan(null);
-
-		return node;
-	}
 
 	public Speciality getSpeciality() {
 		return this.speciality;
@@ -132,35 +112,6 @@ public class Plan implements Serializable {
 		this.speciality = speciality;
 	}
 
-	public Diplom getDiplom() {
-		return this.diplom;
-	}
-
-	public void setDiplom(Diplom diplom) {
-		this.diplom = diplom;
-	}
-
-	public List<Practice> getPractices() {
-		return this.practices;
-	}
-
-	public void setPractices(List<Practice> practices) {
-		this.practices = practices;
-	}
-
-	public Practice addPractice(Practice practice) {
-		getPractices().add(practice);
-		practice.setPlan(this);
-
-		return practice;
-	}
-
-	public Practice removePractice(Practice practice) {
-		getPractices().remove(practice);
-		practice.setPlan(null);
-
-		return practice;
-	}
 
 	public List<WeeksSemestr> getWeeksSemestrs() {
 		return this.weeksSemestrs;
@@ -170,18 +121,22 @@ public class Plan implements Serializable {
 		this.weeksSemestrs = weeksSemestrs;
 	}
 
-	public WeeksSemestr addWeeksSemestr(WeeksSemestr weeksSemestr) {
-		getWeeksSemestrs().add(weeksSemestr);
-		weeksSemestr.setPlan(this);
-
-		return weeksSemestr;
+	public int getSet_data_group() {
+		return set_data_group;
 	}
 
-	public WeeksSemestr removeWeeksSemestr(WeeksSemestr weeksSemestr) {
-		getWeeksSemestrs().remove(weeksSemestr);
-		weeksSemestr.setPlan(null);
-
-		return weeksSemestr;
+	public void setSet_data_group(int set_data_group) {
+		this.set_data_group = set_data_group;
 	}
+
+	public List<Group> getGroup() {
+		return group;
+	}
+
+	public void setGroup(List<Group> group) {
+		this.group = group;
+	}
+
+
 
 }
