@@ -76,18 +76,5 @@ public class GroupUnit implements Serializable {
 		this.subjects = subjects;
 	}
 
-	public Subject addSubject(Subject subject) {
-		getSubjects().add(subject);
-		subject.setGroupUnit(this);
-
-		return subject;
-	}
-
-	public Subject removeSubject(Subject subject) {
-		getSubjects().remove(subject);
-		subject.setGroupUnit(null);
-
-		return subject;
-	}
 
 }
