@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import com.vstu.entity.Group;
 
 @Repository
-public interface GroupRepository extends JpaRepository<Group, Long>{
-	
-	@Query("SELECT gr FROM Group gr WHERE gr.plan.id := id")
+public interface GroupRepository extends JpaRepository<Group, Long> {
+
+	@Query("SELECT gr FROM Group gr WHERE gr.plan.id = :id")
 	public List<Group> findAllByPlanId(@Param("id") Long id);
 
 }

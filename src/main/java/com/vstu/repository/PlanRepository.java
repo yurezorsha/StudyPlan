@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.vstu.entity.Plan;
 
 @Repository
-public interface PlanRepository extends JpaRepository<Plan, Long>{
+public interface PlanRepository extends JpaRepository<Plan, Long> {
 
-	@Query("SELECT p FROM Plan p WHERE p.speciality.id := id")
+	@Query("SELECT p FROM Plan p WHERE p.speciality.id = :id")
 	public List<Plan> findAllBySpecialityId(@Param("id") Long id);
 }
