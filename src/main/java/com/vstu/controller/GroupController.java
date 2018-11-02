@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.vstu.entity.Group;
+import com.vstu.entity.Groups;
 import com.vstu.service.interfaces.IGroupService;
 
 @RestController
@@ -27,28 +27,28 @@ public class GroupController {
 
 	@Autowired
 	IGroupService groupService;
-	
+
 	@GetMapping("group/{id}")
-	public ResponseEntity<Group> getGroupById(@PathVariable("id") Long id) {
-		Group gr = groupService.getGroupById(id);
-		return new ResponseEntity<Group>(gr, HttpStatus.OK);
+	public ResponseEntity<Groups> getGroupsById(@PathVariable("id") Long id) {
+		Groups gr = groupService.getGroupsById(id);
+		return new ResponseEntity<Groups>(gr, HttpStatus.OK);
 	}
 
 	@GetMapping("groups/{id}")
-	public ResponseEntity<List<Group>> getAllPlanId(@PathVariable("id") Long id) {
-		List<Group> list = groupService.getAllByPlanId(id);
-		return new ResponseEntity<List<Group>>(list, HttpStatus.OK);
+	public ResponseEntity<List<Groups>> getAllPlanId(@PathVariable("id") Long id) {
+		List<Groups> list = groupService.getAllByPlanId(id);
+		return new ResponseEntity<List<Groups>>(list, HttpStatus.OK);
 	}
 
 	@GetMapping("group")
-	public ResponseEntity<List<Group>> getAllGroup() {
-		List<Group> list = groupService.getAllGroup();
-		return new ResponseEntity<List<Group>>(list, HttpStatus.OK);
+	public ResponseEntity<List<Groups>> getAllGroups() {
+		List<Groups> list = groupService.getAllGroups();
+		return new ResponseEntity<List<Groups>>(list, HttpStatus.OK);
 	}
 
 	@PostMapping("group")
-	public ResponseEntity<Void> addGroup(@RequestBody Group gr, UriComponentsBuilder builder) {
-		boolean flag = groupService.addGroup(gr);
+	public ResponseEntity<Void> addGroups(@RequestBody Groups gr, UriComponentsBuilder builder) {
+		boolean flag = groupService.addGroups(gr);
 		if (flag == false) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
@@ -58,21 +58,21 @@ public class GroupController {
 	}
 
 	@PutMapping("group")
-	public ResponseEntity<Group> updateGroup(@RequestBody Group gr) {
-		if (groupService.existsGroup(gr.getId())) {
-			groupService.updateGroup(gr);
-			return new ResponseEntity<Group>(gr, HttpStatus.OK);
+	public ResponseEntity<Groups> updateGroups(@RequestBody Groups gr) {
+		if (groupService.existsGroups(gr.getId())) {
+			groupService.updateGroups(gr);
+			return new ResponseEntity<Groups>(gr, HttpStatus.OK);
 		} else {
 			gr = null;
-			return new ResponseEntity<Group>(gr, HttpStatus.CONFLICT);
+			return new ResponseEntity<Groups>(gr, HttpStatus.CONFLICT);
 
 		}
 	}
 
 	@DeleteMapping("group/{id}")
-	public ResponseEntity<Void> deleteGroup(@PathVariable("id") Long id) {
-		if (groupService.existsGroup(id)) {
-			groupService.deleteGroup(id);
+	public ResponseEntity<Void> deleteGroups(@PathVariable("id") Long id) {
+		if (groupService.existsGroups(id)) {
+			groupService.deleteGroups(id);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);

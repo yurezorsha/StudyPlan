@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vstu.entity.Plan;
+import com.vstu.repository.PlanRepository;
 import com.vstu.service.interfaces.IPlanService;
 
 @RestController
@@ -25,10 +27,26 @@ import com.vstu.service.interfaces.IPlanService;
 @CrossOrigin(origins = "*")
 public class PlanController {
 
-	
 	@Autowired
 	IPlanService planService;
-	
+
+	@Autowired
+	PlanRepository planRepo;
+
+	@GetMapping("plan/getYear")
+	public int getYearById(@RequestParam(value = "id", required = true) Long id,
+			@RequestParam(value = "year1", required = true) int year1,
+			@RequestParam(value = "year2", required = true) int year2) {
+
+		return planRepo.getYearById(id);
+	}
+
+	@GetMapping("plan/{id}/data")
+	public List<Object> getData(@PathVariable("id") Long id, @RequestParam(value = "year", required = true) int year) {
+
+		return planService.getNagruzka(id, year);
+	}
+
 	@GetMapping("plan/{id}")
 	public ResponseEntity<Plan> getPlanById(@PathVariable("id") Long id) {
 		Plan p = planService.getPlanById(id);

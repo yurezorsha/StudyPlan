@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.vstu.entity.Group;
+import com.vstu.entity.Groups;
 
 @Repository
-public interface GroupRepository extends JpaRepository<Group, Long> {
+public interface GroupsRepository extends JpaRepository<Groups, Long> {
 
-	@Query("SELECT gr FROM Group gr WHERE gr.plan.id = :id")
-	public List<Group> findAllByPlanId(@Param("id") Long id);
+	@Query("SELECT gr FROM Groups gr WHERE gr.plan.id = :id")
+	public List<Groups> findAllByPlanId(@Param("id") Long id);
 
 }

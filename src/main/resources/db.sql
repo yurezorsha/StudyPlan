@@ -236,7 +236,7 @@ CREATE TABLE `sub_competence` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 
 
-CREATE TABLE `group` (
+CREATE TABLE `groups` (
   `id` int(10) NOT NULL auto_increment,   
   `id_plan` int(10), 
   `count_students` int(10), 

@@ -2,22 +2,22 @@ package com.vstu.service.interfaces;
 
 import java.util.List;
 
-import com.vstu.entity.Group;
+import com.vstu.entity.Groups;
 
 public interface IGroupService {
-	
-	List<Group> getAllGroup();
 
-	List<Group> getAllByPlanId(Long id);
+	List<Groups> getAllGroups();
 
-	Group getGroupById(Long id);
+	List<Groups> getAllByPlanId(Long id);
 
-	boolean addGroup(Group gr);
+	Groups getGroupsById(Long id);
 
-	void updateGroup(Group gr);
+	boolean addGroups(Groups gr);
 
-	void deleteGroup(Long id);
+	void updateGroups(Groups gr);
 
-	boolean existsGroup(Long id);
+	void deleteGroups(Long id);
+
+	boolean existsGroups(Long id);
 
 }

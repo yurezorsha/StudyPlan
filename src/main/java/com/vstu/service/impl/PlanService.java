@@ -10,7 +10,7 @@ import com.vstu.repository.PlanRepository;
 import com.vstu.service.interfaces.IPlanService;
 
 @Service
-public class PlanService implements IPlanService{
+public class PlanService implements IPlanService {
 
 	@Autowired
 	PlanRepository planRepository;
@@ -60,5 +60,14 @@ public class PlanService implements IPlanService{
 		return planRepository.existsById(id);
 	}
 
-	
+	@Override
+	public List<Object> getNagruzka(Long id, int year) {
+		int year1 = planRepository.getYearById(id);
+		int num1 = (year - year1) + 1;
+		if (num1 == 0)
+			return null;
+		else
+			return planRepository.getData(id, num1);
+	}
+
 }

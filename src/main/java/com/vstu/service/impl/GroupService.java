@@ -5,33 +5,33 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vstu.entity.Group;
-import com.vstu.repository.GroupRepository;
+import com.vstu.entity.Groups;
+import com.vstu.repository.GroupsRepository;
 import com.vstu.service.interfaces.IGroupService;
 
 @Service
 public class GroupService implements IGroupService {
-	
+
 	@Autowired
-	GroupRepository groupRepository;
+	GroupsRepository groupRepository;
 
 	@Override
-	public List<Group> getAllGroup() {
+	public List<Groups> getAllGroups() {
 		return groupRepository.findAll();
 	}
 
 	@Override
-	public List<Group> getAllByPlanId(Long id) {
+	public List<Groups> getAllByPlanId(Long id) {
 		return groupRepository.findAllByPlanId(id);
 	}
 
 	@Override
-	public Group getGroupById(Long id) {		
+	public Groups getGroupsById(Long id) {
 		return groupRepository.findById(id).get();
 	}
 
 	@Override
-	public boolean addGroup(Group gr) {
+	public boolean addGroups(Groups gr) {
 		if (groupRepository.existsById(gr.getId())) {
 			return false;
 		} else {
@@ -41,20 +41,19 @@ public class GroupService implements IGroupService {
 	}
 
 	@Override
-	public void updateGroup(Group gr) {
+	public void updateGroups(Groups gr) {
 		groupRepository.save(gr);
-		
 
 	}
 
 	@Override
-	public void deleteGroup(Long id) {
+	public void deleteGroups(Long id) {
 		groupRepository.deleteById(id);
 
 	}
 
 	@Override
-	public boolean existsGroup(Long id) {
+	public boolean existsGroups(Long id) {
 		return groupRepository.existsById(id);
 	}
 

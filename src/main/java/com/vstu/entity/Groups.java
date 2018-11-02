@@ -11,21 +11,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
-@Entity 
-@NamedQuery(name="Group.findAll", query="SELECT g FROM Group g")
-public class Group implements Serializable{
+@Entity
+@NamedQuery(name = "Groups.findAll", query = "SELECT g FROM Groups g")
+public class Groups implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_plan")
+	@JoinColumn(name = "id_plan")
 	private Plan plan;
-	
-	@Column(name="count_students")
+
+	@Column(name = "count_students")
 	private int count_students;
 
 	public long getId() {
@@ -51,8 +51,5 @@ public class Group implements Serializable{
 	public void setCount_students(int count_students) {
 		this.count_students = count_students;
 	}
-	
-	
-	
-	
+
 }

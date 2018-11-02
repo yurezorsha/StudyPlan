@@ -5,7 +5,7 @@ import java.util.List;
 import com.vstu.entity.Plan;
 
 public interface IPlanService {
-	
+
 	List<Plan> getAllPlan();
 
 	List<Plan> getAllBySpecialityId(Long id);
@@ -19,5 +19,7 @@ public interface IPlanService {
 	void deletePlan(Long id);
 
 	boolean existsPlan(Long id);
+
+	public List<Object> getNagruzka(Long id, int year);
 
 }

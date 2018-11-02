@@ -54,7 +54,7 @@ public class Plan implements Serializable {
 	// bi-directional many-to-one association to Group
 	@OneToMany(mappedBy = "plan")
 	@JsonIgnore
-	private List<Group> group;
+	private List<Groups> group;
 
 	// bi-directional many-to-one association to WeeksSemestr
 	@OneToMany(mappedBy = "plan")
@@ -120,11 +120,11 @@ public class Plan implements Serializable {
 		this.set_data_group = set_data_group;
 	}
 
-	public List<Group> getGroup() {
+	public List<Groups> getGroup() {
 		return group;
 	}
 
-	public void setGroup(List<Group> group) {
+	public void setGroup(List<Groups> group) {
 		this.group = group;
 	}
 
