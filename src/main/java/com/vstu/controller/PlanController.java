@@ -42,9 +42,10 @@ public class PlanController {
 	}
 
 	@GetMapping("plan/{id}/data")
-	public List<Object> getData(@PathVariable("id") Long id, @RequestParam(value = "year", required = true) int year) {
+	public ResponseEntity<List<Object>> getData(@PathVariable("id") Long id,
+			@RequestParam(value = "year", required = true) int year) {
 
-		return planService.getNagruzka(id, year);
+		return new ResponseEntity<List<Object>>(planService.getNagruzka(id, year), HttpStatus.OK);
 	}
 
 	@GetMapping("plan/{id}")
