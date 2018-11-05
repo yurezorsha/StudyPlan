@@ -12,7 +12,7 @@ import com.vstu.entity.WeeksSemestr;
 @Repository
 public interface WeeksSemestrRepository extends JpaRepository<WeeksSemestr, Long>{
 	
-	@Query("SELECT w FROM WeeksSemestr w where w.plan.id = :id")
-	public List<WeeksSemestr> findAllByPlanId(@Param("id") Long id);
+	@Query("SELECT w FROM WeeksSemestr w where w.semestr.id = :id")
+	public List<WeeksSemestr> findAllBySemestrId(@Param("id") Long id);
 
 }

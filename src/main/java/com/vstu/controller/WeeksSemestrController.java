@@ -36,7 +36,7 @@ public class WeeksSemestrController {
 
 	@GetMapping("weekssemestrs/{id}")
 	public ResponseEntity<List<WeeksSemestr>> getAllPlanId(@PathVariable("id") Long id) {
-		List<WeeksSemestr> list = weeksSemestrService.getAllByPlanId(id);
+		List<WeeksSemestr> list = weeksSemestrService.getAllBySemestrId(id);
 		return new ResponseEntity<List<WeeksSemestr>>(list, HttpStatus.OK);
 	}
 

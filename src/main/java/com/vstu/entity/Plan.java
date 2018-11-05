@@ -128,13 +128,6 @@ public class Plan implements Serializable {
 		this.speciality = speciality;
 	}
 
-	public List<WeeksSemestr> getWeeksSemestrs() {
-		return this.weeksSemestrs;
-	}
-
-	public void setWeeksSemestrs(List<WeeksSemestr> weeksSemestrs) {
-		this.weeksSemestrs = weeksSemestrs;
-	}
 
 	public int getSet_data_group() {
 		return set_data_group;

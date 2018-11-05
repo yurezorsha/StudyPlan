@@ -21,8 +21,8 @@ public class WeeksSemestrService implements IWeeksSemestrService{
 	}
 
 	@Override
-	public List<WeeksSemestr> getAllByPlanId(Long id) {
-		return weeksSemestrRepository.findAllByPlanId(id);
+	public List<WeeksSemestr> getAllBySemestrId(Long id) {
+		return weeksSemestrRepository.findAllBySemestrId(id);
 	}
 
 	@Override
