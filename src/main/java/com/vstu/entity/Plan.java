@@ -46,7 +46,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		+ " s.practice as count_practice, s.seminar as count_seminar, s.type as type, s.cource_work_hours as cource_work_hours"
 		+ " FROM plan p, groups g, node n, semestr s, subject sb "
 		+ "WHERE p.id = :id  and (n.id_plan=:id) and (s.id_node=n.id and n.id_subject=sb.id "
-		+ "and (s.number = :num1 or s.number = :num1+1))", resultSetMapping = "DataLoad", resultClass = DataLoad.class)
+		+ "and (s.number = :num1 or s.number = :num2))", resultSetMapping = "DataLoad", resultClass = DataLoad.class)
 @Entity
 public class Plan implements Serializable {
 	private static final long serialVersionUID = 1L;

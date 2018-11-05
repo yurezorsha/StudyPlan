@@ -63,11 +63,15 @@ public class PlanService implements IPlanService {
 	@Override
 	public List<Object> getNagruzka(Long id, int year) {
 		int year1 = planRepository.getYearById(id);
-		int num1 = (year - year1) + 1;
-		if (num1 == 0)
+		int course = (year - year1) + 1;
+		if (course > 0 && course <= 5) {
+			int num2 = course * 2;
+			int num1 = num2 - 1;
+
+			return planRepository.getData(id, num1, num2);
+
+		} else
 			return null;
-		else
-			return planRepository.getData(id, num1);
 	}
 
 }
