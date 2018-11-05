@@ -3,10 +3,6 @@ create database study_plan2;
 use study_plan2;
 
 
-
-
-
-
 CREATE TABLE `group_components` (
   `id` int(10) NOT NULL auto_increment,    
   `name` enum('Государственный компонент', 'Компонент учреждения высшего образования', 'Факультативные дисциплины', 'Дополнительные виды обучения'), 
@@ -14,10 +10,6 @@ CREATE TABLE `group_components` (
    PRIMARY KEY (`id`)    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 
-INSERT INTO `group_components` VALUES (1,1);
-INSERT INTO `group_components` VALUES (2,2);
-INSERT INTO `group_components` VALUES (3,3);
-INSERT INTO `group_components` VALUES (4,4);
 
 CREATE TABLE `speciality` (
   `id` int(10) NOT NULL auto_increment,
@@ -27,9 +19,7 @@ CREATE TABLE `speciality` (
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
   
-  INSERT INTO `speciality` (`name`, `shifr`) VALUES 
-('Информационные системы и технологии', '1-40 05 01-01'),
-('Автоматизация технологических процессов и производств (легкая промышленность)', '1-53 01 01-05');
+
 
 
 CREATE TABLE `group_units` (
@@ -60,7 +50,7 @@ CREATE TABLE `subject` (
   REFERENCES `group_units` (`id`)  
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
   
-  
+
 
 CREATE TABLE `plan` (
   `id` int(10) NOT NULL auto_increment,
@@ -76,6 +66,8 @@ CREATE TABLE `plan` (
   
    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
+
+
 
 
 CREATE TABLE `node` (
@@ -101,6 +93,8 @@ CREATE TABLE `node` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 
 
+
+
   CREATE TABLE `semestr` (
   `id` int(10) NOT NULL auto_increment,
   `number` int(10) NOT NULL,  
@@ -108,9 +102,9 @@ CREATE TABLE `node` (
   `laboratory` int(10),
   `practice` int(10),
   `seminar` int(10),
-  `type` enum('экзамен', 'зачет'),
+  `type` enum('экзамен', 'зачет', 'диф зачет', 'просмотр'),
   `rgr` int(1),
-  `course_work_type` enum('work', 'project'),
+  `course_work_type` enum('курсовой проект', 'курсовая работа'),
   `id_node` int(10),
   `ze` int(10),
   `cource_work_ze` int(10),
@@ -121,33 +115,31 @@ CREATE TABLE `node` (
   `diplom_ze` int(10),
   `prac_hour` int(10),
   `prac_ze` int(10),
-  `id_sub_prac_type` int(10),
+  
     
      
   PRIMARY KEY (`id`),
   KEY `FKS` (`id_node`),
   CONSTRAINT `FKS` 
   FOREIGN KEY (`id_node`) 
-  REFERENCES `node` (`id`),
-  
-  KEY `FKS2` (`id_sub_prac_type`),
-  CONSTRAINT `FKS2` 
-  FOREIGN KEY (`id_sub_prac_type`) 
-  REFERENCES `subject` (`id`)
+  REFERENCES `node` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
+
+
+
 
 
 CREATE TABLE `weeks_semestr` (
   `id` int(10) NOT NULL auto_increment,
   `number_semestr` int(10),
   `count_weeks` int(10),
-  `id_plan` int(10),
+  `id_semestr` int(10),
   
   PRIMARY KEY (`id`),   
-  KEY `FKweek` (`id_plan`),
+  KEY `FKweek` (`id_semestr`),
   CONSTRAINT `FKweek` 
-  FOREIGN KEY (`id_plan`) 
-  REFERENCES `plan` (`id`)
+  FOREIGN KEY (`id_semestr`) 
+  REFERENCES `semestr` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 
 

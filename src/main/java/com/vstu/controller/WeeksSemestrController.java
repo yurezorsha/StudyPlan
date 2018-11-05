@@ -24,10 +24,10 @@ import com.vstu.service.interfaces.IWeeksSemestrService;
 @RequestMapping("app")
 @CrossOrigin(origins = "*")
 public class WeeksSemestrController {
-	
+
 	@Autowired
 	IWeeksSemestrService weeksSemestrService;
-	
+
 	@GetMapping("weekssemestr/{id}")
 	public ResponseEntity<WeeksSemestr> getWeeksSemestrById(@PathVariable("id") Long id) {
 		WeeksSemestr w = weeksSemestrService.getWeeksSemestrById(id);
@@ -36,7 +36,7 @@ public class WeeksSemestrController {
 
 	@GetMapping("weekssemestrs/{id}")
 	public ResponseEntity<List<WeeksSemestr>> getAllPlanId(@PathVariable("id") Long id) {
-		List<WeeksSemestr> list = weeksSemestrService.getAllByPlanId(id);
+		List<WeeksSemestr> list = weeksSemestrService.getAllBySemestrId(id);
 		return new ResponseEntity<List<WeeksSemestr>>(list, HttpStatus.OK);
 	}
 
@@ -79,6 +79,5 @@ public class WeeksSemestrController {
 
 		}
 	}
-
 
 }

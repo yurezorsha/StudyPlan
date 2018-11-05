@@ -32,8 +32,8 @@ public class WeeksSemestr implements Serializable {
 
 	//bi-directional many-to-one association to Plan
 	@ManyToOne
-	@JoinColumn(name="id_plan")
-	private Plan plan;
+	@JoinColumn(name="id_semestr")
+	private Semestr semestr;
 
 	public WeeksSemestr() {
 	}
@@ -62,12 +62,14 @@ public class WeeksSemestr implements Serializable {
 		this.numberSemestr = numberSemestr;
 	}
 
-	public Plan getPlan() {
-		return this.plan;
+	public Semestr getSemestr() {
+		return semestr;
 	}
 
-	public void setPlan(Plan plan) {
-		this.plan = plan;
+	public void setSemestr(Semestr semestr) {
+		this.semestr = semestr;
 	}
+
+	
 
 }
