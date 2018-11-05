@@ -240,3 +240,37 @@ CREATE TABLE `groups` (
   FOREIGN KEY (`id_plan`) 
   REFERENCES `plan` (`id`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
+
+
+
+
+
+INSERT INTO `group_components` VALUES (1,1);
+INSERT INTO `group_components` VALUES (2,2);
+INSERT INTO `group_components` VALUES (3,3);
+INSERT INTO `group_components` VALUES (4,4);
+
+INSERT INTO `speciality` (`name`, `shifr`) VALUES 
+('Информационные системы и технологии', '1-40 05 01-01'),
+('Автоматизация технологических процессов и производств (легкая промышленность)', '1-53 01 01-05');
+
+INSERT INTO `group_units` (`name`, `id_group_components`) VALUES ('Социально-гуманитарный модуль 1', 1);
+
+INSERT INTO `subject` (`name`,`shifr`,`id_unit`) VALUES ('История', 'shifr', 1);
+INSERT INTO `subject` (`name`,`shifr`,`id_unit`) VALUES ('Политология', 'shifr', 1);
+INSERT INTO `subject` (`name`,`shifr`,`id_unit`) VALUES ('Философия', 'shifr', 1);
+INSERT INTO `subject` (`name`,`shifr`,`id_unit`) VALUES ('Экономика', 'shifr', 1);
+
+INSERT INTO `plan` (`id_speciality`, `set_data_group`) VALUES (1, 2009);
+
+INSERT INTO `node` (`id_subject`, `id_cathedra`, `id_plan`) VALUES (1, 0, 1);
+
+INSERT INTO `semestr` (`number`,  `lecture`,   `laboratory`,  `practice`,   `seminar`,  `type`,  `rgr`,  `course_work_type`,  `id_node`,  `ze` ,  `cource_work_ze` ,  `cource_work_hours`, `id_teacher`, `id_faculty`, `diplom_hour`, `diplom_ze`, `prac_hour`, `prac_ze` ) 
+VALUES   
+(1, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0),
+ (2, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0),
+  (3, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0),
+   (4, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0);
+  
+  
+INSERT INTO `groups` (`id_plan`, `count_students`) VALUES (1, 20), (1, 25);

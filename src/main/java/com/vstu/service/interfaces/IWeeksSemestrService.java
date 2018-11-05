@@ -6,6 +6,7 @@ import com.vstu.entity.WeeksSemestr;
 
 public interface IWeeksSemestrService {
 
+	
 	List<WeeksSemestr> getAllWeeksSemestr();
 
 	List<WeeksSemestr> getAllBySemestrId(Long id);

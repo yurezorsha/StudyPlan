@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The persistent class for the semestr database table.
@@ -61,12 +64,6 @@ public class Semestr implements Serializable {
 	
 	private int prac_ze;
 	
-	/*@OneToOne
-	@JoinColumn(name="id")
-	private Subject id_sub_prac_type;*/
-	
-	
-	
 	private int diplom_hour;
 	
 	private int diplom_ze;
@@ -75,6 +72,11 @@ public class Semestr implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_node")
 	private Node node;
+	
+	// bi-directional many-to-one association to WeeksSemestr
+		@OneToMany(mappedBy = "semestr")
+		@JsonIgnore
+		private List<WeeksSemestr> weeksSemestrs;
 
 	public Semestr() {
 	}
@@ -214,14 +216,6 @@ public class Semestr implements Serializable {
 	public void setPrac_ze(int prac_ze) {
 		this.prac_ze = prac_ze;
 	}
-
-	/*public Subject getId_sub_prac_type() {
-		return id_sub_prac_type;
-	}
-
-	public void setId_sub_prac_type(Subject id_sub_prac_type) {
-		this.id_sub_prac_type = id_sub_prac_type;
-	}*/
 
 	public int getDiplom_hour() {
 		return diplom_hour;

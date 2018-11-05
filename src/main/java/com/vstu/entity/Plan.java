@@ -83,6 +83,8 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private List<Groups> group;
 
+	
+
 	public Plan() {
 	}
 
@@ -125,6 +127,7 @@ public class Plan implements Serializable {
 	public void setSpeciality(Speciality speciality) {
 		this.speciality = speciality;
 	}
+
 
 	public int getSet_data_group() {
 		return set_data_group;

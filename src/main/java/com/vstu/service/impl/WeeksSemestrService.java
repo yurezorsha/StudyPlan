@@ -10,8 +10,8 @@ import com.vstu.repository.WeeksSemestrRepository;
 import com.vstu.service.interfaces.IWeeksSemestrService;
 
 @Service
-public class WeeksSemestrService implements IWeeksSemestrService {
-
+public class WeeksSemestrService implements IWeeksSemestrService{
+	
 	@Autowired
 	WeeksSemestrRepository weeksSemestrRepository;
 
@@ -43,18 +43,19 @@ public class WeeksSemestrService implements IWeeksSemestrService {
 	@Override
 	public void updateWeeksSemestr(WeeksSemestr w) {
 		weeksSemestrRepository.save(w);
-
+		
 	}
 
 	@Override
 	public void deleteWeeksSemestr(Long id) {
 		weeksSemestrRepository.deleteById(id);
-
+		
 	}
 
 	@Override
 	public boolean existsWeeksSemestr(Long id) {
 		return weeksSemestrRepository.existsById(id);
 	}
+
 
 }
