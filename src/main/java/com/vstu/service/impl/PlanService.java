@@ -1,5 +1,6 @@
 package com.vstu.service.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,13 +63,19 @@ public class PlanService implements IPlanService {
 
 	@Override
 	public List<Object> getNagruzka(Long id, int year) {
+		LinkedList<Object> nagruzka = new LinkedList<Object>(); 
 		int year1 = planRepository.getYearById(id);
 		int course = (year - year1) + 1;
 		if (course > 0 && course <= 5) {
 			int num2 = course * 2;
 			int num1 = num2 - 1;
 
-			return planRepository.getData(id, num1, num2);
+			nagruzka.add(planRepository.getData(id, num1, num2));
+			nagruzka.add(planRepository.getDataDip(id, num1, num2));
+			nagruzka.add(planRepository.getDataPrac(id, num1, num2));
+			
+			return nagruzka;
+			//return planRepository.getDataPrac(id, num1, num2);
 
 		} else
 			return null;
