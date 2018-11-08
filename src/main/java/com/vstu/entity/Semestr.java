@@ -26,7 +26,7 @@ public class Semestr implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+
 	private long id;
 
 	@Column(name = "cource_work_hours")
@@ -56,27 +56,29 @@ public class Semestr implements Serializable {
 
 	private int seminar;
 
-	private String type;
+	@ManyToOne
+	@JoinColumn(name = "id_type")
+	private Type type;
 
 	private int ze;
-	
+
 	private int prac_hour;
-	
+
 	private int prac_ze;
-	
+
 	private int diplom_hour;
-	
+
 	private int diplom_ze;
 
 	// bi-directional many-to-one association to Node
 	@ManyToOne
 	@JoinColumn(name = "id_node")
 	private Node node;
-	
+
 	// bi-directional many-to-one association to WeeksSemestr
-		@OneToMany(mappedBy = "semestr")
-		@JsonIgnore
-		private List<WeeksSemestr> weeksSemestrs;
+	@OneToMany(mappedBy = "semestr")
+	@JsonIgnore
+	private List<WeeksSemestr> weeksSemestrs;
 
 	public Semestr() {
 	}
@@ -177,11 +179,11 @@ public class Semestr implements Serializable {
 		this.seminar = seminar;
 	}
 
-	public String getType() {
+	public Type getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(Type type) {
 		this.type = type;
 	}
 
@@ -232,7 +234,5 @@ public class Semestr implements Serializable {
 	public void setDiplom_ze(int diplom_ze) {
 		this.diplom_ze = diplom_ze;
 	}
-	
-	
 
 }

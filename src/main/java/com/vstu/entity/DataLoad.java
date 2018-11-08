@@ -17,10 +17,11 @@ public class DataLoad {
 	private Integer count_students;
 	private Long id_subject;
 	private String name_subject;
+	private Float calc_field;
 
 	public DataLoad(Long id_teacher, Integer semestr_number, Integer count_lecture, Integer count_laboratory,
 			Integer count_practice, Integer count_seminar, String type, Integer cource_work_hours, Long id_group,
-			Integer count_students, Long id_subject, String name_subject) {
+			Integer count_students, Long id_subject, String name_subject, Float calc_field) {
 		this.id_teacher = id_teacher;
 		this.semestr_number = semestr_number;
 		this.count_lecture = count_lecture;
@@ -33,6 +34,7 @@ public class DataLoad {
 		this.count_students = count_students;
 		this.id_subject = id_subject;
 		this.name_subject = name_subject;
+		this.calc_field = calc_field;
 	}
 
 }

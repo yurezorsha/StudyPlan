@@ -92,6 +92,18 @@ CREATE TABLE `node` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 
+CREATE TABLE `type` (
+  `id` int(10) NOT NULL auto_increment,
+  `name` varchar(50),  
+  `koff` float,
+  
+  
+   PRIMARY KEY (`id`)
+
+  
+   
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
+
 
 
 
@@ -102,7 +114,7 @@ CREATE TABLE `node` (
   `laboratory` int(10),
   `practice` int(10),
   `seminar` int(10),
-  `type` enum('экзамен', 'зачет', 'диф зачет', 'просмотр'),
+  `id_type` int(10),
   `rgr` int(1),
   `course_work_type` enum('курсовой проект', 'курсовая работа'),
   `id_node` int(10),
@@ -122,7 +134,12 @@ CREATE TABLE `node` (
   KEY `FKS` (`id_node`),
   CONSTRAINT `FKS` 
   FOREIGN KEY (`id_node`) 
-  REFERENCES `node` (`id`)
+  REFERENCES `node` (`id`),
+   KEY `FKtype` (`id_type`),
+  CONSTRAINT `FKtype` 
+  FOREIGN KEY (`id_type`) 
+  REFERENCES `type` (`id`)
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 
 
@@ -265,7 +282,9 @@ INSERT INTO `plan` (`id_speciality`, `set_data_group`) VALUES (1, 2009);
 
 INSERT INTO `node` (`id_subject`, `id_cathedra`, `id_plan`) VALUES (1, 0, 1);
 
-INSERT INTO `semestr` (`number`,  `lecture`,   `laboratory`,  `practice`,   `seminar`,  `type`,  `rgr`,  `course_work_type`,  `id_node`,  `ze` ,  `cource_work_ze` ,  `cource_work_hours`, `id_teacher`, `id_faculty`, `diplom_hour`, `diplom_ze`, `prac_hour`, `prac_ze` ) 
+INSERT INTO `type` (`id`, `name`, `koff`) VALUES (1, 'зачет',0.3),(2, 'диф. зачет',0.35),(3, 'экзамен',0.4),(4, 'просмотр',0.4);
+
+INSERT INTO `semestr` (`number`,  `lecture`,   `laboratory`,  `practice`,   `seminar`,  `id_type`,  `rgr`,  `course_work_type`,  `id_node`,  `ze` ,  `cource_work_ze` ,  `cource_work_hours`, `id_teacher`, `id_faculty`, `diplom_hour`, `diplom_ze`, `prac_hour`, `prac_ze` ) 
 VALUES   
 (1, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0),
  (2, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 1, 1),
@@ -274,3 +293,5 @@ VALUES
   
   
 INSERT INTO `groups` (`id_plan`, `count_students`) VALUES (1, 20), (1, 25);
+
+
