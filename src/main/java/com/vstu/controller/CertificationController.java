@@ -31,6 +31,7 @@ public class CertificationController {
 	@GetMapping("certification/{id}")
 	public ResponseEntity<Certification> getCertificationById(@PathVariable("id") Long id) {
 		Certification c = certificationService.getCertificationById(id);
+		
 		return new ResponseEntity<Certification>(c, HttpStatus.OK);
 	}
 

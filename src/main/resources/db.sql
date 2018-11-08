@@ -268,9 +268,9 @@ INSERT INTO `node` (`id_subject`, `id_cathedra`, `id_plan`) VALUES (1, 0, 1);
 INSERT INTO `semestr` (`number`,  `lecture`,   `laboratory`,  `practice`,   `seminar`,  `type`,  `rgr`,  `course_work_type`,  `id_node`,  `ze` ,  `cource_work_ze` ,  `cource_work_hours`, `id_teacher`, `id_faculty`, `diplom_hour`, `diplom_ze`, `prac_hour`, `prac_ze` ) 
 VALUES   
 (1, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0),
- (2, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0),
-  (3, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0),
-   (4, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0);
+ (2, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 1, 1),
+  (3, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 1, 1),
+   (4, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 1, 1, 0, 0);
   
   
 INSERT INTO `groups` (`id_plan`, `count_students`) VALUES (1, 20), (1, 25);
