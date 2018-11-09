@@ -8,13 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The persistent class for the speciality database table.
  * 
  */
 @Entity
-@NamedQuery(name="Speciality.findAll", query="SELECT s FROM Speciality s")
+@NamedQuery(name = "Speciality.findAll", query = "SELECT s FROM Speciality s")
 public class Speciality implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -25,8 +26,9 @@ public class Speciality implements Serializable {
 
 	private String shifr;
 
-	//bi-directional many-to-one association to Plan
-	@OneToMany(mappedBy="speciality")
+	// bi-directional many-to-one association to Plan
+	@OneToMany(mappedBy = "speciality")
+	@JsonIgnore
 	private List<Plan> plans;
 
 	public Speciality() {
@@ -63,7 +65,5 @@ public class Speciality implements Serializable {
 	public void setPlans(List<Plan> plans) {
 		this.plans = plans;
 	}
-
-
 
 }

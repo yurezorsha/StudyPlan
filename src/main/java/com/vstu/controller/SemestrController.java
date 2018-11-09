@@ -2,6 +2,8 @@ package com.vstu.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -56,7 +58,7 @@ public class SemestrController {
 		return new ResponseEntity<List<Semestr>>(list, HttpStatus.OK);
 	}
 
-	@PostMapping("semestr")
+	@PostMapping("semestrs")
 	public ResponseEntity<Void> addSemestr(@RequestBody Semestr s, UriComponentsBuilder builder) {
 		boolean flag = semestrService.addSemestr(s);
 		if (flag == false) {
@@ -65,6 +67,12 @@ public class SemestrController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(builder.path("/semestr/{id}").buildAndExpand(s.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+
+	@PostMapping("semestr")
+	public ResponseEntity<List<Semestr>> addSemestrs(@Valid @RequestBody List<Semestr> s) {
+		List<Semestr> lst = semestrService.addListSemestr(s);
+		return new ResponseEntity<List<Semestr>>(lst, HttpStatus.CREATED);
 	}
 
 	@PutMapping("semestr")

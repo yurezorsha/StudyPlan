@@ -19,4 +19,6 @@ public interface ISemestrService {
 
 	boolean existsSemestr(Long id);
 
+	List<Semestr> addListSemestr(List<Semestr> s);
+
 }

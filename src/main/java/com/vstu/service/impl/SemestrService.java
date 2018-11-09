@@ -59,4 +59,9 @@ public class SemestrService implements ISemestrService {
 		return semestrRepository.existsById(id);
 	}
 
+	@Override
+	public List<Semestr> addListSemestr(List<Semestr> s) {
+		return semestrRepository.saveAll(s);
+	}
+
 }
