@@ -15,4 +15,7 @@ public interface NodeRepository extends JpaRepository<Node, Long> {
 	@Query("SELECT n FROM Node n where n.plan.id = :id")
 	public List<Node> findAllByPlanId(@Param("id") Long id);
 
+	@Query("SELECT n FROM Node n where n.plan.id = :id and n.subject.name=:name")
+	public Node findBySubjectNameAndPlanId(@Param("id") Long id, @Param("name") String name);
+
 }

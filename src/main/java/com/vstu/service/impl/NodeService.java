@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Node;
+import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.NodeRepository;
 import com.vstu.service.interfaces.INodeService;
 
@@ -33,24 +35,33 @@ public class NodeService implements INodeService {
 	}
 
 	@Override
-	public boolean addNode(Node n) {
-		if (nodeRepository.existsById(n.getId())) {
-			return false;
+	public Node addNode(Node n) {
+		if (nodeRepository.findBySubjectNameAndPlanId(n.getPlan().getId(), n.getSubject().getName()) != null) {
+			throw new AlreadyExistException("Node with subject: " + n.getSubject().getName()
+					+ " already exists in plan with Id: " + n.getPlan().getId());
 		} else {
 			nodeRepository.save(n);
-			return true;
+
 		}
+
+		return n;
 	}
 
 	@Override
 	public void updateNode(Node n) {
-		nodeRepository.save(n);
+		if (nodeRepository.existsById(n.getId()))
+			nodeRepository.save(n);
+		else
+			throw new EntityNotFoundException("Node with Id:" + n.getId() + " wasn't found!");
 
 	}
 
 	@Override
 	public void deleteNode(Long id) {
-		nodeRepository.deleteById(id);
+		if (nodeRepository.existsById(id))
+			nodeRepository.deleteById(id);
+		else
+			throw new EntityNotFoundException("Node with Id:" + id + " wasn't found!");
 
 	}
 

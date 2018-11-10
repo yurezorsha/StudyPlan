@@ -11,7 +11,7 @@ public interface INodeService {
 
 	Node getNodeById(Long id);
 
-	boolean addNode(Node n);
+	Node addNode(Node n);
 
 	void updateNode(Node n);
 
