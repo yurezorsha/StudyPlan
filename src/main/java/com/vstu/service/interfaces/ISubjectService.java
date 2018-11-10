@@ -11,7 +11,7 @@ public interface ISubjectService {
 
 	List<Subject> getSubjectByGroupUnitId(Long id);
 
-	boolean addSubject(Subject s);
+	Subject addSubject(Subject s);
 
 	void updateSubject(Subject s);
 

@@ -14,4 +14,6 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 	@Query("SELECT s FROM Subject s where s.groupUnit.id = :id")
 	public List<Subject> findAllByGroupUnitId(@Param("id") Long id);
 
+	public boolean existsByName(@Param("name") String name);
+
 }

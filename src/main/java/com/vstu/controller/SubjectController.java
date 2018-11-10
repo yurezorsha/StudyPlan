@@ -3,7 +3,6 @@ package com.vstu.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -46,37 +45,23 @@ public class SubjectController {
 	}
 
 	@PostMapping("subject")
-	public ResponseEntity<Void> addSubject(@RequestBody Subject sb, UriComponentsBuilder builder) {
-		boolean flag = subjectService.addSubject(sb);
-		if (flag == false) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/subject/{id}").buildAndExpand(sb.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<Subject> addSubject(@RequestBody Subject sb, UriComponentsBuilder builder) {
+		Subject subj = subjectService.addSubject(sb);
+		return new ResponseEntity<Subject>(subj, HttpStatus.CREATED);
 	}
 
 	@PutMapping("subject")
 	public ResponseEntity<Subject> updateSubject(@RequestBody Subject sb) {
-		if (subjectService.existsSubject(sb.getId())) {
-			subjectService.updateSubject(sb);
-			return new ResponseEntity<Subject>(sb, HttpStatus.OK);
-		} else {
-			sb = null;
-			return new ResponseEntity<Subject>(sb, HttpStatus.CONFLICT);
+		subjectService.updateSubject(sb);
+		return new ResponseEntity<Subject>(sb, HttpStatus.OK);
 
-		}
 	}
 
 	@DeleteMapping("subject/{id}")
 	public ResponseEntity<Void> deleteSubject(@PathVariable("id") Long id) {
-		if (subjectService.existsSubject(id)) {
-			subjectService.deleteSubject(id);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		subjectService.deleteSubject(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 
-		}
 	}
 
 }
