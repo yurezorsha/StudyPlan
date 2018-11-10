@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Semestr;
+import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.SemestrRepository;
 import com.vstu.service.interfaces.ISemestrService;
 
@@ -33,24 +35,32 @@ public class SemestrService implements ISemestrService {
 	}
 
 	@Override
-	public boolean addSemestr(Semestr s) {
-		if (semestrRepository.existsById(s.getId())) {
-			return false;
+	public Semestr addSemestr(Semestr s) {
+		if (semestrRepository.existsByNumberAndPlanId(s.getNumber(), s.getNode().getId())) {
+			throw new AlreadyExistException("Semestr with number: " + s.getNumber()
+					+ " already exists in node with id: " + s.getNode().getId());
 		} else {
+
 			semestrRepository.save(s);
-			return true;
 		}
+		return s;
+
 	}
 
 	@Override
 	public void updateSemestr(Semestr s) {
-		semestrRepository.save(s);
-
+		if (semestrRepository.existsById(s.getId()))
+			semestrRepository.save(s);
+		else
+			throw new EntityNotFoundException("Semestr with Id:" + s.getId() + " wasn't found!");
 	}
 
 	@Override
 	public void deleteSemestr(Long id) {
-		semestrRepository.deleteById(id);
+		if (semestrRepository.existsById(id))
+			semestrRepository.deleteById(id);
+		else
+			throw new EntityNotFoundException("Semestr with Id:" + id + " wasn't found!");
 
 	}
 
@@ -61,6 +71,12 @@ public class SemestrService implements ISemestrService {
 
 	@Override
 	public List<Semestr> addListSemestr(List<Semestr> s) {
+		for (Semestr semestr : s) {
+			if (semestrRepository.existsByNumberAndPlanId(semestr.getNumber(), semestr.getNode().getId())) {
+				throw new AlreadyExistException("Semestr with number: " + semestr.getNumber()
+						+ " already exists in node with id: " + semestr.getNode().getId());
+			}
+		}
 		return semestrRepository.saveAll(s);
 	}
 

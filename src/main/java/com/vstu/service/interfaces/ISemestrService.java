@@ -11,7 +11,7 @@ public interface ISemestrService {
 
 	Semestr getSemestrById(Long id);
 
-	boolean addSemestr(Semestr s);
+	Semestr addSemestr(Semestr s);
 
 	void updateSemestr(Semestr s);
 

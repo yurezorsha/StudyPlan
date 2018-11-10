@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vstu.entity.Semestr;
 import com.vstu.repository.SemestrRepository;
@@ -59,14 +57,10 @@ public class SemestrController {
 	}
 
 	@PostMapping("semestrs")
-	public ResponseEntity<Void> addSemestr(@RequestBody Semestr s, UriComponentsBuilder builder) {
-		boolean flag = semestrService.addSemestr(s);
-		if (flag == false) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/semestr/{id}").buildAndExpand(s.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<Semestr> addSemestr(@RequestBody Semestr s) {
+		Semestr semestr = semestrService.addSemestr(s);
+
+		return new ResponseEntity<Semestr>(semestr, HttpStatus.CREATED);
 	}
 
 	@PostMapping("semestr")
@@ -77,25 +71,17 @@ public class SemestrController {
 
 	@PutMapping("semestr")
 	public ResponseEntity<Semestr> updateSemestr(@RequestBody Semestr s) {
-		if (semestrService.existsSemestr(s.getId())) {
-			semestrService.updateSemestr(s);
-			return new ResponseEntity<Semestr>(s, HttpStatus.OK);
-		} else {
-			s = null;
-			return new ResponseEntity<Semestr>(s, HttpStatus.CONFLICT);
+		semestrService.updateSemestr(s);
+		return new ResponseEntity<Semestr>(s, HttpStatus.OK);
 
-		}
 	}
 
 	@DeleteMapping("semestr/{id}")
 	public ResponseEntity<Void> deleteSemestr(@PathVariable("id") Long id) {
-		if (semestrService.existsSemestr(id)) {
-			semestrService.deleteSemestr(id);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 
-		}
+		semestrService.deleteSemestr(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+
 	}
 
 }
