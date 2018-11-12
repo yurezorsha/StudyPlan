@@ -7,13 +7,13 @@ import com.vstu.entity.GroupComponent;
 public interface IGroupComponentService {
 	List<GroupComponent> getAllGroupComponent();
 
-	GroupComponent getGroupComponentById(Long idGr);
+	GroupComponent getGroupComponentById(Long id);
 
-	boolean addGroupComponent(GroupComponent g);
+	GroupComponent addGroupComponent(GroupComponent g);
 
 	void updateGroupComponent(GroupComponent g);
 
-	void deleteGroupComponent(Long idGr);
+	void deleteGroupComponent(Long id);
 
-	boolean existsGroupComponent(Long idGr);
+	boolean existsGroupComponent(Long id);
 }

@@ -9,14 +9,14 @@ public interface IGroupUnitService {
 
 	List<GroupUnit> getAllByGroupComponentId(Long id);
 
-	GroupUnit getGroupUnitById(Long idGr);
+	GroupUnit getGroupUnitById(Long id);
 
-	boolean addGroupUnit(GroupUnit g);
+	GroupUnit addGroupUnit(GroupUnit g);
 
 	void updateGroupUnit(GroupUnit g);
 
-	void deleteGroupUnit(Long idGr);
+	void deleteGroupUnit(Long id);
 
-	boolean existsGroupUnit(Long idGr);
+	boolean existsGroupUnit(Long id);
 
 }

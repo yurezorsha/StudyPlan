@@ -20,6 +20,9 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vstu.entity.data.DataLoad;
+import com.vstu.entity.data.DataLoadDip;
+import com.vstu.entity.data.DataLoadPrac;
 
 /**
  * The persistent class for the plan database table.
@@ -107,7 +110,6 @@ public class Plan implements Serializable {
 
 	// bi-directional many-to-one association to Node
 	@OneToMany(mappedBy = "plan")
-	@JsonIgnore
 	private List<Node> nodes;
 
 	// bi-directional many-to-one association to Speciality
@@ -121,6 +123,11 @@ public class Plan implements Serializable {
 	private List<Groups> group;
 
 	public Plan() {
+	}
+
+	public Plan(int date, Speciality speciality) {
+		this.set_data_group = date;
+		this.speciality = speciality;
 	}
 
 	public long getId() {

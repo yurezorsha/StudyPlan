@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Competence;
+import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.CompetenceRepository;
 import com.vstu.service.interfaces.ICompetenceService;
 
@@ -27,26 +29,32 @@ public class CompetenceService implements ICompetenceService {
 	}
 
 	@Override
-	public boolean addCompetence(Competence c) {
-		if (competenceRepository.existsById(c.getId())) {
-			return false;
+	public Competence addCompetence(Competence c) {
+		if (competenceRepository.existsByNameCompetence(c.getNameCompetence())) {
+			throw new AlreadyExistException("Competence with name: " + c.getNameCompetence() + " already exists!");
 		} else {
 			competenceRepository.save(c);
-			return true;
 		}
+
+		return c;
 
 	}
 
 	@Override
 	public void updateCompetence(Competence c) {
-		competenceRepository.save(c);
+		if (competenceRepository.existsById(c.getId()))
+			competenceRepository.save(c);
+		else
+			throw new EntityNotFoundException("Competence with Id:" + c.getId() + " wasn't found!");
 
 	}
 
 	@Override
 	public void deleteCompetence(Long id) {
-
-		competenceRepository.deleteById(id);
+		if (competenceRepository.existsById(id))
+			competenceRepository.deleteById(id);
+		else
+			throw new EntityNotFoundException("Competence with Id:" + id + " wasn't found!");
 
 	}
 

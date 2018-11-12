@@ -9,7 +9,7 @@ public interface ICompetenceService {
 
 	Competence getCompetenceById(Long id);
 
-	boolean addCompetence(Competence c);
+	Competence addCompetence(Competence c);
 
 	void updateCompetence(Competence c);
 

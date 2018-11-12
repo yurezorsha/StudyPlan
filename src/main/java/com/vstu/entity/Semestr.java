@@ -73,6 +73,7 @@ public class Semestr implements Serializable {
 	// bi-directional many-to-one association to Node
 	@ManyToOne
 	@JoinColumn(name = "id_node")
+	@JsonIgnore
 	private Node node;
 
 	// bi-directional many-to-one association to WeeksSemestr

@@ -39,11 +39,11 @@ public class Node implements Serializable {
 	// bi-directional many-to-one association to Plan
 	@ManyToOne
 	@JoinColumn(name = "id_plan")
+	@JsonIgnore
 	private Plan plan;
 
 	// bi-directional many-to-one association to Semestr
 	@OneToMany(mappedBy = "node")
-	@JsonIgnore
 	private List<Semestr> semestrs;
 
 	public Node() {

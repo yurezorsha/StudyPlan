@@ -15,4 +15,6 @@ public interface GroupUnitRepository extends JpaRepository<GroupUnit, Long> {
 	@Query("SELECT g FROM GroupUnit g where g.groupComponent.id = :id")
 	public List<GroupUnit> findAllByGroupComponentId(@Param("id") Long id);
 
+	public boolean existsByName(@Param("name") String name);
+
 }

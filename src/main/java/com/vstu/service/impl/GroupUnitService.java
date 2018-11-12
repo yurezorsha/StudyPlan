@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.GroupUnit;
+import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.GroupUnitRepository;
 import com.vstu.service.interfaces.IGroupUnitService;
 
@@ -27,36 +29,43 @@ public class GroupUnitService implements IGroupUnitService {
 	}
 
 	@Override
-	public GroupUnit getGroupUnitById(Long idGr) {
+	public GroupUnit getGroupUnitById(Long id) {
 
-		return groupUnitRepository.findById(idGr).get();
+		return groupUnitRepository.findById(id).get();
 	}
 
 	@Override
-	public boolean addGroupUnit(GroupUnit g) {
-		if (groupUnitRepository.existsById(g.getId())) {
-			return false;
+	public GroupUnit addGroupUnit(GroupUnit g) {
+		if (groupUnitRepository.existsByName(g.getName())) {
+			throw new AlreadyExistException("GroupUnit with name: " + g.getName() + " already exists!");
 		} else {
 			groupUnitRepository.save(g);
-			return true;
 		}
+
+		return g;
 	}
 
 	@Override
 	public void updateGroupUnit(GroupUnit g) {
-		groupUnitRepository.save(g);
+		if (groupUnitRepository.existsById(g.getId()))
+			groupUnitRepository.save(g);
+		else
+			throw new EntityNotFoundException("GroupUnit with Id:" + g.getId() + " wasn't found!");
 
 	}
 
 	@Override
-	public void deleteGroupUnit(Long idGr) {
-		groupUnitRepository.deleteById(idGr);
+	public void deleteGroupUnit(Long id) {
+		if (groupUnitRepository.existsById(id))
+			groupUnitRepository.deleteById(id);
+		else
+			throw new EntityNotFoundException("GroupUnit with Id:" + id + " wasn't found!");
 
 	}
 
 	@Override
-	public boolean existsGroupUnit(Long idGr) {
-		return groupUnitRepository.existsById(idGr);
+	public boolean existsGroupUnit(Long id) {
+		return groupUnitRepository.existsById(id);
 	}
 
 }

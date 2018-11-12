@@ -77,6 +77,13 @@ public class PlanController {
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
+	@PostMapping("fullplan")
+	public ResponseEntity<Plan> addFullPlan(@RequestBody Plan p) {
+		Plan plan = planService.addFullPlan(p);
+
+		return new ResponseEntity<Plan>(plan, HttpStatus.CREATED);
+	}
+
 	@PutMapping("plan")
 	public ResponseEntity<Plan> updatePlan(@RequestBody Plan p) {
 		if (planService.existsPlan(p.getId())) {

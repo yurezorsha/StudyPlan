@@ -20,6 +20,8 @@ public interface IPlanService {
 
 	boolean existsPlan(Long id);
 
-	public List<Object> getNagruzka(Long id, int year);
+	List<Object> getNagruzka(Long id, int year);
+
+	Plan addFullPlan(Plan p);
 
 }

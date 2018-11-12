@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.GroupComponent;
+import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.GroupComponentRepository;
 import com.vstu.service.interfaces.IGroupComponentService;
 
@@ -21,39 +23,46 @@ public class GroupComponentService implements IGroupComponentService {
 	}
 
 	@Override
-	public GroupComponent getGroupComponentById(Long idGr) {
+	public GroupComponent getGroupComponentById(Long id) {
 
-		return groupComponentRepository.findById(idGr).get();
+		return groupComponentRepository.findById(id).get();
 	}
 
 	@Override
-	public boolean addGroupComponent(GroupComponent g) {
-		if (groupComponentRepository.existsById(g.getId())) {
-			return false;
+	public GroupComponent addGroupComponent(GroupComponent g) {
+		if (groupComponentRepository.existsByName(g.getName())) {
+			throw new AlreadyExistException("GroupComponent with name: " + g.getName() + " already exists!");
 		} else {
 			groupComponentRepository.save(g);
-			return true;
+
 		}
+
+		return g;
 
 	}
 
 	@Override
 	public void updateGroupComponent(GroupComponent g) {
-		groupComponentRepository.save(g);
+		if (groupComponentRepository.existsById(g.getId()))
+			groupComponentRepository.save(g);
+		else
+			throw new EntityNotFoundException("GroupComponent with Id:" + g.getId() + " wasn't found!");
 
 	}
 
 	@Override
-	public void deleteGroupComponent(Long idGr) {
-
-		groupComponentRepository.deleteById(idGr);
+	public void deleteGroupComponent(Long id) {
+		if (groupComponentRepository.existsById(id))
+			groupComponentRepository.deleteById(id);
+		else
+			throw new EntityNotFoundException("GroupComponent with Id:" + id + " wasn't found!");
 
 	}
 
 	@Override
-	public boolean existsGroupComponent(Long idGr) {
+	public boolean existsGroupComponent(Long id) {
 
-		return groupComponentRepository.existsById(idGr);
+		return groupComponentRepository.existsById(id);
 	}
 
 }

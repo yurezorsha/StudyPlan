@@ -1,4 +1,4 @@
-package com.vstu.entity;
+package com.vstu.entity.data;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
