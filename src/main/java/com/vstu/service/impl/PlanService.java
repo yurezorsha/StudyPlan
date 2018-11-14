@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Node;
 import com.vstu.entity.Plan;
-import com.vstu.entity.Semestr;
 import com.vstu.repository.PlanRepository;
 import com.vstu.service.interfaces.IPlanService;
 
@@ -54,6 +53,9 @@ public class PlanService implements IPlanService {
 
 	@Override
 	public void updatePlan(Plan p) {
+		for (Node node : p.getNodes())
+			nodeService.updateNode(p.getId(), node);
+
 		planRepository.save(p);
 
 	}
@@ -97,14 +99,7 @@ public class PlanService implements IPlanService {
 
 		for (Node node : p.getNodes()) {
 
-			node.setPlan(plan);
-			Node n = nodeService.addNode(node);
-
-			for (Semestr semestr : node.getSemestrs()) {
-				semestr.setNode(n);
-			}
-
-			semestrService.addListSemestr(node.getSemestrs());
+			Node n = nodeService.addNode(plan.getId(), node);
 
 		}
 

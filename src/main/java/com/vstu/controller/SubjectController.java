@@ -39,7 +39,7 @@ public class SubjectController {
 	}
 
 	@GetMapping("subjects/{id}")
-	public ResponseEntity<List<Subject>> getAllSubjectByStudyProgram(@PathVariable("id") Long id) {
+	public ResponseEntity<List<Subject>> getAllSubjectByGroupUnitId(@PathVariable("id") Long id) {
 		List<Subject> list = subjectService.getSubjectByGroupUnitId(id);
 		return new ResponseEntity<List<Subject>>(list, HttpStatus.OK);
 	}

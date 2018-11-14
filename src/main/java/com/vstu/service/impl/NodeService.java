@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Node;
+import com.vstu.entity.Plan;
+import com.vstu.entity.Semestr;
 import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.NodeRepository;
@@ -15,6 +17,12 @@ import com.vstu.service.interfaces.INodeService;
 public class NodeService implements INodeService {
 	@Autowired
 	NodeRepository nodeRepository;
+
+	@Autowired
+	PlanService planService;
+
+	@Autowired
+	SemestrService semestrService;
 
 	@Override
 	public List<Node> getAllNode() {
@@ -35,12 +43,15 @@ public class NodeService implements INodeService {
 	}
 
 	@Override
-	public Node addNode(Node n) {
-		if (nodeRepository.findBySubjectNameAndPlanId(n.getPlan().getId(), n.getSubject().getName()) != null) {
+	public Node addNode(Long id, Node n) {
+		Plan p = planService.getPlanById(id);
+		if (nodeRepository.findBySubjectNameAndPlanId(p.getId(), n.getSubject().getName()) != null) {
 			throw new AlreadyExistException("Node with subject: " + n.getSubject().getName()
 					+ " already exists in plan with Id: " + n.getPlan().getId());
 		} else {
-			nodeRepository.save(n);
+			n.setPlan(p);
+			n = nodeRepository.save(n);
+			semestrService.addListSemestr(n.getId(), n.getSemestrs());
 
 		}
 
@@ -48,10 +59,16 @@ public class NodeService implements INodeService {
 	}
 
 	@Override
-	public void updateNode(Node n) {
-		if (nodeRepository.existsById(n.getId()))
-			nodeRepository.save(n);
-		else
+	public void updateNode(Long id, Node n) {
+		Plan p = planService.getPlanById(id);
+		if (nodeRepository.existsById(n.getId())) {
+			n.setPlan(p);
+
+			for (Semestr s : n.getSemestrs()) {
+				semestrService.updateSemestr(n.getId(), s);
+			}
+			n = nodeRepository.save(n);
+		} else
 			throw new EntityNotFoundException("Node with Id:" + n.getId() + " wasn't found!");
 
 	}

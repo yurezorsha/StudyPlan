@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.vstu.entity.Node;
 import com.vstu.entity.Semestr;
 import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
@@ -15,6 +16,9 @@ import com.vstu.service.interfaces.ISemestrService;
 public class SemestrService implements ISemestrService {
 	@Autowired
 	SemestrRepository semestrRepository;
+
+	@Autowired
+	NodeService nodeServide;
 
 	@Override
 	public List<Semestr> getAllSemestr() {
@@ -36,6 +40,7 @@ public class SemestrService implements ISemestrService {
 
 	@Override
 	public Semestr addSemestr(Semestr s) {
+
 		if (semestrRepository.existsByNumberAndPlanId(s.getNumber(), s.getNode().getId())) {
 			throw new AlreadyExistException("Semestr with number: " + s.getNumber()
 					+ " already exists in node with id: " + s.getNode().getId());
@@ -48,10 +53,12 @@ public class SemestrService implements ISemestrService {
 	}
 
 	@Override
-	public void updateSemestr(Semestr s) {
-		if (semestrRepository.existsById(s.getId()))
+	public void updateSemestr(Long id, Semestr s) {
+		Node n = nodeServide.getNodeById(id);
+		if (semestrRepository.existsById(s.getId())) {
+			s.setNode(n);
 			semestrRepository.save(s);
-		else
+		} else
 			throw new EntityNotFoundException("Semestr with Id:" + s.getId() + " wasn't found!");
 	}
 
@@ -70,11 +77,13 @@ public class SemestrService implements ISemestrService {
 	}
 
 	@Override
-	public List<Semestr> addListSemestr(List<Semestr> s) {
+	public List<Semestr> addListSemestr(Long id, List<Semestr> s) {
+		Node n = nodeServide.getNodeById(id);
 		for (Semestr semestr : s) {
-			if (semestrRepository.existsByNumberAndPlanId(semestr.getNumber(), semestr.getNode().getId())) {
+			semestr.setNode(n);
+			if (semestrRepository.existsByNumberAndPlanId(semestr.getNumber(), n.getId())) {
 				throw new AlreadyExistException("Semestr with number: " + semestr.getNumber()
-						+ " already exists in node with id: " + semestr.getNode().getId());
+						+ " already exists in node with id: " + n.getId());
 			}
 		}
 		return semestrRepository.saveAll(s);

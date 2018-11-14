@@ -2,8 +2,6 @@ package com.vstu.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,15 +61,15 @@ public class SemestrController {
 		return new ResponseEntity<Semestr>(semestr, HttpStatus.CREATED);
 	}
 
-	@PostMapping("semestr")
-	public ResponseEntity<List<Semestr>> addSemestrs(@Valid @RequestBody List<Semestr> s) {
-		List<Semestr> lst = semestrService.addListSemestr(s);
+	@PostMapping("semestr/{id}")
+	public ResponseEntity<List<Semestr>> addSemestrs(@PathVariable("id") Long id, @RequestBody List<Semestr> s) {
+		List<Semestr> lst = semestrService.addListSemestr(id, s);
 		return new ResponseEntity<List<Semestr>>(lst, HttpStatus.CREATED);
 	}
 
-	@PutMapping("semestr")
-	public ResponseEntity<Semestr> updateSemestr(@RequestBody Semestr s) {
-		semestrService.updateSemestr(s);
+	@PutMapping("semestr/{id}")
+	public ResponseEntity<Semestr> updateSemestr(@PathVariable("id") Long id, @RequestBody Semestr s) {
+		semestrService.updateSemestr(id, s);
 		return new ResponseEntity<Semestr>(s, HttpStatus.OK);
 
 	}

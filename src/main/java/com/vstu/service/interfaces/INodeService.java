@@ -11,9 +11,9 @@ public interface INodeService {
 
 	Node getNodeById(Long id);
 
-	Node addNode(Node n);
+	Node addNode(Long id, Node n);
 
-	void updateNode(Node n);
+	void updateNode(Long id, Node n);
 
 	void deleteNode(Long id);
 

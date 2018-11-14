@@ -13,12 +13,12 @@ public interface ISemestrService {
 
 	Semestr addSemestr(Semestr s);
 
-	void updateSemestr(Semestr s);
+	void updateSemestr(Long id, Semestr s);
 
 	void deleteSemestr(Long id);
 
 	boolean existsSemestr(Long id);
 
-	List<Semestr> addListSemestr(List<Semestr> s);
+	List<Semestr> addListSemestr(Long id, List<Semestr> s);
 
 }

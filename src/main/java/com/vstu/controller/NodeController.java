@@ -44,15 +44,15 @@ public class NodeController {
 		return new ResponseEntity<List<Node>>(list, HttpStatus.OK);
 	}
 
-	@PostMapping("node")
-	public ResponseEntity<Node> addNode(@RequestBody Node n) {
-		Node node = nodeService.addNode(n);
+	@PostMapping("node/{id}")
+	public ResponseEntity<Node> addNode(@PathVariable("id") Long id, @RequestBody Node n) {
+		Node node = nodeService.addNode(id, n);
 		return new ResponseEntity<Node>(node, HttpStatus.CREATED);
 	}
 
-	@PutMapping("node")
-	public ResponseEntity<Node> updateNode(@RequestBody Node n) {
-		nodeService.updateNode(n);
+	@PutMapping("node/{id}")
+	public ResponseEntity<Node> updateNode(@PathVariable("id") Long id, @RequestBody Node n) {
+		nodeService.updateNode(id, n);
 		return new ResponseEntity<Node>(n, HttpStatus.OK);
 
 	}
