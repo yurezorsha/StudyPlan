@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Node;
 import com.vstu.entity.Plan;
+import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.PlanRepository;
 import com.vstu.service.interfaces.IPlanService;
 
@@ -42,26 +44,38 @@ public class PlanService implements IPlanService {
 	}
 
 	@Override
-	public boolean addPlan(Plan p) {
-		if (planRepository.existsById(p.getId())) {
-			return false;
-		} else {
-			planRepository.save(p);
-			return true;
+	public Plan addPlan(Plan p) {
+		if (existsPlan(p.getId()))
+			throw new AlreadyExistException("Plan with Id: " + p.getId() + "already exists!");
+		Plan plan = new Plan(p.getSet_data_group(), p.getSpeciality());
+		plan = planRepository.save(plan);
+
+		for (Node node : p.getNodes()) {
+
+			Node n = nodeService.addNode(plan.getId(), node);
+
 		}
+
+		return p;
 	}
 
 	@Override
-	public void updatePlan(Plan p) {
+	public Plan updatePlan(Plan p) {
+		if (!existsPlan(p.getId()))
+			throw new EntityNotFoundException("Plan with Id: " + p.getId() + "wasn't found!");
+
 		for (Node node : p.getNodes())
 			nodeService.updateNode(p.getId(), node);
 
-		planRepository.save(p);
+		return planRepository.save(p);
 
 	}
 
 	@Override
 	public void deletePlan(Long id) {
+		if (!existsPlan(id))
+			throw new EntityNotFoundException("Plan with Id: " + id + "wasn't found!");
+
 		planRepository.deleteById(id);
 
 	}
@@ -89,21 +103,6 @@ public class PlanService implements IPlanService {
 
 		} else
 			return null;
-	}
-
-	@Override
-	public Plan addFullPlan(Plan p) {
-
-		Plan plan = new Plan(p.getSet_data_group(), p.getSpeciality());
-		plan = planRepository.save(plan);
-
-		for (Node node : p.getNodes()) {
-
-			Node n = nodeService.addNode(plan.getId(), node);
-
-		}
-
-		return p;
 	}
 
 }

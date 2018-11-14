@@ -3,7 +3,6 @@ package com.vstu.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vstu.entity.Plan;
 import com.vstu.repository.PlanRepository;
@@ -67,44 +65,22 @@ public class PlanController {
 	}
 
 	@PostMapping("plan")
-	public ResponseEntity<Void> addPlan(@RequestBody Plan p, UriComponentsBuilder builder) {
-		boolean flag = planService.addPlan(p);
-		if (flag == false) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/plan/{id}").buildAndExpand(p.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-	}
-
-	@PostMapping("fullplan")
-	public ResponseEntity<Plan> addFullPlan(@RequestBody Plan p) {
-		Plan plan = planService.addFullPlan(p);
+	public ResponseEntity<Plan> addPlan(@RequestBody Plan p) {
+		Plan plan = planService.addPlan(p);
 
 		return new ResponseEntity<Plan>(plan, HttpStatus.CREATED);
 	}
 
 	@PutMapping("plan")
 	public ResponseEntity<Plan> updatePlan(@RequestBody Plan p) {
-		if (planService.existsPlan(p.getId())) {
-			planService.updatePlan(p);
-			return new ResponseEntity<Plan>(p, HttpStatus.OK);
-		} else {
-			p = null;
-			return new ResponseEntity<Plan>(p, HttpStatus.CONFLICT);
-
-		}
+		Plan plan = planService.updatePlan(p);
+		return new ResponseEntity<Plan>(plan, HttpStatus.OK);
 	}
 
 	@DeleteMapping("plan/{id}")
 	public ResponseEntity<Void> deletePlan(@PathVariable("id") Long id) {
-		if (planService.existsPlan(id)) {
-			planService.deletePlan(id);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-
-		}
+		planService.deletePlan(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 }

@@ -69,8 +69,8 @@ public class SemestrController {
 
 	@PutMapping("semestr/{id}")
 	public ResponseEntity<Semestr> updateSemestr(@PathVariable("id") Long id, @RequestBody Semestr s) {
-		semestrService.updateSemestr(id, s);
-		return new ResponseEntity<Semestr>(s, HttpStatus.OK);
+		Semestr sem = semestrService.updateSemestr(id, s);
+		return new ResponseEntity<Semestr>(sem, HttpStatus.OK);
 
 	}
 

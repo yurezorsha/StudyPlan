@@ -12,9 +12,9 @@ public interface IFakultativService {
 
 	Fakultativ getFakultativById(Long id);
 
-	boolean addFakultativ(Fakultativ f);
+	Fakultativ addFakultativ(Fakultativ f);
 
-	void updateFakultativ(Fakultativ f);
+	Fakultativ updateFakultativ(Fakultativ f);
 
 	void deleteFakultativ(Long id);
 

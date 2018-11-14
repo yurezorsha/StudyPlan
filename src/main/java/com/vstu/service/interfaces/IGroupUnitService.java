@@ -13,7 +13,7 @@ public interface IGroupUnitService {
 
 	GroupUnit addGroupUnit(GroupUnit g);
 
-	void updateGroupUnit(GroupUnit g);
+	GroupUnit updateGroupUnit(GroupUnit g);
 
 	void deleteGroupUnit(Long id);
 

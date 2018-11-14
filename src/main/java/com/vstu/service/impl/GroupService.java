@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Groups;
+import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.repository.GroupsRepository;
 import com.vstu.service.interfaces.IGroupService;
 
@@ -31,24 +32,28 @@ public class GroupService implements IGroupService {
 	}
 
 	@Override
-	public boolean addGroups(Groups gr) {
-		if (groupRepository.existsById(gr.getId())) {
-			return false;
-		} else {
-			groupRepository.save(gr);
-			return true;
-		}
+	public Groups addGroups(Groups c) {
+		if (existsGroups(c.getId()))
+			throw new AlreadyExistException("Groups with Id: " + c.getId() + " already exists!");
+
+		return groupRepository.save(c);
 	}
 
 	@Override
-	public void updateGroups(Groups gr) {
-		groupRepository.save(gr);
+	public Groups updateGroups(Groups c) {
+		if (!existsGroups(c.getId()))
+			throw new AlreadyExistException("Groups with Id: " + c.getId() + " wasn't found!");
+
+		return groupRepository.save(c);
 
 	}
 
 	@Override
 	public void deleteGroups(Long id) {
-		groupRepository.deleteById(id);
+		if (!existsGroups(id))
+			throw new AlreadyExistException("Groups with Id: " + id + " wasn't found!");
+		else
+			groupRepository.deleteById(id);
 
 	}
 

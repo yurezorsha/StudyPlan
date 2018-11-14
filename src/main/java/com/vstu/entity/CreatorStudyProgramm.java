@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -18,7 +17,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "creator_study_programm")
-@NamedQuery(name = "CreatorStudyProgramm.findAll", query = "SELECT c FROM CreatorStudyProgramm c")
 public class CreatorStudyProgramm implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -46,8 +46,8 @@ public class GroupComponentController {
 
 	@PutMapping("groupcomponent")
 	public ResponseEntity<GroupComponent> updateGroupComponent(@RequestBody GroupComponent gr) {
-		groupComponentService.updateGroupComponent(gr);
-		return new ResponseEntity<GroupComponent>(gr, HttpStatus.OK);
+		GroupComponent gc = groupComponentService.updateGroupComponent(gr);
+		return new ResponseEntity<GroupComponent>(gc, HttpStatus.OK);
 
 	}
 

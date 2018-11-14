@@ -52,8 +52,8 @@ public class SubjectController {
 
 	@PutMapping("subject")
 	public ResponseEntity<Subject> updateSubject(@RequestBody Subject sb) {
-		subjectService.updateSubject(sb);
-		return new ResponseEntity<Subject>(sb, HttpStatus.OK);
+		Subject subj = subjectService.updateSubject(sb);
+		return new ResponseEntity<Subject>(subj, HttpStatus.OK);
 
 	}
 

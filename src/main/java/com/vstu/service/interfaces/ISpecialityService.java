@@ -8,11 +8,11 @@ public interface ISpecialityService {
 
 	List<Speciality> getAllSpeciality();
 
-	Speciality getSpecialityById(Long id);	
+	Speciality getSpecialityById(Long id);
 
-	boolean addSpeciality(Speciality s);
+	Speciality addSpeciality(Speciality s);
 
-	void updateSpeciality(Speciality s);
+	Speciality updateSpeciality(Speciality s);
 
 	void deleteSpeciality(Long id);
 

@@ -3,7 +3,6 @@ package com.vstu.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -46,37 +45,21 @@ public class SubCompetenceController {
 	}
 
 	@PostMapping("subcompetence")
-	public ResponseEntity<Void> addSubCompetence(@RequestBody SubCompetence sb, UriComponentsBuilder builder) {
-		boolean flag = subCompetenceService.addSubCompetence(sb);
-		if (flag == false) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/subcompetence/{id}").buildAndExpand(sb.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<SubCompetence> addSubCompetence(@RequestBody SubCompetence sb, UriComponentsBuilder builder) {
+		SubCompetence s = subCompetenceService.addSubCompetence(sb);
+		return new ResponseEntity<SubCompetence>(s, HttpStatus.CREATED);
 	}
 
 	@PutMapping("subcompetence")
 	public ResponseEntity<SubCompetence> updateSubCompetence(@RequestBody SubCompetence sb) {
-		if (subCompetenceService.existsSubCompetence(sb.getId())) {
-			subCompetenceService.updateSubCompetence(sb);
-			return new ResponseEntity<SubCompetence>(sb, HttpStatus.OK);
-		} else {
-			sb = null;
-			return new ResponseEntity<SubCompetence>(sb, HttpStatus.CONFLICT);
-
-		}
+		subCompetenceService.updateSubCompetence(sb);
+		return new ResponseEntity<SubCompetence>(sb, HttpStatus.OK);
 	}
 
 	@DeleteMapping("subcompetence/{id}")
 	public ResponseEntity<Void> deleteSubCompetence(@PathVariable("id") Long id) {
-		if (subCompetenceService.existsSubCompetence(id)) {
-			subCompetenceService.deleteSubCompetence(id);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-
-		}
+		subCompetenceService.deleteSubCompetence(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 }

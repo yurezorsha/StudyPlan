@@ -13,7 +13,7 @@ public interface ISubjectService {
 
 	Subject addSubject(Subject s);
 
-	void updateSubject(Subject s);
+	Subject updateSubject(Subject s);
 
 	void deleteSubject(Long id);
 

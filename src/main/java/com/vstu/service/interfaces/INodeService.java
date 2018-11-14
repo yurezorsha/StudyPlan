@@ -13,7 +13,7 @@ public interface INodeService {
 
 	Node addNode(Long id, Node n);
 
-	void updateNode(Long id, Node n);
+	Node updateNode(Long id, Node n);
 
 	void deleteNode(Long id);
 

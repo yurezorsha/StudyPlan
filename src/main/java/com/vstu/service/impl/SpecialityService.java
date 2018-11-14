@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Speciality;
+import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.repository.SpecialityRepository;
 import com.vstu.service.interfaces.ISpecialityService;
 
 @Service
-public class SpecialityService implements ISpecialityService{
-	
+public class SpecialityService implements ISpecialityService {
+
 	@Autowired
 	SpecialityRepository specialityRepository;
 
@@ -28,26 +29,28 @@ public class SpecialityService implements ISpecialityService{
 	}
 
 	@Override
-	public boolean addSpeciality(Speciality s) {
-		if (specialityRepository.existsById(s.getId())) {
-			return false;
-		} else {
-			specialityRepository.save(s);
-			return true;
-		}
+	public Speciality addSpeciality(Speciality c) {
+		if (existsSpeciality(c.getId()))
+			throw new AlreadyExistException("Speciality with Id: " + c.getId() + " already exists!");
 
+		return specialityRepository.save(c);
 	}
 
 	@Override
-	public void updateSpeciality(Speciality s) {
-		specialityRepository.save(s);
+	public Speciality updateSpeciality(Speciality c) {
+		if (!existsSpeciality(c.getId()))
+			throw new AlreadyExistException("Speciality with Id: " + c.getId() + " wasn't found!");
+
+		return specialityRepository.save(c);
 
 	}
 
 	@Override
 	public void deleteSpeciality(Long id) {
-
-		specialityRepository.deleteById(id);
+		if (!existsSpeciality(id))
+			throw new AlreadyExistException("Speciality with Id: " + id + " wasn't found!");
+		else
+			specialityRepository.deleteById(id);
 
 	}
 

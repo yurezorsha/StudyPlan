@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  */
 @Entity
-@NamedQuery(name = "Subject.findAll", query = "SELECT s FROM Subject s")
 public class Subject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,10 +25,6 @@ public class Subject implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
 	private long id;
-
-	/*
-	 * @OneToOne(mappedBy="semestr") private Semestr semestr;
-	 */
 
 	private String name;
 

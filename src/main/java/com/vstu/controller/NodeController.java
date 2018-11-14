@@ -52,8 +52,8 @@ public class NodeController {
 
 	@PutMapping("node/{id}")
 	public ResponseEntity<Node> updateNode(@PathVariable("id") Long id, @RequestBody Node n) {
-		nodeService.updateNode(id, n);
-		return new ResponseEntity<Node>(n, HttpStatus.OK);
+		Node node = nodeService.updateNode(id, n);
+		return new ResponseEntity<Node>(node, HttpStatus.OK);
 
 	}
 

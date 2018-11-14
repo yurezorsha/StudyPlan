@@ -3,7 +3,6 @@ package com.vstu.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vstu.entity.Type;
 import com.vstu.service.interfaces.ITypeService;
@@ -41,37 +39,21 @@ public class TypeController {
 	}
 
 	@PostMapping("type")
-	public ResponseEntity<Void> addType(@RequestBody Type t, UriComponentsBuilder builder) {
-		boolean flag = typeService.addType(t);
-		if (flag == false) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/type/{id}").buildAndExpand(t.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<Type> addType(@RequestBody Type t) {
+		Type type = typeService.addType(t);
+		return new ResponseEntity<Type>(type, HttpStatus.CREATED);
 	}
 
 	@PutMapping("type")
 	public ResponseEntity<Type> updateType(@RequestBody Type t) {
-		if (typeService.existsType(t.getId())) {
-			typeService.updateType(t);
-			return new ResponseEntity<Type>(t, HttpStatus.OK);
-		} else {
-			t = null;
-			return new ResponseEntity<Type>(t, HttpStatus.CONFLICT);
-
-		}
+		Type type = typeService.updateType(t);
+		return new ResponseEntity<Type>(t, HttpStatus.OK);
 	}
 
 	@DeleteMapping("type/{id}")
 	public ResponseEntity<Void> deleteType(@PathVariable("id") Long id) {
-		if (typeService.existsType(id)) {
-			typeService.deleteType(id);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-
-		}
+		typeService.deleteType(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 }

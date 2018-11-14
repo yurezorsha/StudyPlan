@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.SubCompetence;
+import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.repository.SubCompetenceRepository;
 import com.vstu.service.interfaces.ISubCompetenceService;
 
@@ -33,24 +34,28 @@ public class SubCompetenceService implements ISubCompetenceService {
 	}
 
 	@Override
-	public boolean addSubCompetence(SubCompetence s) {
-		if (subCompetenceRepository.existsById(s.getId())) {
-			return false;
-		} else {
-			subCompetenceRepository.save(s);
-			return true;
-		}
+	public SubCompetence addSubCompetence(SubCompetence c) {
+		if (existsSubCompetence(c.getId()))
+			throw new AlreadyExistException("SubCompetence with Id: " + c.getId() + " already exists!");
+
+		return subCompetenceRepository.save(c);
 	}
 
 	@Override
-	public void updateSubCompetence(SubCompetence s) {
-		subCompetenceRepository.save(s);
+	public SubCompetence updateSubCompetence(SubCompetence c) {
+		if (!existsSubCompetence(c.getId()))
+			throw new AlreadyExistException("SubCompetence with Id: " + c.getId() + " wasn't found!");
+
+		return subCompetenceRepository.save(c);
 
 	}
 
 	@Override
 	public void deleteSubCompetence(Long id) {
-		subCompetenceRepository.deleteById(id);
+		if (!existsSubCompetence(id))
+			throw new AlreadyExistException("SubCompetence with Id: " + id + " wasn't found!");
+		else
+			subCompetenceRepository.deleteById(id);
 
 	}
 

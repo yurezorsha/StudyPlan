@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Fakultativ;
+import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.repository.FakultativRepository;
 import com.vstu.service.interfaces.IFakultativService;
 
 @Service
-public class FakultativService implements IFakultativService{
+public class FakultativService implements IFakultativService {
 
 	@Autowired
 	FakultativRepository fakultativRepository;
@@ -31,25 +32,29 @@ public class FakultativService implements IFakultativService{
 	}
 
 	@Override
-	public boolean addFakultativ(Fakultativ f) {
-		if (fakultativRepository.existsById(f.getId())) {
-			return false;
-		} else {
-			fakultativRepository.save(f);
-			return true;
-		}
+	public Fakultativ addFakultativ(Fakultativ c) {
+		if (existsFakultativ(c.getId()))
+			throw new AlreadyExistException("Fakultativ with Id: " + c.getId() + " already exists!");
+
+		return fakultativRepository.save(c);
 	}
 
 	@Override
-	public void updateFakultativ(Fakultativ f) {
-		fakultativRepository.save(f);
-		
+	public Fakultativ updateFakultativ(Fakultativ c) {
+		if (!existsFakultativ(c.getId()))
+			throw new AlreadyExistException("Fakultativ with Id: " + c.getId() + " wasn't found!");
+
+		return fakultativRepository.save(c);
+
 	}
 
 	@Override
 	public void deleteFakultativ(Long id) {
-		fakultativRepository.deleteById(id);
-		
+		if (!existsFakultativ(id))
+			throw new AlreadyExistException("Fakultativ with Id: " + id + " wasn't found!");
+		else
+			fakultativRepository.deleteById(id);
+
 	}
 
 	@Override
@@ -57,6 +62,4 @@ public class FakultativService implements IFakultativService{
 		return fakultativRepository.existsById(id);
 	}
 
-	
-	
 }

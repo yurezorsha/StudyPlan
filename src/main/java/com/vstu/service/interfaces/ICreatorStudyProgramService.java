@@ -11,9 +11,9 @@ public interface ICreatorStudyProgramService {
 
 	List<CreatorStudyProgramm> getCreatorStudyProgramByStudyProgramId(Long id);
 
-	boolean addCreatorStudyProgram(CreatorStudyProgramm c);
+	CreatorStudyProgramm addCreatorStudyProgram(CreatorStudyProgramm c);
 
-	void updateCreatorStudyProgram(CreatorStudyProgramm c);
+	CreatorStudyProgramm updateCreatorStudyProgram(CreatorStudyProgramm c);
 
 	void deleteCreatorStudyProgram(Long id);
 

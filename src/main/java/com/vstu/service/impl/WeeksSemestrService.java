@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.WeeksSemestr;
+import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.repository.WeeksSemestrRepository;
 import com.vstu.service.interfaces.IWeeksSemestrService;
 
 @Service
-public class WeeksSemestrService implements IWeeksSemestrService{
-	
+public class WeeksSemestrService implements IWeeksSemestrService {
+
 	@Autowired
 	WeeksSemestrRepository weeksSemestrRepository;
 
@@ -31,31 +32,34 @@ public class WeeksSemestrService implements IWeeksSemestrService{
 	}
 
 	@Override
-	public boolean addWeeksSemestr(WeeksSemestr w) {
-		if (weeksSemestrRepository.existsById(w.getId())) {
-			return false;
-		} else {
-			weeksSemestrRepository.save(w);
-			return true;
-		}
+	public WeeksSemestr addWeeksSemestr(WeeksSemestr c) {
+		if (!existsWeeksSemestr(c.getId()))
+			throw new AlreadyExistException("WeeksSemestr with Id: " + c.getId() + " already exists!");
+
+		return weeksSemestrRepository.save(c);
 	}
 
 	@Override
-	public void updateWeeksSemestr(WeeksSemestr w) {
-		weeksSemestrRepository.save(w);
-		
+	public WeeksSemestr updateWeeksSemestr(WeeksSemestr c) {
+		if (!existsWeeksSemestr(c.getId()))
+			throw new AlreadyExistException("WeeksSemestr with Id: " + c.getId() + " wasn't found!");
+
+		return weeksSemestrRepository.save(c);
+
 	}
 
 	@Override
 	public void deleteWeeksSemestr(Long id) {
-		weeksSemestrRepository.deleteById(id);
-		
+		if (!existsWeeksSemestr(id))
+			throw new AlreadyExistException("WeeksSemestr with Id: " + id + " wasn't found!");
+		else
+			weeksSemestrRepository.deleteById(id);
+
 	}
 
 	@Override
 	public boolean existsWeeksSemestr(Long id) {
 		return weeksSemestrRepository.existsById(id);
 	}
-
 
 }

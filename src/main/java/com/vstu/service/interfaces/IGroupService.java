@@ -12,9 +12,9 @@ public interface IGroupService {
 
 	Groups getGroupsById(Long id);
 
-	boolean addGroups(Groups gr);
+	Groups addGroups(Groups gr);
 
-	void updateGroups(Groups gr);
+	Groups updateGroups(Groups gr);
 
 	void deleteGroups(Long id);
 

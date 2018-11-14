@@ -30,31 +30,28 @@ public class CompetenceService implements ICompetenceService {
 
 	@Override
 	public Competence addCompetence(Competence c) {
-		if (competenceRepository.existsByNameCompetence(c.getNameCompetence())) {
+		if (competenceRepository.existsByNameCompetence(c.getNameCompetence()))
 			throw new AlreadyExistException("Competence with name: " + c.getNameCompetence() + " already exists!");
-		} else {
-			competenceRepository.save(c);
-		}
 
-		return c;
+		return competenceRepository.save(c);
 
 	}
 
 	@Override
-	public void updateCompetence(Competence c) {
-		if (competenceRepository.existsById(c.getId()))
-			competenceRepository.save(c);
-		else
+	public Competence updateCompetence(Competence c) {
+		if (!existsCompetence(c.getId()))
 			throw new EntityNotFoundException("Competence with Id:" + c.getId() + " wasn't found!");
+
+		return competenceRepository.save(c);
 
 	}
 
 	@Override
 	public void deleteCompetence(Long id) {
-		if (competenceRepository.existsById(id))
-			competenceRepository.deleteById(id);
-		else
+		if (!existsCompetence(id))
 			throw new EntityNotFoundException("Competence with Id:" + id + " wasn't found!");
+		else
+			competenceRepository.deleteById(id);
 
 	}
 

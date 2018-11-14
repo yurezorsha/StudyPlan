@@ -46,8 +46,8 @@ public class CompetenceController {
 
 	@PutMapping("competence")
 	public ResponseEntity<Competence> updateCompetence(@RequestBody Competence c) {
-		competenceService.updateCompetence(c);
-		return new ResponseEntity<Competence>(c, HttpStatus.OK);
+		Competence com = competenceService.updateCompetence(c);
+		return new ResponseEntity<Competence>(com, HttpStatus.OK);
 
 	}
 

@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Certification;
+import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.repository.CertificationRepository;
 import com.vstu.service.interfaces.ICertificationService;
 
 @Service
-public class CertificationService implements ICertificationService{
+public class CertificationService implements ICertificationService {
 	@Autowired
 	CertificationRepository certificationRepository;
 
@@ -30,25 +31,29 @@ public class CertificationService implements ICertificationService{
 	}
 
 	@Override
-	public boolean addCertification(Certification c) {
-		if (certificationRepository.existsById(c.getId())) {
-			return false;
-		} else {
-			certificationRepository.save(c);
-			return true;
-		}
+	public Certification addCertification(Certification c) {
+		if (existsCertification(c.getId()))
+			throw new AlreadyExistException("Certification with Id: " + c.getId() + " already exists!");
+
+		return certificationRepository.save(c);
 	}
 
 	@Override
-	public void updateCertification(Certification c) {
-		certificationRepository.save(c);
-		
+	public Certification updateCertification(Certification c) {
+		if (!existsCertification(c.getId()))
+			throw new AlreadyExistException("Certification with Id: " + c.getId() + " wasn't found!");
+
+		return certificationRepository.save(c);
+
 	}
 
 	@Override
 	public void deleteCertification(Long id) {
-		certificationRepository.deleteById(id);
-		
+		if (!existsCertification(id))
+			throw new AlreadyExistException("Certification with Id: " + id + " wasn't found!");
+		else
+			certificationRepository.deleteById(id);
+
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package com.vstu.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vstu.entity.CreatorStudyProgramm;
 import com.vstu.service.interfaces.ICreatorStudyProgramService;
@@ -47,38 +45,21 @@ public class CreatorStudyProgramController {
 	}
 
 	@PostMapping("creatorstudyprogram")
-	public ResponseEntity<Void> addCreatorStudyProgram(@RequestBody CreatorStudyProgramm creator,
-			UriComponentsBuilder builder) {
-		boolean flag = creatorStudyProgramService.addCreatorStudyProgram(creator);
-		if (flag == false) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/creatorstudyprogram/{id}").buildAndExpand(creator.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<CreatorStudyProgramm> addCreatorStudyProgram(@RequestBody CreatorStudyProgramm c) {
+		CreatorStudyProgramm creator = creatorStudyProgramService.addCreatorStudyProgram(c);
+		return new ResponseEntity<CreatorStudyProgramm>(creator, HttpStatus.CREATED);
 	}
 
 	@PutMapping("creatorstudyprogram")
-	public ResponseEntity<CreatorStudyProgramm> updateCreatorStudyProgram(@RequestBody CreatorStudyProgramm gr) {
-		if (creatorStudyProgramService.existsCreatorStudyProgram(gr.getId())) {
-			creatorStudyProgramService.updateCreatorStudyProgram(gr);
-			return new ResponseEntity<CreatorStudyProgramm>(gr, HttpStatus.OK);
-		} else {
-			gr = null;
-			return new ResponseEntity<CreatorStudyProgramm>(gr, HttpStatus.CONFLICT);
-
-		}
+	public ResponseEntity<CreatorStudyProgramm> updateCreatorStudyProgram(@RequestBody CreatorStudyProgramm c) {
+		CreatorStudyProgramm creator = creatorStudyProgramService.updateCreatorStudyProgram(c);
+		return new ResponseEntity<CreatorStudyProgramm>(creator, HttpStatus.OK);
 	}
 
 	@DeleteMapping("creatorstudyprogram/{id}")
 	public ResponseEntity<Void> deleteCreatorStudyProgram(@PathVariable("id") Long id) {
-		if (creatorStudyProgramService.existsCreatorStudyProgram(id)) {
-			creatorStudyProgramService.deleteCreatorStudyProgram(id);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-
-		}
+		creatorStudyProgramService.deleteCreatorStudyProgram(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 }

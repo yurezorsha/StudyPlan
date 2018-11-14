@@ -13,7 +13,7 @@ public interface ISemestrService {
 
 	Semestr addSemestr(Semestr s);
 
-	void updateSemestr(Long id, Semestr s);
+	Semestr updateSemestr(Long id, Semestr s);
 
 	void deleteSemestr(Long id);
 

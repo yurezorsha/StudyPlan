@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.CreatorStudyProgramm;
+import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.CreatorStudyProgrammRepository;
 import com.vstu.service.interfaces.ICreatorStudyProgramService;
 
@@ -26,23 +28,30 @@ public class CreatorStudyProgramService implements ICreatorStudyProgramService {
 	}
 
 	@Override
-	public boolean addCreatorStudyProgram(CreatorStudyProgramm c) {
-		if (creatorStudyProgramRepository.existsById(c.getId())) {
-			return false;
-		} else {
-			creatorStudyProgramRepository.save(c);
-			return true;
-		}
+	public CreatorStudyProgramm addCreatorStudyProgram(CreatorStudyProgramm c) {
+		if (existsCreatorStudyProgram(c.getId()))
+			throw new AlreadyExistException("CreatorStudyProgramm with name: " + c.getId() + " already exists!");
+
+		return creatorStudyProgramRepository.save(c);
+
 	}
 
 	@Override
-	public void updateCreatorStudyProgram(CreatorStudyProgramm c) {
-		creatorStudyProgramRepository.save(c);
+	public CreatorStudyProgramm updateCreatorStudyProgram(CreatorStudyProgramm c) {
+		if (!existsCreatorStudyProgram(c.getId()))
+			throw new EntityNotFoundException("CreatorStudyProgramm with Id:" + c.getId() + " wasn't found!");
+
+		return creatorStudyProgramRepository.save(c);
+
 	}
 
 	@Override
 	public void deleteCreatorStudyProgram(Long id) {
-		creatorStudyProgramRepository.deleteById(id);
+		if (!existsCreatorStudyProgram(id))
+			throw new EntityNotFoundException("CreatorStudyProgramm with Id:" + id + " wasn't found!");
+		else
+			creatorStudyProgramRepository.deleteById(id);
+
 	}
 
 	@Override

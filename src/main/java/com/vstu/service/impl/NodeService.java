@@ -59,26 +59,27 @@ public class NodeService implements INodeService {
 	}
 
 	@Override
-	public void updateNode(Long id, Node n) {
-		Plan p = planService.getPlanById(id);
-		if (nodeRepository.existsById(n.getId())) {
-			n.setPlan(p);
-
-			for (Semestr s : n.getSemestrs()) {
-				semestrService.updateSemestr(n.getId(), s);
-			}
-			n = nodeRepository.save(n);
-		} else
+	public Node updateNode(Long id, Node n) {
+		if (!existsNode(n.getId()))
 			throw new EntityNotFoundException("Node with Id:" + n.getId() + " wasn't found!");
 
+		Plan p = planService.getPlanById(id);
+
+		n.setPlan(p);
+
+		for (Semestr s : n.getSemestrs()) {
+			semestrService.updateSemestr(n.getId(), s);
+		}
+
+		return nodeRepository.save(n);
 	}
 
 	@Override
 	public void deleteNode(Long id) {
-		if (nodeRepository.existsById(id))
-			nodeRepository.deleteById(id);
-		else
+		if (!existsNode(id))
 			throw new EntityNotFoundException("Node with Id:" + id + " wasn't found!");
+
+		nodeRepository.deleteById(id);
 
 	}
 

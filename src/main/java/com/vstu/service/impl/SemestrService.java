@@ -41,33 +41,32 @@ public class SemestrService implements ISemestrService {
 	@Override
 	public Semestr addSemestr(Semestr s) {
 
-		if (semestrRepository.existsByNumberAndPlanId(s.getNumber(), s.getNode().getId())) {
+		if (semestrRepository.existsByNumberAndPlanId(s.getNumber(), s.getNode().getId()))
 			throw new AlreadyExistException("Semestr with number: " + s.getNumber()
 					+ " already exists in node with id: " + s.getNode().getId());
-		} else {
 
-			semestrRepository.save(s);
-		}
-		return s;
+		return semestrRepository.save(s);
 
 	}
 
 	@Override
-	public void updateSemestr(Long id, Semestr s) {
-		Node n = nodeServide.getNodeById(id);
-		if (semestrRepository.existsById(s.getId())) {
-			s.setNode(n);
-			semestrRepository.save(s);
-		} else
+	public Semestr updateSemestr(Long id, Semestr s) {
+		if (!existsSemestr(s.getId()))
 			throw new EntityNotFoundException("Semestr with Id:" + s.getId() + " wasn't found!");
+
+		Node n = nodeServide.getNodeById(id);
+		s.setNode(n);
+
+		return semestrRepository.save(s);
+
 	}
 
 	@Override
 	public void deleteSemestr(Long id) {
-		if (semestrRepository.existsById(id))
-			semestrRepository.deleteById(id);
-		else
+		if (!existsSemestr(id))
 			throw new EntityNotFoundException("Semestr with Id:" + id + " wasn't found!");
+
+		semestrRepository.deleteById(id);
 
 	}
 

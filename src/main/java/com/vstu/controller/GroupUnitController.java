@@ -53,7 +53,7 @@ public class GroupUnitController {
 
 	@PutMapping("groupunit")
 	public ResponseEntity<GroupUnit> updateGroupUnit(@RequestBody GroupUnit gr) {
-		groupUnitService.updateGroupUnit(gr);
+		GroupUnit gu = groupUnitService.updateGroupUnit(gr);
 		return new ResponseEntity<GroupUnit>(gr, HttpStatus.OK);
 	}
 

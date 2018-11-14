@@ -7,32 +7,29 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
 
 /**
  * The persistent class for the weeks_semestr database table.
  * 
  */
 @Entity
-@Table(name="weeks_semestr")
-@NamedQuery(name="WeeksSemestr.findAll", query="SELECT w FROM WeeksSemestr w")
+@Table(name = "weeks_semestr")
 public class WeeksSemestr implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private long id;
 
-	@Column(name="count_weeks")
+	@Column(name = "count_weeks")
 	private int countWeeks;
 
-	@Column(name="number_semestr")
+	@Column(name = "number_semestr")
 	private int numberSemestr;
 
-	//bi-directional many-to-one association to Plan
+	// bi-directional many-to-one association to Plan
 	@ManyToOne
-	@JoinColumn(name="id_semestr")
+	@JoinColumn(name = "id_semestr")
 	private Semestr semestr;
 
 	public WeeksSemestr() {
@@ -69,7 +66,5 @@ public class WeeksSemestr implements Serializable {
 	public void setSemestr(Semestr semestr) {
 		this.semestr = semestr;
 	}
-
-	
 
 }

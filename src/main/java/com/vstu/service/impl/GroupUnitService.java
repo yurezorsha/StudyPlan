@@ -36,30 +36,27 @@ public class GroupUnitService implements IGroupUnitService {
 
 	@Override
 	public GroupUnit addGroupUnit(GroupUnit g) {
-		if (groupUnitRepository.existsByName(g.getName())) {
+		if (groupUnitRepository.existsByName(g.getName()))
 			throw new AlreadyExistException("GroupUnit with name: " + g.getName() + " already exists!");
-		} else {
-			groupUnitRepository.save(g);
-		}
 
-		return g;
+		return groupUnitRepository.save(g);
 	}
 
 	@Override
-	public void updateGroupUnit(GroupUnit g) {
-		if (groupUnitRepository.existsById(g.getId()))
-			groupUnitRepository.save(g);
-		else
+	public GroupUnit updateGroupUnit(GroupUnit g) {
+		if (!existsGroupUnit(g.getId()))
 			throw new EntityNotFoundException("GroupUnit with Id:" + g.getId() + " wasn't found!");
+
+		return groupUnitRepository.save(g);
 
 	}
 
 	@Override
 	public void deleteGroupUnit(Long id) {
-		if (groupUnitRepository.existsById(id))
-			groupUnitRepository.deleteById(id);
-		else
+		if (!existsGroupUnit(id))
 			throw new EntityNotFoundException("GroupUnit with Id:" + id + " wasn't found!");
+
+		groupUnitRepository.deleteById(id);
 
 	}
 

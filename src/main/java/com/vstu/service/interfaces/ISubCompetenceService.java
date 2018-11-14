@@ -11,9 +11,9 @@ public interface ISubCompetenceService {
 
 	SubCompetence getSubCompetenceById(Long id);
 
-	boolean addSubCompetence(SubCompetence s);
+	SubCompetence addSubCompetence(SubCompetence s);
 
-	void updateSubCompetence(SubCompetence s);
+	SubCompetence updateSubCompetence(SubCompetence s);
 
 	void deleteSubCompetence(Long id);
 

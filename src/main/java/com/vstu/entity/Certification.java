@@ -6,24 +6,21 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-
 
 /**
  * The persistent class for the certification database table.
  * 
  */
 @Entity
-@NamedQuery(name="Certification.findAll", query="SELECT c FROM Certification c")
 public class Certification implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private long id;
 
-	//bi-directional many-to-one association to Plan
+	// bi-directional many-to-one association to Plan
 	@ManyToOne
-	@JoinColumn(name="id_plan")
+	@JoinColumn(name = "id_plan")
 	private Plan plan;
 
 	public Certification() {

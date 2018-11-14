@@ -11,7 +11,7 @@ public interface IGroupComponentService {
 
 	GroupComponent addGroupComponent(GroupComponent g);
 
-	void updateGroupComponent(GroupComponent g);
+	GroupComponent updateGroupComponent(GroupComponent g);
 
 	void deleteGroupComponent(Long id);
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Type;
+import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.repository.TypeRepository;
 import com.vstu.service.interfaces.ITypeService;
 
@@ -27,24 +28,28 @@ public class TypeService implements ITypeService {
 	}
 
 	@Override
-	public boolean addType(Type t) {
-		if (typeRepository.existsById(t.getId())) {
-			return false;
-		} else {
-			typeRepository.save(t);
-			return true;
-		}
+	public Type addType(Type c) {
+		if (!existsType(c.getId()))
+			throw new AlreadyExistException("Type with Id: " + c.getId() + " already exists!");
+
+		return typeRepository.save(c);
 	}
 
 	@Override
-	public void updateType(Type t) {
-		typeRepository.save(t);
+	public Type updateType(Type c) {
+		if (!existsType(c.getId()))
+			throw new AlreadyExistException("Type with Id: " + c.getId() + " wasn't found!");
+
+		return typeRepository.save(c);
 
 	}
 
 	@Override
 	public void deleteType(Long id) {
-		typeRepository.deleteById(id);
+		if (!existsType(id))
+			throw new AlreadyExistException("Type with Id: " + id + " wasn't found!");
+		else
+			typeRepository.deleteById(id);
 
 	}
 

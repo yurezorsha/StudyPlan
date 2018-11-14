@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.StudyProgramm;
+import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.repository.StudyProgrammRepository;
 import com.vstu.service.interfaces.IStudyProgramService;
 
@@ -27,23 +28,29 @@ public class StudyProgramService implements IStudyProgramService {
 	}
 
 	@Override
-	public boolean addStudyProgram(StudyProgramm s) {
-		if (studyProgramRepository.existsById(s.getId())) {
-			return false;
-		} else {
-			studyProgramRepository.save(s);
-			return true;
-		}
+	public StudyProgramm addStudyProgram(StudyProgramm c) {
+		if (existsStudyProgram(c.getId()))
+			throw new AlreadyExistException("StudyProgram with Id: " + c.getId() + " already exists!");
+
+		return studyProgramRepository.save(c);
 	}
 
 	@Override
-	public void updateStudyProgram(StudyProgramm s) {
-		studyProgramRepository.save(s);
+	public StudyProgramm updateStudyProgram(StudyProgramm c) {
+		if (!existsStudyProgram(c.getId()))
+			throw new AlreadyExistException("StudyProgram with Id: " + c.getId() + " wasn't found!");
+
+		return studyProgramRepository.save(c);
+
 	}
 
 	@Override
 	public void deleteStudyProgram(Long id) {
-		studyProgramRepository.deleteById(id);
+		if (!existsStudyProgram(id))
+			throw new AlreadyExistException("StudyProgram with Id: " + id + " wasn't found!");
+		else
+			studyProgramRepository.deleteById(id);
+
 	}
 
 	@Override

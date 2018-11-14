@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
@@ -29,7 +28,6 @@ import com.vstu.entity.data.DataLoadPrac;
  * 
  */
 
-@NamedQuery(name = "Plan.findAll", query = "SELECT p FROM Plan p")
 @SqlResultSetMappings({
 		@SqlResultSetMapping(name = "DataLoad", classes = { @ConstructorResult(targetClass = DataLoad.class, columns = {
 				@ColumnResult(name = "id_teacher", type = Long.class),

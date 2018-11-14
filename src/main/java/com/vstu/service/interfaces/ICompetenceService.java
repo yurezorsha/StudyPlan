@@ -11,7 +11,7 @@ public interface ICompetenceService {
 
 	Competence addCompetence(Competence c);
 
-	void updateCompetence(Competence c);
+	Competence updateCompetence(Competence c);
 
 	void deleteCompetence(Long id);
 

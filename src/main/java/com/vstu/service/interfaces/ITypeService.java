@@ -9,9 +9,9 @@ public interface ITypeService {
 
 	Type getTypeById(Long id);
 
-	boolean addType(Type t);
+	Type addType(Type t);
 
-	void updateType(Type t);
+	Type updateType(Type t);
 
 	void deleteType(Long id);
 

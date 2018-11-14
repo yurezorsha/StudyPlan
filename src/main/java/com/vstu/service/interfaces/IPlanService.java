@@ -12,16 +12,14 @@ public interface IPlanService {
 
 	Plan getPlanById(Long id);
 
-	boolean addPlan(Plan p);
+	Plan addPlan(Plan p);
 
-	void updatePlan(Plan p);
+	Plan updatePlan(Plan p);
 
 	void deletePlan(Long id);
 
 	boolean existsPlan(Long id);
 
 	List<Object> getNagruzka(Long id, int year);
-
-	Plan addFullPlan(Plan p);
 
 }

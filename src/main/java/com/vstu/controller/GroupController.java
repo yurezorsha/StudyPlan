@@ -3,7 +3,6 @@ package com.vstu.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vstu.entity.Groups;
 import com.vstu.service.interfaces.IGroupService;
@@ -47,36 +45,20 @@ public class GroupController {
 	}
 
 	@PostMapping("group")
-	public ResponseEntity<Void> addGroups(@RequestBody Groups gr, UriComponentsBuilder builder) {
-		boolean flag = groupService.addGroups(gr);
-		if (flag == false) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/group/{id}").buildAndExpand(gr.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<Groups> addGroups(@RequestBody Groups gr) {
+		Groups g = groupService.addGroups(gr);
+		return new ResponseEntity<Groups>(g, HttpStatus.CREATED);
 	}
 
 	@PutMapping("group")
 	public ResponseEntity<Groups> updateGroups(@RequestBody Groups gr) {
-		if (groupService.existsGroups(gr.getId())) {
-			groupService.updateGroups(gr);
-			return new ResponseEntity<Groups>(gr, HttpStatus.OK);
-		} else {
-			gr = null;
-			return new ResponseEntity<Groups>(gr, HttpStatus.CONFLICT);
-
-		}
+		Groups g = groupService.updateGroups(gr);
+		return new ResponseEntity<Groups>(gr, HttpStatus.OK);
 	}
 
 	@DeleteMapping("group/{id}")
 	public ResponseEntity<Void> deleteGroups(@PathVariable("id") Long id) {
-		if (groupService.existsGroups(id)) {
-			groupService.deleteGroups(id);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-
-		}
+		groupService.deleteGroups(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 }

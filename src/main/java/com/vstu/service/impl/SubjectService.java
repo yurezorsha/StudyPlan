@@ -34,30 +34,27 @@ public class SubjectService implements ISubjectService {
 
 	@Override
 	public Subject addSubject(Subject s) {
-		if (subjectRepository.existsByName(s.getName())) {
+		if (subjectRepository.existsByName(s.getName()))
 			throw new AlreadyExistException("Subject with name: " + s.getName() + " already exists!");
-		} else {
-			subjectRepository.save(s);
 
-		}
+		return subjectRepository.save(s);
 
-		return s;
 	}
 
 	@Override
-	public void updateSubject(Subject s) {
-		if (subjectRepository.existsById(s.getId()))
-			subjectRepository.save(s);
-		else
+	public Subject updateSubject(Subject s) {
+		if (!existsSubject(s.getId()))
 			throw new EntityNotFoundException("Subject with Id:" + s.getId() + " wasn't found!");
+
+		return subjectRepository.save(s);
 	}
 
 	@Override
 	public void deleteSubject(Long id) {
-		if (subjectRepository.existsById(id))
-			subjectRepository.deleteById(id);
-		else
+		if (!existsSubject(id))
 			throw new EntityNotFoundException("Subject with Id:" + id + " wasn't found!");
+
+		subjectRepository.deleteById(id);
 	}
 
 	@Override

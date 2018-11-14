@@ -30,32 +30,28 @@ public class GroupComponentService implements IGroupComponentService {
 
 	@Override
 	public GroupComponent addGroupComponent(GroupComponent g) {
-		if (groupComponentRepository.existsByName(g.getName())) {
+		if (groupComponentRepository.existsByName(g.getName()))
 			throw new AlreadyExistException("GroupComponent with name: " + g.getName() + " already exists!");
-		} else {
-			groupComponentRepository.save(g);
 
-		}
-
-		return g;
+		return groupComponentRepository.save(g);
 
 	}
 
 	@Override
-	public void updateGroupComponent(GroupComponent g) {
-		if (groupComponentRepository.existsById(g.getId()))
-			groupComponentRepository.save(g);
-		else
+	public GroupComponent updateGroupComponent(GroupComponent g) {
+		if (!existsGroupComponent(g.getId()))
 			throw new EntityNotFoundException("GroupComponent with Id:" + g.getId() + " wasn't found!");
+
+		return groupComponentRepository.save(g);
 
 	}
 
 	@Override
 	public void deleteGroupComponent(Long id) {
-		if (groupComponentRepository.existsById(id))
-			groupComponentRepository.deleteById(id);
-		else
+		if (!existsGroupComponent(id))
 			throw new EntityNotFoundException("GroupComponent with Id:" + id + " wasn't found!");
+
+		groupComponentRepository.deleteById(id);
 
 	}
 

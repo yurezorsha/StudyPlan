@@ -11,9 +11,9 @@ public interface IStudyProgramService {
 
 	List<StudyProgramm> getStudyProgramBySubjectId(Long id);
 
-	boolean addStudyProgram(StudyProgramm c);
+	StudyProgramm addStudyProgram(StudyProgramm c);
 
-	void updateStudyProgram(StudyProgramm c);
+	StudyProgramm updateStudyProgram(StudyProgramm c);
 
 	void deleteStudyProgram(Long id);
 
