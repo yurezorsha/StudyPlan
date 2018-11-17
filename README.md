@@ -4,7 +4,7 @@ API REST SERVICE STUDY PLAN
 
 | Сущности    |  Описание |
 | ----------| ----------|
-| Certification         |  |
+| [Certification](#certification)        |  |
 | Competence            |  |
 | CreatorStudyProgram   |  |
 | Fakultativ            |  |
@@ -23,7 +23,7 @@ API REST SERVICE STUDY PLAN
 
 
 
-Certification
+## Certification
 --------------
 
 | Запрос    | URL                  | Описание |
