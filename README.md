@@ -8,7 +8,7 @@ API REST SERVICE STUDY PLAN
 | [Competence](#competence)            | api для работы со справочником компетенциями  |
 | [CreatorStudyProgram](#creatorstudyprogram)   | api для работы с создателями учебной программы  |
 | [Fakultativ](#fakultativ)           | api для работы с факультативами |
-| [GroupComponent](#groupcomponent)        | api для работы групповыми компонентами |
+| [GroupComponent](#groupcomponent)        | api для работы с групповыми компонентами |
 | [GroupUnit](#groupunit)             | api для работы с группами модулей |
 | [Group](#group)                 | api для работы с группами  |
 | [Node](#node)                  | api для работы с записями плана |
@@ -16,7 +16,7 @@ API REST SERVICE STUDY PLAN
 | [Semestr](#semestr)               | api для работы с семестрами  |
 | [Speciality](#speciality)            | api для работы со специальностями  |
 | [StudyProgram](#studyprogram)          | api для работы с учебной программой |
-| [SubCompetence](#subcompetence)         | api для работы со со списоком компетенций для дисцилины  |
+| [SubCompetence](#subcompetence)         | api для работы со списоком компетенций для дисцилины  |
 | [Subject](#subject)               |api для работы со справочником дисциплин  |
 | [Type](#type)                  |api для работы со справочником оценки знаний  |
 | [WeeksSemestr](#weekssemestr)          | api для работы с неделями в семестре  |
