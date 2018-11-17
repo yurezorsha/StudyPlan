@@ -8,14 +8,14 @@ API REST SERVICE STUDY PLAN
 | Competence            |  |
 | CreatorStudyProgram   |  |
 | Fakultativ            |  |
-| GroupComponent        | ```json {         "id": 1,         
-                                     "name": "Государственный компонент"     } ```|
-| GroupUnit             | ```json {         "id": 1,         
+| GroupComponent        |{         "id": 1,         
+                                     "name": "Государственный компонент"     } |
+| GroupUnit             |{         "id": 1,         
                                      "name": "Социально-гуманитарный модуль 1",         
                                      "groupComponent": {  "id": 1,             
                                                           "name": "Государственный компонент" 
                                                         }     
-                           } ```|
+                           }|
 | Group                 |  |
 | Node                  |  |
 | Plan                  |  |
@@ -23,7 +23,7 @@ API REST SERVICE STUDY PLAN
 | Speciality            |  |
 | StudyProgram          |  |
 | SubCompetence         |  |
-| Subject               | ```json {  "id": 1,         
+| Subject               | {  "id": 1,         
                              "name": "История",         
                              "shifr": "shifr",         
                              "groupUnit": { "id": 1,             
@@ -32,7 +32,7 @@ API REST SERVICE STUDY PLAN
                                                                 "name": "Государственный компонент"             
                                                                }        
                                           }     
-                           } ``` |
+                           } |
 | Type                  |  |
 | WeeksSemestr          |  |
 
