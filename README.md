@@ -192,7 +192,7 @@ Subject
 | DELETE    | /subject/{id}   | Удалить Subject по id |
 | PUT       | /subject        | Обновить Subject |
 
-```json
+```javascript
 {
         "id": 1,
         "name": "История",
