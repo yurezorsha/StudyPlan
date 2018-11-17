@@ -2,24 +2,25 @@ API REST SERVICE STUDY PLAN
 ===========================
 ### http://localhost:8080/studyplan
 
-| Сущности    |  Описание |
+| Разделы    |  Описание |
 | ----------| ----------|
-| [Certification](#certification)        |  |
-| [Competence](#competence)            |  |
-| [CreatorStudyProgram](#creatorstudyprogram)   |  |
-| [Fakultativ](#fakultativ)           |  |
-| [GroupComponent](#groupcomponent)        |  |
-| [GroupUnit](#groupunit)             |  |
-| [Group](#group)                 |  |
-| [Node](#node)                  |  |
-| [Plan](#plan)                 |  |
-| [Semestr](#semestr)               |  |
-| [Speciality](#speciality)            |  |
-| [StudyProgram](#studyprogram)          |  |
-| [SubCompetence](#subcompetence)         |  |
-| [Subject](#subject)               |  |
-| [Type](#type)                  |  |
-| [WeeksSemestr](#weekssemestr)          |  |
+| [Certification](#certification)        | api для работы с аттестациями  |
+| [Competence](#competence)            | api для работы со справочником компетенциями  |
+| [CreatorStudyProgram](#creatorstudyprogram)   | api для работы с создателями учебной программы  |
+| [Fakultativ](#fakultativ)           | api для работы с факультативами |
+| [GroupComponent](#groupcomponent)        | api для работы групповыми компонентами |
+| [GroupUnit](#groupunit)             | api для работы с группами модулей |
+| [Group](#group)                 | api для работы с группами  |
+| [Node](#node)                  | api для работы с записями плана |
+| [Plan](#plan)                 | api для работы с планами |
+| [Semestr](#semestr)               | api для работы с семестрами  |
+| [Speciality](#speciality)            | api для работы со специальностями  |
+| [StudyProgram](#studyprogram)          | api для работы с учебной программой |
+| [SubCompetence](#subcompetence)         | api для работы со со списоком компетенций для дисцилины  |
+| [Subject](#subject)               |api для работы со справочником дисциплин  |
+| [Type](#type)                  |api для работы со справочником оценки знаний  |
+| [WeeksSemestr](#weekssemestr)          | api для работы с неделями в семестре  |
+| [Errors](#errors)          | ошибки, которые могут возникнуть при работе |
 
 
 
@@ -623,3 +624,55 @@ GET localhost:8080/studyplan/weekssemestr/1
 }
 
 ```
+
+Errors
+-------------
+
+| Ошибка    | Код                  | Описание |
+| :----------:|:--------------------| ---------|
+| Not Found      | 404 | При попытке изменения или удаления несуществующей записи |
+| Conflict       | 409 | При создании существующей записи|
+
+Формат ответа: DELETE http://localhost:8080/studyplan/subject/15
+
+```javascript
+{
+    "timestamp": "2018-11-17T15:07:21.167+0000",
+    "status": 404,
+    "error": "Not Found",
+    "message": "Subject with Id:15 wasn't found!",
+    "path": "/studyplan/subject/15"
+}
+```
+
+Формат ответа: POST http://localhost:8080/studyplan/subject
+Тело запроса: 
+
+```javascript
+{
+        "name": "История",
+        "shifr": "shifr",
+        "groupUnit": {
+            "id": 1,
+            "name": "Социально-гуманитарный модуль 1",
+            "groupComponent": {
+                "id": 1,
+                "name": "Государственный компонент"
+            }
+        }
+    }
+```
+Тело ответа:
+
+```javascript
+{
+    "timestamp": "2018-11-17T15:11:09.466+0000",
+    "status": 409,
+    "error": "Conflict",
+    "message": "Subject with name: История already exists!",
+    "path": "/studyplan/subject"
+}
+```
+
+
+
