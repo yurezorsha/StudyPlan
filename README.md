@@ -3,13 +3,13 @@ API REST SERVICE STUDY PLAN
 ### http://localhost:8080/studyplan
 
 | Сущности    |  Описание |
-| ----------| ---------|
+| ----------| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Certification         |  |
 | Competence            |  |
 | CreatorStudyProgram   |  |
 | Fakultativ            |  |
-| GroupComponent        |  |
-| GroupUnit             |  |
+| GroupComponent        |  {         "id": 1,         "name": "Государственный компонент"     }|
+| GroupUnit             |  {         "id": 1,         "name": "Социально-гуманитарный модуль 1",         "groupComponent": {             "id": 1,             "name": "Государственный компонент"         }     }|
 | Group                 |  |
 | Node                  |  |
 | Plan                  |  |
@@ -17,19 +17,7 @@ API REST SERVICE STUDY PLAN
 | Speciality            |  |
 | StudyProgram          |  |
 | SubCompetence         |  |
-| Subject               |  {
-        "id": 1,
-        "name": "История",
-        "shifr": "shifr",
-        "groupUnit": {
-            "id": 1,
-            "name": "Социально-гуманитарный модуль 1",
-            "groupComponent": {
-                "id": 1,
-                "name": "Государственный компонент"
-            }
-        }
-    }|
+| Subject               | {         "id": 1,         "name": "История",         "shifr": "shifr",         "groupUnit": {             "id": 1,             "name": "Социально-гуманитарный модуль 1",             "groupComponent": {                 "id": 1,                 "name": "Государственный компонент"             }         }     } |
 | Type                  |  |
 | WeeksSemestr          |  |
 
