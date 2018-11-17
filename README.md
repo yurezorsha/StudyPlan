@@ -5,21 +5,21 @@ API REST SERVICE STUDY PLAN
 | Сущности    |  Описание |
 | ----------| ----------|
 | [Certification](#certification)        |  |
-| Competence            |  |
-| CreatorStudyProgram   |  |
-| Fakultativ            |  |
-| GroupComponent        |  |
-| GroupUnit             |  |
-| Group                 |  |
-| Node                  |  |
-| Plan                  |  |
-| Semestr               |  |
-| Speciality            |  |
-| StudyProgram          |  |
-| SubCompetence         |  |
-| Subject               |  |
-| Type                  |  |
-| WeeksSemestr          |  |
+| [Competence](#competence)            |  |
+| [CreatorStudyProgram](#creatorstudyprogram)   |  |
+| [Fakultativ](#fakultativ)           |  |
+| [GroupComponent](#groupcomponent)        |  |
+| [GroupUnit](#groupunit)             |  |
+| [Group](#group)                 |  |
+| [Node](#node)                  |  |
+| [Plan](#plan)                 |  |
+| [Semestr](#semestr)               |  |
+| [Speciality](#speciality)            |  |
+| [StudyProgram](#studyprogram)          |  |
+| [SubCompetence](#subcompetence)         |  |
+| [Subject](#subject)               |  |
+| [Type](#type)                  |  |
+| [WeeksSemestr](#weekssemestr)          |  |
 
 
 
