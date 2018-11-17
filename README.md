@@ -23,7 +23,7 @@ API REST SERVICE STUDY PLAN
 
 
 
-## Certification
+Certification
 --------------
 
 | Запрос    | URL                  | Описание |
