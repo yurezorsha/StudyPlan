@@ -17,7 +17,19 @@ API REST SERVICE STUDY PLAN
 | Speciality            |  |
 | StudyProgram          |  |
 | SubCompetence         |  |
-| Subject               |  |
+| Subject               |  {
+        "id": 1,
+        "name": "История",
+        "shifr": "shifr",
+        "groupUnit": {
+            "id": 1,
+            "name": "Социально-гуманитарный модуль 1",
+            "groupComponent": {
+                "id": 1,
+                "name": "Государственный компонент"
+            }
+        }
+    }|
 | Type                  |  |
 | WeeksSemestr          |  |
 
