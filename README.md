@@ -166,6 +166,37 @@ GET localhost:8080/studyplan/groupunit/1
 }
 ```
 
+Subject
+--------------
+
+| Запрос    | URL                  | Описание |
+| :----------:|:--------------------| ---------|
+| GET       | /subject/{id}   | Получить Subject по id |
+| GET       | /subjects/{id}  | Получить все Subjects по id(GroupUnit) |
+| GET       | /subject        | Получить список всех Subject |
+| POST      | /subject        | Добавить Subject |
+| DELETE    | /subject/{id}   | Удалить Subject по id |
+| PUT       | /subject        | Обновить Subject |
+
+Формат ответа:
+GET localhost:8080/studyplan/subject/1
+
+```javascript
+{
+        "id": 1,
+        "name": "История",
+        "shifr": "shifr",
+        "groupUnit": {
+            "id": 1,
+            "name": "Социально-гуманитарный модуль 1",
+            "groupComponent": {
+                "id": 1,
+                "name": "Государственный компонент"
+            }
+        }
+    }
+ ```
+
 Group
 --------------
 
@@ -189,6 +220,27 @@ GET localhost:8080/studyplan/group/3
 }
 ```
 
+Type
+--------------
+
+| Запрос    | URL                  | Описание |
+| :----------:|:--------------------| ---------|
+| GET       | /type/{id}   | Получить Type по id |
+| GET       | /type        | Получить список всех Types |
+| POST      | /type        | Добавить Type |
+| DELETE    | /type/{id}   | Удалить Type по id |
+| PUT       | /type        | Обновить Type |
+
+Формат ответа:
+GET localhost:8080/studyplan/type/1
+
+```javascript
+{
+    "id": 1,
+    "name": "зачет",
+    "koff": 0.3
+}
+```
 
 Semestr
 --------------
@@ -523,58 +575,6 @@ GET localhost:8080/studyplan/subcompetence/1
 
 ```
 
-Subject
---------------
-
-| Запрос    | URL                  | Описание |
-| :----------:|:--------------------| ---------|
-| GET       | /subject/{id}   | Получить Subject по id |
-| GET       | /subjects/{id}  | Получить все Subjects по id(GroupUnit) |
-| GET       | /subject        | Получить список всех Subject |
-| POST      | /subject        | Добавить Subject |
-| DELETE    | /subject/{id}   | Удалить Subject по id |
-| PUT       | /subject        | Обновить Subject |
-
-Формат ответа:
-GET localhost:8080/studyplan/subject/1
-
-```javascript
-{
-        "id": 1,
-        "name": "История",
-        "shifr": "shifr",
-        "groupUnit": {
-            "id": 1,
-            "name": "Социально-гуманитарный модуль 1",
-            "groupComponent": {
-                "id": 1,
-                "name": "Государственный компонент"
-            }
-        }
-    }
- ```
-
-Type
---------------
-
-| Запрос    | URL                  | Описание |
-| :----------:|:--------------------| ---------|
-| GET       | /type/{id}   | Получить Type по id |
-| GET       | /type        | Получить список всех Types |
-| POST      | /type        | Добавить Type |
-| DELETE    | /type/{id}   | Удалить Type по id |
-| PUT       | /type        | Обновить Type |
-
-Формат ответа:
-GET localhost:8080/studyplan/type/1
-
-```javascript
-{
-    "id": 1,
-    "name": "зачет",
-    "koff": 0.3
-}
-```
 
 WeeksSemestr
 --------------
