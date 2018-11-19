@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Plan;
+import com.vstu.entity.data.DataDTO;
 import com.vstu.repository.PlanRepository;
 import com.vstu.service.interfaces.IPlanService;
 
@@ -38,10 +39,10 @@ public class PlanController {
 	}
 
 	@GetMapping("plan/{id}/data")
-	public ResponseEntity<List<Object>> getData(@PathVariable("id") Long id,
+	public ResponseEntity<DataDTO> getData(@PathVariable("id") Long id,
 			@RequestParam(value = "year", required = true) int year) {
 
-		return new ResponseEntity<List<Object>>(planService.getNagruzka(id, year), HttpStatus.OK);
+		return new ResponseEntity<DataDTO>(planService.getNagruzka(id, year), HttpStatus.OK);
 	}
 
 	@GetMapping("plan/{id}")

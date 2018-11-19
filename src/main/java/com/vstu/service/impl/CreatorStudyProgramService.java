@@ -23,6 +23,8 @@ public class CreatorStudyProgramService implements ICreatorStudyProgramService {
 
 	@Override
 	public CreatorStudyProgramm getCreatorStudyProgramById(Long id) {
+		if (!existsCreatorStudyProgram(id))
+			throw new EntityNotFoundException("CreatorStudyProgramm with Id:" + id + " wasn't found!");
 		return creatorStudyProgramRepository.findById(id).get();
 
 	}

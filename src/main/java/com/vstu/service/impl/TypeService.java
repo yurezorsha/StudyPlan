@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Type;
 import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.TypeRepository;
 import com.vstu.service.interfaces.ITypeService;
 
@@ -23,6 +24,8 @@ public class TypeService implements ITypeService {
 
 	@Override
 	public Type getTypeById(Long id) {
+		if (!existsType(id))
+			throw new EntityNotFoundException("Type with Id: " + id + " wasn't found!");
 
 		return typeRepository.findById(id).get();
 	}
@@ -38,7 +41,7 @@ public class TypeService implements ITypeService {
 	@Override
 	public Type updateType(Type c) {
 		if (!existsType(c.getId()))
-			throw new AlreadyExistException("Type with Id: " + c.getId() + " wasn't found!");
+			throw new EntityNotFoundException("Type with Id: " + c.getId() + " wasn't found!");
 
 		return typeRepository.save(c);
 
@@ -47,7 +50,7 @@ public class TypeService implements ITypeService {
 	@Override
 	public void deleteType(Long id) {
 		if (!existsType(id))
-			throw new AlreadyExistException("Type with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("Type with Id: " + id + " wasn't found!");
 		else
 			typeRepository.deleteById(id);
 

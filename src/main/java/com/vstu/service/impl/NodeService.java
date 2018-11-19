@@ -38,6 +38,8 @@ public class NodeService implements INodeService {
 
 	@Override
 	public Node getNodeById(Long id) {
+		if (!existsNode(id))
+			throw new EntityNotFoundException("Node with Id:" + id + " wasn't found!");
 
 		return nodeRepository.findById(id).get();
 	}

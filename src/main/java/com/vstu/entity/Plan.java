@@ -72,18 +72,18 @@ import com.vstu.entity.data.DataLoadPrac;
 		@NamedNativeQuery(name = "Plan.getDataPrac", query = "SELECT g.id as id_group, g.count_students as count_students, sb.id as id_subject, s.prac_ze as prac_ze, s.prac_hour as prac_hour,"
 				+ " sb.name as name_subject, s.number as semestr_number"
 				+ " FROM plan p, groups g, node n, semestr s, subject sb "
-				+ "WHERE p.id = :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.prac_ze <> 0 and s.prac_hour <> 0)) ", resultSetMapping = "DataLoadPrac", resultClass = DataLoadPrac.class),
+				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.prac_ze <> 0 and s.prac_hour <> 0)) ", resultSetMapping = "DataLoadPrac", resultClass = DataLoadPrac.class),
 
 		@NamedNativeQuery(name = "Plan.getDataDip", query = "SELECT g.id as id_group, g.count_students as count_students, sb.id as id_subject, s.diplom_ze as diplom_ze, s.diplom_hour as diplom_hour,"
 				+ " sb.name as name_subject, s.number as semestr_number"
 				+ " FROM plan p, groups g, node n, semestr s, subject sb "
-				+ "WHERE p.id = :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.diplom_ze <> 0 and s.diplom_hour <> 0)) ", resultSetMapping = "DataLoadDip", resultClass = DataLoadDip.class),
+				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.diplom_ze <> 0 and s.diplom_hour <> 0)) ", resultSetMapping = "DataLoadDip", resultClass = DataLoadDip.class),
 
 		@NamedNativeQuery(name = "Plan.getData", query = "SELECT s.id_teacher as id_teacher, g.id as id_group, g.count_students as count_students, sb.id as id_subject,"
 				+ " sb.name as name_subject, s.number as semestr_number, s.lecture as count_lecture, s.laboratory as count_laboratory,"
 				+ " s.practice as count_practice, s.seminar as count_seminar, t.name as type, s.cource_work_hours as cource_work_hours, (t.koff*g.count_students) as calc_field"
 				+ " FROM plan p, groups g, node n, semestr s, subject sb, Type t "
-				+ "WHERE p.id = :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2)) and s.prac_hour = 0 and s.diplom_hour = 0 and t.id=s.id_type", resultSetMapping = "DataLoad", resultClass = DataLoad.class) })
+				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2)) and s.prac_hour = 0 and s.diplom_hour = 0 and t.id=s.id_type", resultSetMapping = "DataLoad", resultClass = DataLoad.class) })
 
 @Entity
 public class Plan implements Serializable {

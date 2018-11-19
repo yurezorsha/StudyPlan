@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Speciality;
 import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.SpecialityRepository;
 import com.vstu.service.interfaces.ISpecialityService;
 
@@ -24,6 +25,8 @@ public class SpecialityService implements ISpecialityService {
 
 	@Override
 	public Speciality getSpecialityById(Long id) {
+		if (!existsSpeciality(id))
+			throw new EntityNotFoundException("Speciality with Id: " + id + " wasn't found!");
 
 		return specialityRepository.findById(id).get();
 	}
@@ -39,7 +42,7 @@ public class SpecialityService implements ISpecialityService {
 	@Override
 	public Speciality updateSpeciality(Speciality c) {
 		if (!existsSpeciality(c.getId()))
-			throw new AlreadyExistException("Speciality with Id: " + c.getId() + " wasn't found!");
+			throw new EntityNotFoundException("Speciality with Id: " + c.getId() + " wasn't found!");
 
 		return specialityRepository.save(c);
 
@@ -48,7 +51,7 @@ public class SpecialityService implements ISpecialityService {
 	@Override
 	public void deleteSpeciality(Long id) {
 		if (!existsSpeciality(id))
-			throw new AlreadyExistException("Speciality with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("Speciality with Id: " + id + " wasn't found!");
 		else
 			specialityRepository.deleteById(id);
 

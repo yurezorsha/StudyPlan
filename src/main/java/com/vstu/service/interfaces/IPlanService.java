@@ -3,6 +3,7 @@ package com.vstu.service.interfaces;
 import java.util.List;
 
 import com.vstu.entity.Plan;
+import com.vstu.entity.data.DataDTO;
 
 public interface IPlanService {
 
@@ -20,6 +21,6 @@ public interface IPlanService {
 
 	boolean existsPlan(Long id);
 
-	List<Object> getNagruzka(Long id, int year);
+	DataDTO getNagruzka(Long id, int year);
 
 }

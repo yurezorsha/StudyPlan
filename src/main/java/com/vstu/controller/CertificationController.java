@@ -18,7 +18,6 @@ import com.vstu.entity.Certification;
 import com.vstu.service.interfaces.ICertificationService;
 
 @RestController
-// @RequestMapping("app")
 @CrossOrigin(origins = "*")
 public class CertificationController {
 

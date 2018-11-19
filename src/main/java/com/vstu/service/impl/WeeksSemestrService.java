@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.WeeksSemestr;
 import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.WeeksSemestrRepository;
 import com.vstu.service.interfaces.IWeeksSemestrService;
 
@@ -28,6 +29,9 @@ public class WeeksSemestrService implements IWeeksSemestrService {
 
 	@Override
 	public WeeksSemestr getWeeksSemestrById(Long id) {
+		if (!existsWeeksSemestr(id))
+			throw new EntityNotFoundException("WeeksSemestr with Id: " + id + " wasn't found!");
+
 		return weeksSemestrRepository.findById(id).get();
 	}
 
@@ -42,7 +46,7 @@ public class WeeksSemestrService implements IWeeksSemestrService {
 	@Override
 	public WeeksSemestr updateWeeksSemestr(WeeksSemestr c) {
 		if (!existsWeeksSemestr(c.getId()))
-			throw new AlreadyExistException("WeeksSemestr with Id: " + c.getId() + " wasn't found!");
+			throw new EntityNotFoundException("WeeksSemestr with Id: " + c.getId() + " wasn't found!");
 
 		return weeksSemestrRepository.save(c);
 
@@ -51,7 +55,7 @@ public class WeeksSemestrService implements IWeeksSemestrService {
 	@Override
 	public void deleteWeeksSemestr(Long id) {
 		if (!existsWeeksSemestr(id))
-			throw new AlreadyExistException("WeeksSemestr with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("WeeksSemestr with Id: " + id + " wasn't found!");
 		else
 			weeksSemestrRepository.deleteById(id);
 

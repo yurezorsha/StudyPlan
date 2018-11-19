@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Certification;
 import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.CertificationRepository;
 import com.vstu.service.interfaces.ICertificationService;
 
@@ -22,11 +23,15 @@ public class CertificationService implements ICertificationService {
 
 	@Override
 	public List<Certification> getAllByPlanId(Long id) {
+
 		return certificationRepository.findAllByPlanId(id);
 	}
 
 	@Override
 	public Certification getCertificationById(Long id) {
+		if (!existsCertification(id))
+			throw new EntityNotFoundException("Certification with Id: " + id + " wasn't found!");
+
 		return certificationRepository.findById(id).get();
 	}
 
@@ -41,7 +46,7 @@ public class CertificationService implements ICertificationService {
 	@Override
 	public Certification updateCertification(Certification c) {
 		if (!existsCertification(c.getId()))
-			throw new AlreadyExistException("Certification with Id: " + c.getId() + " wasn't found!");
+			throw new EntityNotFoundException("Certification with Id: " + c.getId() + " wasn't found!");
 
 		return certificationRepository.save(c);
 
@@ -50,7 +55,7 @@ public class CertificationService implements ICertificationService {
 	@Override
 	public void deleteCertification(Long id) {
 		if (!existsCertification(id))
-			throw new AlreadyExistException("Certification with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("Certification with Id: " + id + " wasn't found!");
 		else
 			certificationRepository.deleteById(id);
 

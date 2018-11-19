@@ -1,6 +1,5 @@
 package com.vstu.service.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Node;
 import com.vstu.entity.Plan;
+import com.vstu.entity.data.DataDTO;
 import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.PlanRepository;
@@ -39,6 +39,8 @@ public class PlanService implements IPlanService {
 
 	@Override
 	public Plan getPlanById(Long id) {
+		if (!existsPlan(id))
+			throw new EntityNotFoundException("Plan with Id: " + id + "wasn't found!");
 
 		return planRepository.findById(id).get();
 	}
@@ -86,20 +88,19 @@ public class PlanService implements IPlanService {
 	}
 
 	@Override
-	public List<Object> getNagruzka(Long id, int year) {
-		LinkedList<Object> nagruzka = new LinkedList<Object>();
+	public DataDTO getNagruzka(Long id, int year) {
+
 		int year1 = planRepository.getYearById(id);
 		int course = (year - year1) + 1;
 		if (course > 0 && course <= 5) {
 			int num2 = course * 2;
 			int num1 = num2 - 1;
+			DataDTO datadto = new DataDTO();
+			datadto.setLoad_subjects(planRepository.getData(id, num1, num2));
+			datadto.setLoad_diploma(planRepository.getDataDip(id, num1, num2));
+			datadto.setLoad_practice(planRepository.getDataPrac(id, num1, num2));
 
-			nagruzka.add(planRepository.getData(id, num1, num2));
-			nagruzka.add(planRepository.getDataDip(id, num1, num2));
-			nagruzka.add(planRepository.getDataPrac(id, num1, num2));
-
-			return nagruzka;
-			// return planRepository.getDataPrac(id, num1, num2);
+			return datadto;
 
 		} else
 			return null;

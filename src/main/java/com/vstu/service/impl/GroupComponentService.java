@@ -24,6 +24,8 @@ public class GroupComponentService implements IGroupComponentService {
 
 	@Override
 	public GroupComponent getGroupComponentById(Long id) {
+		if (!existsGroupComponent(id))
+			throw new EntityNotFoundException("GroupComponent with Id:" + id + " wasn't found!");
 
 		return groupComponentRepository.findById(id).get();
 	}

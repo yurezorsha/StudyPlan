@@ -24,6 +24,8 @@ public class CompetenceService implements ICompetenceService {
 
 	@Override
 	public Competence getCompetenceById(Long id) {
+		if (!existsCompetence(id))
+			throw new EntityNotFoundException("Competence with Id:" + id + " wasn't found!");
 
 		return competenceRepository.findById(id).get();
 	}

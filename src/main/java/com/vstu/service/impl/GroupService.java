@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Groups;
 import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.GroupsRepository;
 import com.vstu.service.interfaces.IGroupService;
 
@@ -28,6 +29,9 @@ public class GroupService implements IGroupService {
 
 	@Override
 	public Groups getGroupsById(Long id) {
+		if (!existsGroups(id))
+			throw new EntityNotFoundException("Groups with Id: " + id + " wasn't found!");
+
 		return groupRepository.findById(id).get();
 	}
 
@@ -42,7 +46,7 @@ public class GroupService implements IGroupService {
 	@Override
 	public Groups updateGroups(Groups c) {
 		if (!existsGroups(c.getId()))
-			throw new AlreadyExistException("Groups with Id: " + c.getId() + " wasn't found!");
+			throw new EntityNotFoundException("Groups with Id: " + c.getId() + " wasn't found!");
 
 		return groupRepository.save(c);
 
@@ -51,7 +55,7 @@ public class GroupService implements IGroupService {
 	@Override
 	public void deleteGroups(Long id) {
 		if (!existsGroups(id))
-			throw new AlreadyExistException("Groups with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("Groups with Id: " + id + " wasn't found!");
 		else
 			groupRepository.deleteById(id);
 

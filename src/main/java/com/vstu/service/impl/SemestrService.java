@@ -34,6 +34,8 @@ public class SemestrService implements ISemestrService {
 
 	@Override
 	public Semestr getSemestrById(Long id) {
+		if (!existsSemestr(id))
+			throw new EntityNotFoundException("Semestr with Id:" + id + " wasn't found!");
 
 		return semestrRepository.findById(id).get();
 	}

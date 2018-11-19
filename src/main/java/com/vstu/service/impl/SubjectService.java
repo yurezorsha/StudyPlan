@@ -23,6 +23,8 @@ public class SubjectService implements ISubjectService {
 
 	@Override
 	public Subject getSubjectById(Long id) {
+		if (!existsSubject(id))
+			throw new EntityNotFoundException("Subject with Id:" + id + " wasn't found!");
 
 		return subjectRepository.findById(id).get();
 	}

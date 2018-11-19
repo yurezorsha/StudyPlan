@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.StudyProgramm;
 import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.StudyProgrammRepository;
 import com.vstu.service.interfaces.IStudyProgramService;
 
@@ -23,6 +24,9 @@ public class StudyProgramService implements IStudyProgramService {
 
 	@Override
 	public StudyProgramm getStudyProgramById(Long id) {
+		if (!existsStudyProgram(id))
+			throw new EntityNotFoundException("StudyProgram with Id: " + id + " wasn't found!");
+
 		return studyProgramRepository.findById(id).get();
 
 	}
@@ -38,7 +42,7 @@ public class StudyProgramService implements IStudyProgramService {
 	@Override
 	public StudyProgramm updateStudyProgram(StudyProgramm c) {
 		if (!existsStudyProgram(c.getId()))
-			throw new AlreadyExistException("StudyProgram with Id: " + c.getId() + " wasn't found!");
+			throw new EntityNotFoundException("StudyProgram with Id: " + c.getId() + " wasn't found!");
 
 		return studyProgramRepository.save(c);
 
@@ -47,7 +51,7 @@ public class StudyProgramService implements IStudyProgramService {
 	@Override
 	public void deleteStudyProgram(Long id) {
 		if (!existsStudyProgram(id))
-			throw new AlreadyExistException("StudyProgram with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("StudyProgram with Id: " + id + " wasn't found!");
 		else
 			studyProgramRepository.deleteById(id);
 

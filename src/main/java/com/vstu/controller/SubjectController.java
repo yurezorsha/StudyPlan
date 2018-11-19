@@ -2,6 +2,8 @@ package com.vstu.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vstu.entity.Subject;
 import com.vstu.service.interfaces.ISubjectService;
@@ -43,7 +44,7 @@ public class SubjectController {
 	}
 
 	@PostMapping("subject")
-	public ResponseEntity<Subject> addSubject(@RequestBody Subject sb, UriComponentsBuilder builder) {
+	public ResponseEntity<Subject> addSubject(@RequestBody @Valid Subject sb) {
 		Subject subj = subjectService.addSubject(sb);
 		return new ResponseEntity<Subject>(subj, HttpStatus.CREATED);
 	}

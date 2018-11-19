@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.SubCompetence;
 import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.SubCompetenceRepository;
 import com.vstu.service.interfaces.ISubCompetenceService;
 
@@ -29,6 +30,8 @@ public class SubCompetenceService implements ISubCompetenceService {
 
 	@Override
 	public SubCompetence getSubCompetenceById(Long id) {
+		if (!existsSubCompetence(id))
+			throw new EntityNotFoundException("SubCompetence with Id: " + id + " wasn't found!");
 
 		return subCompetenceRepository.findById(id).get();
 	}
@@ -44,7 +47,7 @@ public class SubCompetenceService implements ISubCompetenceService {
 	@Override
 	public SubCompetence updateSubCompetence(SubCompetence c) {
 		if (!existsSubCompetence(c.getId()))
-			throw new AlreadyExistException("SubCompetence with Id: " + c.getId() + " wasn't found!");
+			throw new EntityNotFoundException("SubCompetence with Id: " + c.getId() + " wasn't found!");
 
 		return subCompetenceRepository.save(c);
 
@@ -53,7 +56,7 @@ public class SubCompetenceService implements ISubCompetenceService {
 	@Override
 	public void deleteSubCompetence(Long id) {
 		if (!existsSubCompetence(id))
-			throw new AlreadyExistException("SubCompetence with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("SubCompetence with Id: " + id + " wasn't found!");
 		else
 			subCompetenceRepository.deleteById(id);
 

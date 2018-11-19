@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Fakultativ;
 import com.vstu.exceptions.AlreadyExistException;
+import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.FakultativRepository;
 import com.vstu.service.interfaces.IFakultativService;
 
@@ -28,6 +29,9 @@ public class FakultativService implements IFakultativService {
 
 	@Override
 	public Fakultativ getFakultativById(Long id) {
+		if (!existsFakultativ(id))
+			throw new EntityNotFoundException("Fakultativ with Id: " + id + " wasn't found!");
+
 		return fakultativRepository.findById(id).get();
 	}
 
@@ -42,7 +46,7 @@ public class FakultativService implements IFakultativService {
 	@Override
 	public Fakultativ updateFakultativ(Fakultativ c) {
 		if (!existsFakultativ(c.getId()))
-			throw new AlreadyExistException("Fakultativ with Id: " + c.getId() + " wasn't found!");
+			throw new EntityNotFoundException("Fakultativ with Id: " + c.getId() + " wasn't found!");
 
 		return fakultativRepository.save(c);
 
@@ -51,7 +55,7 @@ public class FakultativService implements IFakultativService {
 	@Override
 	public void deleteFakultativ(Long id) {
 		if (!existsFakultativ(id))
-			throw new AlreadyExistException("Fakultativ with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("Fakultativ with Id: " + id + " wasn't found!");
 		else
 			fakultativRepository.deleteById(id);
 

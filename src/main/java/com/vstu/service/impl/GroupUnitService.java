@@ -30,6 +30,8 @@ public class GroupUnitService implements IGroupUnitService {
 
 	@Override
 	public GroupUnit getGroupUnitById(Long id) {
+		if (!existsGroupUnit(id))
+			throw new EntityNotFoundException("GroupUnit with Id:" + id + " wasn't found!");
 
 		return groupUnitRepository.findById(id).get();
 	}
