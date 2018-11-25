@@ -116,7 +116,7 @@ Fakultativ
 Формат ответа:
 GET localhost:8080/studyplan/fakultativ/1
 
-```javascrip
+```javascript
 {
     "id": 1,
     "name": "Факультатив 1",
