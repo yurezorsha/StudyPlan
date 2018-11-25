@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Node;
-import com.vstu.service.interfaces.INodeService;
+import com.vstu.service.interfaces.NodeService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class NodeController {
 
 	@Autowired
-	INodeService nodeService;
+	NodeService nodeService;
 
 	@GetMapping("node/{id}")
 	public ResponseEntity<Node> getNodeById(@PathVariable("id") Long id) {

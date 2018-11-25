@@ -2,13 +2,17 @@ package com.vstu.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+/**
+ * The persistent class for the groups database table.
+ * 
+ */
 
 @Entity
 public class Groups implements Serializable {
@@ -23,8 +27,7 @@ public class Groups implements Serializable {
 	@JoinColumn(name = "id_plan")
 	private Plan plan;
 
-	@Column(name = "count_students")
-	private int count_students;
+	private int countStudents;
 
 	public long getId() {
 		return id;
@@ -42,12 +45,12 @@ public class Groups implements Serializable {
 		this.plan = plan;
 	}
 
-	public int getCount_students() {
-		return count_students;
+	public int getCountStudents() {
+		return countStudents;
 	}
 
-	public void setCount_students(int count_students) {
-		this.count_students = count_students;
+	public void setCountStudents(int countStudents) {
+		this.countStudents = countStudents;
 	}
 
 }

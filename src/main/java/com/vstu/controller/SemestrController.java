@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Semestr;
 import com.vstu.repository.SemestrRepository;
-import com.vstu.service.interfaces.ISemestrService;
+import com.vstu.service.interfaces.SemestrService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class SemestrController {
 	@Autowired
-	ISemestrService semestrService;
+	SemestrService semestrService;
 
 	@Autowired
 	SemestrRepository repo;
@@ -53,8 +53,8 @@ public class SemestrController {
 	}
 
 	@PostMapping("semestrs")
-	public ResponseEntity<Semestr> addSemestr(@RequestBody Semestr s) {
-		Semestr semestr = semestrService.addSemestr(s);
+	public ResponseEntity<Semestr> addSemestr(@PathVariable("id") Long id, @RequestBody Semestr s) {
+		Semestr semestr = semestrService.addSemestr(id, s);
 
 		return new ResponseEntity<Semestr>(semestr, HttpStatus.CREATED);
 	}

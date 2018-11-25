@@ -2,7 +2,6 @@ package com.vstu.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,10 +20,8 @@ public class WeeksSemestr implements Serializable {
 	@Id
 	private long id;
 
-	@Column(name = "count_weeks")
 	private int countWeeks;
 
-	@Column(name = "number_semestr")
 	private int numberSemestr;
 
 	// bi-directional many-to-one association to Plan

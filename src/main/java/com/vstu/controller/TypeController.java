@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Type;
-import com.vstu.service.interfaces.ITypeService;
+import com.vstu.service.interfaces.TypeService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class TypeController {
 
 	@Autowired
-	ITypeService typeService;
+	TypeService typeService;
 
 	@GetMapping("type/{id}")
 	public ResponseEntity<Type> getTypeById(@PathVariable("id") Long id) {
@@ -45,7 +45,7 @@ public class TypeController {
 	@PutMapping("type")
 	public ResponseEntity<Type> updateType(@RequestBody Type t) {
 		Type type = typeService.updateType(t);
-		return new ResponseEntity<Type>(t, HttpStatus.OK);
+		return new ResponseEntity<Type>(type, HttpStatus.OK);
 	}
 
 	@DeleteMapping("type/{id}")

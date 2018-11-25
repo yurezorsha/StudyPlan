@@ -16,33 +16,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Plan;
-import com.vstu.entity.data.DataDTO;
+import com.vstu.entity.data.DataAllLoad;
 import com.vstu.repository.PlanRepository;
-import com.vstu.service.interfaces.IPlanService;
+import com.vstu.service.interfaces.PlanService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class PlanController {
 
 	@Autowired
-	IPlanService planService;
+	PlanService planService;
 
 	@Autowired
 	PlanRepository planRepo;
 
-	@GetMapping("plan/getYear")
-	public int getYearById(@RequestParam(value = "id", required = true) Long id,
-			@RequestParam(value = "year1", required = true) int year1,
-			@RequestParam(value = "year2", required = true) int year2) {
-
-		return planRepo.getYearById(id);
-	}
-
 	@GetMapping("plan/{id}/data")
-	public ResponseEntity<DataDTO> getData(@PathVariable("id") Long id,
+	public ResponseEntity<DataAllLoad> getData(@PathVariable("id") Long id,
 			@RequestParam(value = "year", required = true) int year) {
 
-		return new ResponseEntity<DataDTO>(planService.getNagruzka(id, year), HttpStatus.OK);
+		return new ResponseEntity<DataAllLoad>(planService.getLoad(id, year), HttpStatus.OK);
 	}
 
 	@GetMapping("plan/{id}")

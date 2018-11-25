@@ -15,13 +15,13 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
 	@Query("SELECT p FROM Plan p WHERE p.speciality.id = :id")
 	public List<Plan> findAllBySpecialityId(@Param("id") Long id);
 
-	@Query("SELECT p.set_data_group FROM Plan p WHERE p.id = :id")
-	public int getYearById(@Param("id") Long id);
+	@Query("SELECT p.setDataGroup FROM Plan p WHERE p.id = :id")
+	public int getYearById(@Param("id") long id);
 
-	public List getData(@Param("id") Long id, @Param("num1") int num1, @Param("num2") int num2);
+	public List getDataLoadSubject(@Param("id") Long id, @Param("num1") int num1, @Param("num2") int num2);
 
-	public List getDataDip(@Param("id") Long id, @Param("num1") int num1, @Param("num2") int num2);
+	public List getDataLoadDiploma(@Param("id") Long id, @Param("num1") int num1, @Param("num2") int num2);
 
-	public List getDataPrac(@Param("id") Long id, @Param("num1") int num1, @Param("num2") int num2);
+	public List getDataLoadPractice(@Param("id") Long id, @Param("num1") int num1, @Param("num2") int num2);
 
 }

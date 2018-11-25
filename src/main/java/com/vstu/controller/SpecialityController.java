@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Speciality;
-import com.vstu.service.interfaces.ISpecialityService;
+import com.vstu.service.interfaces.SpecialityService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class SpecialityController {
 	@Autowired
-	ISpecialityService specialityService;
+	SpecialityService specialityService;
 
 	@GetMapping("speciality/{id}")
 	public ResponseEntity<Speciality> getSpecialityById(@PathVariable("id") Long id) {

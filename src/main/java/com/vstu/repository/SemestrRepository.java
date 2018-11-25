@@ -22,6 +22,6 @@ public interface SemestrRepository extends JpaRepository<Semestr, Long> {
 	public long sumAllHours(@Param("id") Long id);
 
 	@Query("SELECT CASE WHEN COUNT(s) > 0 THEN true ELSE false END FROM Semestr s WHERE s.number = :number and s.node.id=:id")
-	public boolean existsByNumberAndPlanId(@Param("number") Integer number, @Param("id") Long id);
+	public boolean existsByNumberAndNodeId(@Param("number") Integer number, @Param("id") Long id);
 
 }

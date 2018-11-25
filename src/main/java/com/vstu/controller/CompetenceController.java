@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Competence;
-import com.vstu.service.interfaces.ICompetenceService;
+import com.vstu.service.interfaces.CompetenceService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class CompetenceController {
 	@Autowired
-	ICompetenceService competenceService;
+	CompetenceService competenceService;
 
 	@GetMapping("competence/{id}")
 	public ResponseEntity<Competence> getCompetenceById(@PathVariable("id") Long id) {

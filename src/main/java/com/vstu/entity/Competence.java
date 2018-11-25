@@ -3,7 +3,6 @@ package com.vstu.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,10 +21,8 @@ public class Competence implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private long id;
 
-	@Column(name = "name_competence")
 	private String nameCompetence;
 
 	// bi-directional many-to-one association to SubCompetence

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +31,6 @@ public class StudyProgramm implements Serializable {
 	private long id;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date_approve")
 	private Date dateApprove;
 
 	// bi-directional many-to-one association to CreatorStudyProgramm

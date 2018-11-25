@@ -3,7 +3,6 @@ package com.vstu.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
@@ -19,71 +18,73 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vstu.entity.data.DataLoad;
-import com.vstu.entity.data.DataLoadDip;
-import com.vstu.entity.data.DataLoadPrac;
+import com.vstu.entity.data.DataLoadDiploma;
+import com.vstu.entity.data.DataLoadPractice;
+import com.vstu.entity.data.DataLoadSubject;
 
 /**
  * The persistent class for the plan database table.
  * 
  */
 
+// queries for full load
 @SqlResultSetMappings({
-		@SqlResultSetMapping(name = "DataLoad", classes = { @ConstructorResult(targetClass = DataLoad.class, columns = {
-				@ColumnResult(name = "id_teacher", type = Long.class),
-				@ColumnResult(name = "semestr_number", type = Integer.class),
-				@ColumnResult(name = "count_lecture", type = Integer.class),
-				@ColumnResult(name = "count_laboratory", type = Integer.class),
-				@ColumnResult(name = "count_practice", type = Integer.class),
-				@ColumnResult(name = "count_seminar", type = Integer.class),
-				@ColumnResult(name = "type", type = String.class),
-				@ColumnResult(name = "cource_work_hours", type = Integer.class),
-				@ColumnResult(name = "id_group", type = Long.class),
-				@ColumnResult(name = "count_students", type = Integer.class),
-				@ColumnResult(name = "id_subject", type = Long.class),
-				@ColumnResult(name = "name_subject", type = String.class),
-				@ColumnResult(name = "calc_field", type = Float.class) }) }),
+		@SqlResultSetMapping(name = "DataLoadSubject", classes = {
+				@ConstructorResult(targetClass = DataLoadSubject.class, columns = {
+						@ColumnResult(name = "idTeacher", type = Long.class),
+						@ColumnResult(name = "semestrNumber", type = Integer.class),
+						@ColumnResult(name = "countLecture", type = Integer.class),
+						@ColumnResult(name = "countLaboratory", type = Integer.class),
+						@ColumnResult(name = "countPractice", type = Integer.class),
+						@ColumnResult(name = "countSeminar", type = Integer.class),
+						@ColumnResult(name = "type", type = String.class),
+						@ColumnResult(name = "courceWorkHours", type = Integer.class),
+						@ColumnResult(name = "idGroup", type = Long.class),
+						@ColumnResult(name = "countStudents", type = Integer.class),
+						@ColumnResult(name = "idSubject", type = Long.class),
+						@ColumnResult(name = "nameSubject", type = String.class),
+						@ColumnResult(name = "calcField", type = Float.class) }) }),
 
-		@SqlResultSetMapping(name = "DataLoadPrac", classes = {
-				@ConstructorResult(targetClass = DataLoadPrac.class, columns = {
-						@ColumnResult(name = "semestr_number", type = Integer.class),
-						@ColumnResult(name = "id_group", type = Long.class),
-						@ColumnResult(name = "count_students", type = Integer.class),
-						@ColumnResult(name = "id_subject", type = Long.class),
-						@ColumnResult(name = "name_subject", type = String.class),
-						@ColumnResult(name = "prac_ze", type = Integer.class),
-						@ColumnResult(name = "prac_hour", type = Integer.class) })
+		@SqlResultSetMapping(name = "DataLoadPractice", classes = {
+				@ConstructorResult(targetClass = DataLoadPractice.class, columns = {
+						@ColumnResult(name = "semestrNumber", type = Integer.class),
+						@ColumnResult(name = "idGroup", type = Long.class),
+						@ColumnResult(name = "countStudents", type = Integer.class),
+						@ColumnResult(name = "idSubject", type = Long.class),
+						@ColumnResult(name = "nameSubject", type = String.class),
+						@ColumnResult(name = "pracZe", type = Integer.class),
+						@ColumnResult(name = "pracHour", type = Integer.class) })
 
 		}),
 
-		@SqlResultSetMapping(name = "DataLoadDip", classes = {
-				@ConstructorResult(targetClass = DataLoadDip.class, columns = {
-						@ColumnResult(name = "semestr_number", type = Integer.class),
-						@ColumnResult(name = "id_group", type = Long.class),
-						@ColumnResult(name = "count_students", type = Integer.class),
-						@ColumnResult(name = "id_subject", type = Long.class),
-						@ColumnResult(name = "name_subject", type = String.class),
-						@ColumnResult(name = "diplom_ze", type = Integer.class),
-						@ColumnResult(name = "diplom_hour", type = Integer.class) })
+		@SqlResultSetMapping(name = "DataLoadDiploma", classes = {
+				@ConstructorResult(targetClass = DataLoadDiploma.class, columns = {
+						@ColumnResult(name = "semestrNumber", type = Integer.class),
+						@ColumnResult(name = "idGroup", type = Long.class),
+						@ColumnResult(name = "countStudents", type = Integer.class),
+						@ColumnResult(name = "idSubject", type = Long.class),
+						@ColumnResult(name = "nameSubject", type = String.class),
+						@ColumnResult(name = "diplomZe", type = Integer.class),
+						@ColumnResult(name = "diplomHour", type = Integer.class) })
 
 		}) })
 
 @NamedNativeQueries({
-		@NamedNativeQuery(name = "Plan.getDataPrac", query = "SELECT g.id as id_group, g.count_students as count_students, sb.id as id_subject, s.prac_ze as prac_ze, s.prac_hour as prac_hour,"
-				+ " sb.name as name_subject, s.number as semestr_number"
+		@NamedNativeQuery(name = "Plan.getDataLoadPractice", query = "SELECT g.id as idGroup, g.count_students as countStudents, sb.id as idSubject, s.prac_ze as pracZe, s.prac_hour as pracHour,"
+				+ " sb.name as nameSubject, s.number as semestrNumber"
 				+ " FROM plan p, groups g, node n, semestr s, subject sb "
-				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.prac_ze <> 0 and s.prac_hour <> 0)) ", resultSetMapping = "DataLoadPrac", resultClass = DataLoadPrac.class),
+				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.prac_ze <> 0 and s.prac_hour <> 0)) ", resultSetMapping = "DataLoadPractice", resultClass = DataLoadPractice.class),
 
-		@NamedNativeQuery(name = "Plan.getDataDip", query = "SELECT g.id as id_group, g.count_students as count_students, sb.id as id_subject, s.diplom_ze as diplom_ze, s.diplom_hour as diplom_hour,"
-				+ " sb.name as name_subject, s.number as semestr_number"
+		@NamedNativeQuery(name = "Plan.getDataLoadDiploma", query = "SELECT g.id as idGroup, g.count_students as countStudents, sb.id as idSubject, s.diplom_ze as diplomZe, s.diplom_hour as diplomHour,"
+				+ " sb.name as nameSubject, s.number as semestrNumber"
 				+ " FROM plan p, groups g, node n, semestr s, subject sb "
-				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.diplom_ze <> 0 and s.diplom_hour <> 0)) ", resultSetMapping = "DataLoadDip", resultClass = DataLoadDip.class),
+				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.diplom_ze <> 0 and s.diplom_hour <> 0)) ", resultSetMapping = "DataLoadDiploma", resultClass = DataLoadDiploma.class),
 
-		@NamedNativeQuery(name = "Plan.getData", query = "SELECT s.id_teacher as id_teacher, g.id as id_group, g.count_students as count_students, sb.id as id_subject,"
-				+ " sb.name as name_subject, s.number as semestr_number, s.lecture as count_lecture, s.laboratory as count_laboratory,"
-				+ " s.practice as count_practice, s.seminar as count_seminar, t.name as type, s.cource_work_hours as cource_work_hours, (t.koff*g.count_students) as calc_field"
+		@NamedNativeQuery(name = "Plan.getDataLoadSubject", query = "SELECT s.id_teacher as idTeacher, g.id as idGroup, g.count_students as countStudents, sb.id as idSubject,"
+				+ " sb.name as nameSubject, s.number as semestrNumber, s.lecture as countLecture, s.laboratory as countLaboratory,"
+				+ " s.practice as countPractice, s.seminar as countSeminar, t.name as type, s.cource_work_hours as courceWorkHours, (t.koff*g.count_students) as calcField"
 				+ " FROM plan p, groups g, node n, semestr s, subject sb, Type t "
-				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2)) and s.prac_hour = 0 and s.diplom_hour = 0 and t.id=s.id_type", resultSetMapping = "DataLoad", resultClass = DataLoad.class) })
+				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2)) and s.prac_hour = 0 and s.diplom_hour = 0 and t.id=s.id_type", resultSetMapping = "DataLoadSubject", resultClass = DataLoadSubject.class) })
 
 @Entity
 public class Plan implements Serializable {
@@ -93,8 +94,7 @@ public class Plan implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "set_data_group")
-	private int set_data_group;
+	private int setDataGroup;
 
 	// bi-directional many-to-one association to Certification
 	@OneToMany(mappedBy = "plan")
@@ -124,7 +124,7 @@ public class Plan implements Serializable {
 	}
 
 	public Plan(int date, Speciality speciality) {
-		this.set_data_group = date;
+		this.setDataGroup = date;
 		this.speciality = speciality;
 	}
 
@@ -168,12 +168,12 @@ public class Plan implements Serializable {
 		this.speciality = speciality;
 	}
 
-	public int getSet_data_group() {
-		return set_data_group;
+	public int getSetDataGroup() {
+		return setDataGroup;
 	}
 
-	public void setSet_data_group(int set_data_group) {
-		this.set_data_group = set_data_group;
+	public void setSetdatagroup(int setDataGroup) {
+		this.setDataGroup = setDataGroup;
 	}
 
 	public List<Groups> getGroup() {

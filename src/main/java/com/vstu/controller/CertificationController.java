@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Certification;
-import com.vstu.service.interfaces.ICertificationService;
+import com.vstu.service.interfaces.CertificationService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class CertificationController {
 
 	@Autowired
-	ICertificationService certificationService;
+	CertificationService certificationService;
 
 	@GetMapping("certification/{id}")
 	public ResponseEntity<Certification> getCertificationById(@PathVariable("id") Long id) {

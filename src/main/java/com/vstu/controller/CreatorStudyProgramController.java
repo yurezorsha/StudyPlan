@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.CreatorStudyProgramm;
-import com.vstu.service.interfaces.ICreatorStudyProgramService;
+import com.vstu.service.interfaces.CreatorStudyProgramService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class CreatorStudyProgramController {
 	@Autowired
-	ICreatorStudyProgramService creatorStudyProgramService;
+	CreatorStudyProgramService creatorStudyProgramService;
 
 	@GetMapping("creatorstudyprogram/{id}")
 	public ResponseEntity<CreatorStudyProgramm> getCreatorStudyProgramById(@PathVariable("id") Long id) {

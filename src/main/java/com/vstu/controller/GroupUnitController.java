@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.GroupUnit;
-import com.vstu.service.interfaces.IGroupUnitService;
+import com.vstu.service.interfaces.GroupUnitService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class GroupUnitController {
 	@Autowired
-	IGroupUnitService groupUnitService;
+	GroupUnitService groupUnitService;
 
 	@GetMapping("groupunit/{id}")
 	public ResponseEntity<GroupUnit> getGroupUnitById(@PathVariable("id") Long id) {

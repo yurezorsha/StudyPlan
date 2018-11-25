@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Fakultativ;
-import com.vstu.service.interfaces.IFakultativService;
+import com.vstu.service.interfaces.FakultativService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class FakultativController {
 
 	@Autowired
-	IFakultativService fakultativService;
+	FakultativService fakultativService;
 
 	@GetMapping("fakultativ/{id}")
 	public ResponseEntity<Fakultativ> getFakultativById(@PathVariable("id") Long id) {

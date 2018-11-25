@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Subject;
-import com.vstu.service.interfaces.ISubjectService;
+import com.vstu.service.interfaces.SubjectService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class SubjectController {
 	@Autowired
-	ISubjectService subjectService;
+	SubjectService subjectService;
 
 	@GetMapping("subject/{id}")
 	public ResponseEntity<Subject> getSubjectById(@PathVariable("id") Long id) {

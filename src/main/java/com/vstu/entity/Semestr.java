@@ -3,7 +3,6 @@ package com.vstu.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,19 +26,14 @@ public class Semestr implements Serializable {
 
 	private long id;
 
-	@Column(name = "cource_work_hours")
 	private int courceWorkHours;
 
-	@Column(name = "cource_work_ze")
 	private int courceWorkZe;
 
-	@Column(name = "course_work_type")
 	private String courseWorkType;
 
-	@Column(name = "id_faculty")
 	private int idFaculty;
 
-	@Column(name = "id_teacher")
 	private int idTeacher;
 
 	private int laboratory;
@@ -60,13 +54,13 @@ public class Semestr implements Serializable {
 
 	private int ze;
 
-	private int prac_hour;
+	private int pracHour;
 
-	private int prac_ze;
+	private int pracZe;
 
-	private int diplom_hour;
+	private int diplomHour;
 
-	private int diplom_ze;
+	private int diplomZe;
 
 	// bi-directional many-to-one association to Node
 	@ManyToOne
@@ -202,36 +196,36 @@ public class Semestr implements Serializable {
 		this.node = node;
 	}
 
-	public int getPrac_hour() {
-		return prac_hour;
+	public int getPracHour() {
+		return pracHour;
 	}
 
-	public void setPrac_hour(int prac_hour) {
-		this.prac_hour = prac_hour;
+	public void setPrac_hour(int pracHour) {
+		this.pracHour = pracHour;
 	}
 
-	public int getPrac_ze() {
-		return prac_ze;
+	public int getPracZe() {
+		return pracZe;
 	}
 
-	public void setPrac_ze(int prac_ze) {
-		this.prac_ze = prac_ze;
+	public void setPracZe(int pracZe) {
+		this.pracZe = pracZe;
 	}
 
-	public int getDiplom_hour() {
-		return diplom_hour;
+	public int getDiplomHour() {
+		return diplomHour;
 	}
 
-	public void setDiplom_hour(int diplom_hour) {
-		this.diplom_hour = diplom_hour;
+	public void setDiplomHour(int diplomHour) {
+		this.diplomHour = diplomHour;
 	}
 
-	public int getDiplom_ze() {
-		return diplom_ze;
+	public int getDiplomZe() {
+		return diplomZe;
 	}
 
-	public void setDiplom_ze(int diplom_ze) {
-		this.diplom_ze = diplom_ze;
+	public void setDiplomZe(int diplomZe) {
+		this.diplomZe = diplomZe;
 	}
 
 }

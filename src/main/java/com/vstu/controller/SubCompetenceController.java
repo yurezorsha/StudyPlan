@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vstu.entity.SubCompetence;
-import com.vstu.service.interfaces.ISubCompetenceService;
+import com.vstu.service.interfaces.SubCompetenceService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class SubCompetenceController {
 	@Autowired
-	ISubCompetenceService subCompetenceService;
+	SubCompetenceService subCompetenceService;
 
 	@GetMapping("subcompetence/{id}")
 	public ResponseEntity<SubCompetence> getSubCompetenceById(@PathVariable("id") Long id) {

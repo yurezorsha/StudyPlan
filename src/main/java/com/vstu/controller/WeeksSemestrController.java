@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.WeeksSemestr;
-import com.vstu.service.interfaces.IWeeksSemestrService;
+import com.vstu.service.interfaces.WeeksSemestrService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class WeeksSemestrController {
 
 	@Autowired
-	IWeeksSemestrService weeksSemestrService;
+	WeeksSemestrService weeksSemestrService;
 
 	@GetMapping("weekssemestr/{id}")
 	public ResponseEntity<WeeksSemestr> getWeeksSemestrById(@PathVariable("id") Long id) {

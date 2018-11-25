@@ -3,7 +3,6 @@ package com.vstu.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +25,6 @@ public class Node implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "id_cathedra")
 	private int idCathedra;
 
 	// bi-directional many-to-one association to Subject
