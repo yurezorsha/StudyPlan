@@ -131,4 +131,12 @@ public class SemestrServiceImpl implements SemestrService {
 		return lst;
 	}
 
+	@Override
+	public int sumAllHoursById(Long id) {
+		Semestr s = getSemestrById(id);
+
+		return s.getCourceWorkHours() + s.getDiplomHour() + s.getPracHour() + s.getLaboratory() + s.getLecture()
+				+ s.getSeminar();
+	}
+
 }

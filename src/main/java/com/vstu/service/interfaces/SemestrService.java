@@ -21,4 +21,6 @@ public interface SemestrService {
 
 	List<Semestr> addListSemestr(Long id, List<Semestr> s);
 
+	int sumAllHoursById(Long id);
+
 }

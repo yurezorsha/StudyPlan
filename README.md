@@ -1,6 +1,10 @@
 API REST SERVICE STUDY PLAN
 ===========================
 ### http://localhost:8080/studyplan
+Система Study Plan осущетвляет создание, хранение, редактирование учебных планов для университета.
+А также формирование учебной нагрузки за определенный период веремени.
+Систем состоит из связанных таблиц. Работа с таблицами осуществляется посредством использования 
+соответствующих API. API для работы с системой Study Plan представлены в таблице.
 
 | Разделы    |  Описание |
 | ----------| ----------|
@@ -112,7 +116,7 @@ Fakultativ
 Формат ответа:
 GET localhost:8080/studyplan/fakultativ/1
 
-```javascrip
+```javascript
 {
     "id": 1,
     "name": "Факультатив 1",
@@ -252,8 +256,8 @@ Semestr
 | GET       | /semestrs/{id}  | Получить все Semestrs по id(GroupComponent) |
 | GET       | /semestr        | Получить список всех Semestrs |
 | GET       | /semestr/sum/{id}| Получить кол-во часов всех пар в Semestr с id |
-| POST      | /semestr/{id}   | Добавить список Semestrs в Node с id |
-| POST      | /semestrs       | Добавить Semestr |
+| POST      | /semestr/{id}   | Добавить Semestr в Node с id |
+| POST      | /semestrs/{id}       | Добавить список Semestr в Node с id|
 | DELETE    | /semestr/{id}   | Удалить Semestr по id |
 | PUT       | /semestr /{id}  | Обновить Semestr в Node с id |
 
@@ -333,7 +337,6 @@ Plan
 | GET       | /plans/{id}  | Получить все Plan по id(Speciality) |
 | GET       | /plan        | Получить список всех Plans |
 | GET       | /plan/{id}/data  | Получить учебную нагрузку по id(Plan) за год |
-| GET       | /plan/getYear |  |
 | POST      | /plan        | Добавить Plan |
 | DELETE    | /plan/{id}   | Удалить Plan по id |
 | PUT       | /plan        | Обновить Plan |

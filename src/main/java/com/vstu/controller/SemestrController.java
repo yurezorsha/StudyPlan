@@ -35,9 +35,9 @@ public class SemestrController {
 	}
 
 	@GetMapping("semestr/sum/{id}")
-	public @ResponseBody Long getSum(@PathVariable("id") Long id) {
+	public @ResponseBody int getSum(@PathVariable("id") Long id) {
 
-		return repo.sumAllHoursById(id);
+		return semestrService.sumAllHoursById(id);
 	}
 
 	@GetMapping("semestrs/{id}")
@@ -52,14 +52,14 @@ public class SemestrController {
 		return new ResponseEntity<List<Semestr>>(list, HttpStatus.OK);
 	}
 
-	@PostMapping("semestrs")
+	@PostMapping("semestr/{id}")
 	public ResponseEntity<Semestr> addSemestr(@PathVariable("id") Long id, @RequestBody Semestr s) {
 		Semestr semestr = semestrService.addSemestr(id, s);
 
 		return new ResponseEntity<Semestr>(semestr, HttpStatus.CREATED);
 	}
 
-	@PostMapping("semestr/{id}")
+	@PostMapping("semestrs/{id}")
 	public ResponseEntity<List<Semestr>> addSemestrs(@PathVariable("id") Long id, @RequestBody List<Semestr> s) {
 		List<Semestr> lst = semestrService.addListSemestr(id, s);
 		return new ResponseEntity<List<Semestr>>(lst, HttpStatus.CREATED);
