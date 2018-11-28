@@ -123,7 +123,7 @@ public class UnitMockMVCTest {
 	@org.junit.Test
 	public void testDelete() throws Exception {
 		Type type = new Type();
-		type.setId(1);
+		type.setId(1); 
 		type.setKoff(9);
 		type.setName("testDELETE");
 	    when(typeService.getTypeById(type.getId())).thenReturn(type);
