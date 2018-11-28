@@ -1,3 +1,4 @@
+
 package com.vstu;
 
 import org.springframework.boot.SpringApplication;
@@ -11,3 +12,6 @@ public class AppApplication {
 	}
 
 }
+
+
+
