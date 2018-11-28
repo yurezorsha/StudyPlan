@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 API REST SERVICE STUDY PLAN
 ===========================
 ### http://localhost:8080/studyplan
@@ -1360,6 +1359,3 @@ Errors
 }
 ```
 
-
-
->>>>>>> refs/remotes/origin/master
