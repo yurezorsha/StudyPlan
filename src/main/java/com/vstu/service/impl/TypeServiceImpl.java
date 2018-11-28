@@ -41,7 +41,8 @@ public class TypeServiceImpl implements TypeService {
 
 	@Override
 	public Type addType(Type t) {
-		if (!existsType(t.getId())) {
+		
+		if (existsType(t.getId())) {
 			LOGGER.error("Type with Id: " + t.getId() + " already exists!");
 			throw new AlreadyExistException("Type with Id: " + t.getId() + " already exists!");
 		}
