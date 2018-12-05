@@ -62,10 +62,10 @@ public class NodeServiceImpl implements NodeService {
 		Plan p = planService.getPlanById(id);
 		if (nodeRepository.findBySubjectNameAndPlanId(p.getId(), n.getSubject().getName()) != null) {
 			LOGGER.error("Node with subject: " + n.getSubject().getName() + " already exists in plan with Id: "
-					+ n.getPlan().getId());
+					+ id);
 
 			throw new AlreadyExistException("Node with subject: " + n.getSubject().getName()
-					+ " already exists in plan with Id: " + n.getPlan().getId());
+					+ " already exists in plan with Id: " + id);
 		} else {
 			n.setPlan(p);
 			n = nodeRepository.save(n);

@@ -37,8 +37,8 @@ import com.vstu.entity.Type;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value= {"/create-type-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value= {"/delete-type-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value= {"/testdb/create-type-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value= {"/testdb/delete-type-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 public class TestTypeController {
 	
 	@Autowired
@@ -70,6 +70,7 @@ public class TestTypeController {
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.content(JsonUtil.toJson(t)))
 				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.id").isNotEmpty())
 				.andExpect(jsonPath("$.name").value(t.getName()))
 				.andExpect(jsonPath("$.koff").value(t.getKoff()));
 		  		
