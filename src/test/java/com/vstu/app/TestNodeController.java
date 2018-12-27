@@ -38,8 +38,8 @@ import com.vstu.service.interfaces.SubjectService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value= {"/testdb/create-subj-unit-group-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value= {"/testdb/delete-subj-unit-group-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value= {"/testdb/create-test-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value= {"/testdb/delete-test-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 public class TestNodeController {
 	@Autowired
 	private MockMvc mockMvc;
@@ -73,7 +73,7 @@ public class TestNodeController {
 	}
 	
 	@Test
-	public void testPostNodeWithCorrectId() throws Exception {
+	public void testPostNodeWithCorrectPlanId() throws Exception {
 		Node node =new Node();
 		node.setIdCathedra(1);
 		node.setSubject(subjectService.getSubjectById(3L));
@@ -161,7 +161,7 @@ public class TestNodeController {
 	@Test
 	public void testGetNodeIncorrectId() throws Exception {
 		
-		mockMvc.perform(get("/node/{id}", 5L)
+		mockMvc.perform(get("/node/{id}", 100)
 				   .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				   .andExpect(status().isNotFound());
 				              

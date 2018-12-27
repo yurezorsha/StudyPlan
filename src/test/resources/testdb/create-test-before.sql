@@ -71,26 +71,7 @@ UPDATE plan
 SET    id_speciality = NULL;
 
 delete from plan;
-
-INSERT INTO `plan` 
-(`id`,`id_speciality`, `set_data_group`) 
-VALUES (1, 1, 2009);
-
-
-
-       
-       
-
-
-
-INSERT INTO `node` 
-(`id`,`id_subject`, `id_cathedra`, `id_plan`) 
-VALUES 
-(1,1, 1, 1),
-(2,2, 1, 1);
-       
-
-       
+      
 INSERT INTO `type` 
 (`id`, `name`, `koff`) 
 VALUES 
@@ -98,7 +79,24 @@ VALUES
 (2, 'диф. зачет',0.35),
 (3, 'экзамен',0.4),
 (4, 'просмотр',0.4);
-       
+
+delete from speciality;
+
+INSERT INTO `speciality` 
+(`id`, `name`, `shifr`) 
+VALUES 
+(1, 'Информационные системы и технологии','1-40 05 01-01'),
+(2, 'Автоматизация технологических процессов и производств (легкая промышленность)','1-53 01 01-05');
+
+INSERT INTO `plan` 
+(`id`,`id_speciality`, `set_data_group`) 
+VALUES (1, 1, 2009);
+
+INSERT INTO `node` 
+(`id`,`id_subject`, `id_cathedra`, `id_plan`) 
+VALUES 
+(1,1, 1, 1),
+(2,2, 1, 1);
 
 INSERT INTO `semestr` 
 (`id`,`number`,  `lecture`,   `laboratory`,  `practice`,   `seminar`,  `id_type`,  
@@ -106,6 +104,13 @@ INSERT INTO `semestr`
 `id_teacher`, `id_faculty`, `diplom_hour`, `diplom_ze`, `prac_hour`, `prac_ze` ) 
 VALUES   
 (1,1, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0);
+
+delete from groups;
+
+INSERT INTO `groups`
+(`id`, `id_plan`,`count_students`)
+VALUES
+(1,1,20);
 
 
 

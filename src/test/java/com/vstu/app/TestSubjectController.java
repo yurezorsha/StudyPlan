@@ -32,8 +32,8 @@ import com.vstu.service.interfaces.GroupUnitService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value= {"/testdb/create-subj-unit-group-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value= {"/testdb/delete-subj-unit-group-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value= {"/testdb/create-test-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value= {"/testdb/delete-test-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 public class TestSubjectController {
 	
 	@Autowired
@@ -51,6 +51,7 @@ public class TestSubjectController {
 		subject.setName("Философия");
 		subject.setShifr("Фил");
 		subject.setGroupUnit(groupUnitService.getGroupUnitById(1L));
+				
 		
 		mockMvc.perform(get("/subject/{id}", 3)
 				   .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -60,8 +61,7 @@ public class TestSubjectController {
 				   .andExpect(jsonPath("$.groupUnit.id").value(subject.getGroupUnit().getId()))
 		           .andExpect(jsonPath("$.groupUnit.name").value(subject.getGroupUnit().getName()));
 		
-		
-		
+				
 	}
 	
 	@Test

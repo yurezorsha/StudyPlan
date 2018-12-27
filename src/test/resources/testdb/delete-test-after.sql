@@ -50,6 +50,10 @@ SET    id_speciality = NULL;
 
 delete from plan;
 
+delete from speciality;
+
+delete from groups;
+
 
 
 

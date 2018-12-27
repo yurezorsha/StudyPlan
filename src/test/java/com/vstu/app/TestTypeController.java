@@ -37,8 +37,8 @@ import com.vstu.entity.Type;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value= {"/testdb/create-type-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value= {"/testdb/delete-type-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value= {"/testdb/create-test-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value= {"/testdb/delete-test-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 public class TestTypeController {
 	
 	@Autowired
@@ -61,7 +61,7 @@ public class TestTypeController {
 	}
 
 	@Test
-	public void testAddType() throws Exception {
+	public void testPostType() throws Exception {
 		Type t= new Type();
 		t.setName("test");
 		t.setKoff(4L);
@@ -104,7 +104,7 @@ public class TestTypeController {
 	@Test
 	public void testDeleteType() throws Exception {
 		
-		mockMvc.perform( delete("/type/{id}",1L)
+		mockMvc.perform( delete("/type/{id}",3L)
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 		        .accept(MediaType.APPLICATION_JSON))
 		        .andExpect(status().isOk());

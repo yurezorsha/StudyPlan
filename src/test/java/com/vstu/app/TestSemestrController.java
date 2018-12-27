@@ -33,8 +33,8 @@ import com.vstu.service.interfaces.TypeService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value= {"/testdb/create-subj-unit-group-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value= {"/testdb/delete-subj-unit-group-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value= {"/testdb/create-test-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value= {"/testdb/delete-test-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 public class TestSemestrController {
 	@Autowired
 	private MockMvc mockMvc;
@@ -86,7 +86,6 @@ public class TestSemestrController {
 		           .andExpect(jsonPath("$.type").isNotEmpty())
 		           .andExpect(jsonPath("$.rgr").value(semestr.getRgr()))
 		           .andExpect(jsonPath("$.courseWorkType").value(semestr.getCourseWorkType()))
-		           //.andExpect(jsonPath("$.node").isNotEmpty())
 		           .andExpect(jsonPath("$.ze").value(semestr.getZe()))
 		           .andExpect(jsonPath("$.courceWorkZe").value(semestr.getCourceWorkZe()))
 		           .andExpect(jsonPath("$.courceWorkHours").value(semestr.getCourceWorkHours()))

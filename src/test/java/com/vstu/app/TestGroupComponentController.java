@@ -31,8 +31,8 @@ import com.vstu.service.interfaces.GroupUnitService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value= {"/testdb/create-subj-unit-group-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value= {"/testdb/delete-subj-unit-group-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value= {"/testdb/create-test-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value= {"/testdb/delete-test-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 public class TestGroupComponentController {
 	@Autowired
 	private MockMvc mockMvc;
@@ -64,7 +64,7 @@ public class TestGroupComponentController {
 	}
 	
 	@Test
-	public void testPostSubject() throws Exception {
+	public void testGroupComponent() throws Exception {
 		
 		GroupComponent groupComponent=new GroupComponent() ;
 		groupComponent.setName("2");

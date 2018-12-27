@@ -41,9 +41,9 @@ public class SpecialityServiceImpl implements SpecialityService {
 
 	@Override
 	public Speciality addSpeciality(Speciality s) {
-		if (existsSpeciality(s.getId())) {
-			LOGGER.error("Speciality with Id: " + s.getId() + " already exists!");
-			throw new AlreadyExistException("Speciality with Id: " + s.getId() + " already exists!");
+		if (specialityRepository.existsByName(s.getName())) {
+			LOGGER.error("Speciality with name: " + s.getName() + " already exists!");
+			throw new AlreadyExistException("Speciality with name: " + s.getName() + " already exists!");
 		}
 
 		Speciality speciality = specialityRepository.save(s);
