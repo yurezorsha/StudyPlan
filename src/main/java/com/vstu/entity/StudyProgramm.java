@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -31,6 +32,7 @@ public class StudyProgramm implements Serializable {
 	private long id;
 
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Europe/Minsk")
 	private Date dateApprove;
 
 	// bi-directional many-to-one association to CreatorStudyProgramm

@@ -112,6 +112,41 @@ INSERT INTO `groups`
 VALUES
 (1,1,20);
 
+UPDATE sub_competence
+SET    id_competence = NULL;
+
+UPDATE sub_competence
+SET    id_subject = NULL;
+
+delete from sub_competence;
+
+delete from competence;
+
+INSERT INTO `competence` (`id`,`code`, `name_competence`) VALUES (1,'БПК-3', 'Быть способным использовать 
+                                                                       основные законы электротехники 
+                                                                       и владеть методами их применения, 
+																	   применять электронные элементы 
+																	   и приборы в системах автоматизации');
+																	   
+																	   
+INSERT INTO `sub_competence` (`id`,`id_competence`, `id_subject`) VALUES (1,1,1);
+
+UPDATE creator_study_programm
+SET id_study_programm=NULL;
+
+delete from study_programm;
+
+INSERT INTO `study_programm` (`id`,`id_subject`, `date_approve`) VALUES (1,1,'2010-10-05');
+delete from creator_study_programm;
+
+INSERT INTO `creator_study_programm` (`id`,`id_teacher`, `id_study_programm`) VALUES (1,1,1),(2,2,1);
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-package com.vstu.app;
+package com.vstu.integration;
 
 import java.io.IOException;
 

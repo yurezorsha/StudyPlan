@@ -54,6 +54,23 @@ delete from speciality;
 
 delete from groups;
 
+UPDATE sub_competence
+SET    id_competence = NULL;
+
+delete from competence;
+
+UPDATE sub_competence
+SET    id_subject = NULL;
+
+delete from sub_competence;
+
+UPDATE creator_study_programm
+SET id_study_programm=NULL;
+
+delete from study_programm;
+
+delete from creator_study_programm;
+
 
 
 

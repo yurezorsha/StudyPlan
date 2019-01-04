@@ -22,7 +22,7 @@ public class Competence implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
+    private String code;
 	private String nameCompetence;
 
 	// bi-directional many-to-one association to SubCompetence
@@ -39,6 +39,14 @@ public class Competence implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getNameCompetence() {

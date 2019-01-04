@@ -1,4 +1,5 @@
-package com.vstu.app;
+package com.vstu.integration;
+
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -64,7 +65,7 @@ public class TestGroupComponentController {
 	}
 	
 	@Test
-	public void testGroupComponent() throws Exception {
+	public void testPostGroupComponent() throws Exception {
 		
 		GroupComponent groupComponent=new GroupComponent() ;
 		groupComponent.setName("2");
