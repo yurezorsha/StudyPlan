@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Node;
 import com.vstu.entity.Plan;
+import com.vstu.entity.Practice;
 import com.vstu.entity.data.DataAllLoad;
 import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.PlanRepository;
+import com.vstu.service.interfaces.NodeService;
 import com.vstu.service.interfaces.PlanService;
+import com.vstu.service.interfaces.PracticeService;
+import com.vstu.service.interfaces.SemestrService;
 
 /**
  * service for work with plan table
@@ -26,10 +30,13 @@ public class PlanServiceImpl implements PlanService {
 	PlanRepository planRepository;
 
 	@Autowired
-	NodeServiceImpl nodeService;
+	NodeService nodeService;
 
 	@Autowired
-	SemestrServiceImpl semestrService;
+	SemestrService semestrService;
+	
+	@Autowired
+	PracticeService practiceService;
 
 	@Override
 	public List<Plan> getAllPlan() {
@@ -63,13 +70,12 @@ public class PlanServiceImpl implements PlanService {
 			throw new AlreadyExistException("Plan with Id: " + p.getId() + " already exists!");
 		}
 		{
-			Plan plan = new Plan(p.getSetDataGroup(), p.getSpeciality());
-			plan = planRepository.save(plan);
+			Plan plan = planRepository.save(p);
 
+			practiceService.addListPracticeByPlanId(plan.getId(), p.getPractices());
+			
 			for (Node node : p.getNodes()) {
-
 				Node n = nodeService.addNode(plan.getId(), node);
-
 			}
 		}
 
@@ -84,9 +90,14 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public Plan updatePlan(Plan p) {
 		if (!existsPlan(p.getId())) {
+			
 			LOGGER.error("Plan with Id: " + p.getId() + " wasn't found!");
 			throw new EntityNotFoundException("Plan with Id: " + p.getId() + " wasn't found!");
+			
 		} else {
+			
+			practiceService.updateListPracticeByPlanId(p.getId(), p.getPractices());
+			
 			for (Node node : p.getNodes()) {
 				nodeService.updateNode(p.getId(), node);
 			}

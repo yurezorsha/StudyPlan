@@ -14,6 +14,7 @@ import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.NodeRepository;
 import com.vstu.service.interfaces.NodeService;
+import com.vstu.service.interfaces.SemestrService;
 
 /**
  * service for work with node table
@@ -30,7 +31,7 @@ public class NodeServiceImpl implements NodeService {
 	PlanServiceImpl planService;
 
 	@Autowired
-	SemestrServiceImpl semestrService;
+	SemestrService semestrService;
 
 	@Override
 	public List<Node> getAllNode() {
@@ -69,7 +70,7 @@ public class NodeServiceImpl implements NodeService {
 		} else {
 			n.setPlan(p);
 			n = nodeRepository.save(n);
-			semestrService.addListSemestr(n.getId(), n.getSemestrs());
+			semestrService.addListSemestrByNodeId(n.getId(), n.getSemestrs());
 
 		}
 		LOGGER.info("Node with id: " + n.getId() + " has been added in plan with id: " + n.getPlan().getId());
@@ -89,10 +90,7 @@ public class NodeServiceImpl implements NodeService {
 
 			Plan p = planService.getPlanById(id);
 			n.setPlan(p);
-
-			for (Semestr s : n.getSemestrs()) {
-				semestrService.updateSemestr(n.getId(), s);
-			}
+			semestrService.updateListSemestrByNodeId(n.getId(), n.getSemestrs());
 			n = nodeRepository.save(n);
 		}
 

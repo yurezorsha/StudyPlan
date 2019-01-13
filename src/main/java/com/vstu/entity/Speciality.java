@@ -26,6 +26,8 @@ public class Speciality implements Serializable {
 	private String name;
 
 	private String shifr;
+	
+	private String qualification;
 
 	// bi-directional many-to-one association to Plan
 	@OneToMany(mappedBy = "speciality")
@@ -57,6 +59,14 @@ public class Speciality implements Serializable {
 
 	public void setShifr(String shifr) {
 		this.shifr = shifr;
+	}
+
+	public String getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
 	}
 
 	public List<Plan> getPlans() {

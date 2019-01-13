@@ -12,6 +12,7 @@ import com.vstu.entity.Semestr;
 import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.SemestrRepository;
+import com.vstu.service.interfaces.NodeService;
 import com.vstu.service.interfaces.SemestrService;
 
 /**
@@ -20,19 +21,13 @@ import com.vstu.service.interfaces.SemestrService;
  */
 @Service
 public class SemestrServiceImpl implements SemestrService {
-	private static final Logger LOGGER = LoggerFactory.getLogger(SemestrServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SemestrService.class);
 
 	@Autowired
 	SemestrRepository semestrRepository;
 
 	@Autowired
-	NodeServiceImpl nodeService;
-
-	@Override
-	public List<Semestr> getAllSemestr() {
-
-		return semestrRepository.findAll();
-	}
+	NodeService nodeService;
 
 	@Override
 	public List<Semestr> getAllByNodeId(Long id) {
@@ -48,50 +43,6 @@ public class SemestrServiceImpl implements SemestrService {
 		}
 
 		return semestrRepository.findById(id).get();
-	}
-
-	/**
-	 * adding semestr with node id
-	 */
-	@Override
-	public Semestr addSemestr(Long id, Semestr s) {
-
-		if (semestrRepository.existsByNumberAndNodeId(s.getNumber(), id)) {
-
-			LOGGER.error("Semestr with number: " + s.getNumber() + " already exists in node with id: "
-					+ s.getNode().getId());
-
-			throw new AlreadyExistException("Semestr with number: " + s.getNumber()
-					+ " already exists in node with id: " + s.getNode().getId());
-		}
-
-		Node node = nodeService.getNodeById(id);
-		s.setNode(node);
-		Semestr semestr = semestrRepository.save(s);
-		LOGGER.info("Semestr with number: " + semestr.getNumber() + " has been added in node with id: "
-				+ semestr.getNode().getId());
-
-		return semestr;
-
-	}
-
-	/**
-	 * updating semestr with node id
-	 */
-	@Override
-	public Semestr updateSemestr(Long id, Semestr s) {
-		if (!existsSemestr(s.getId())) {
-			LOGGER.error("Semestr with Id:" + s.getId() + " wasn't found!");
-			throw new EntityNotFoundException("Semestr with Id:" + s.getId() + " wasn't found!");
-		}
-
-		Node n = nodeService.getNodeById(id);
-		s.setNode(n);
-		Semestr semestr = semestrRepository.save(s);
-		LOGGER.info("Semestr with number: " + semestr.getNumber() + " has been updated in node with id: "
-				+ semestr.getNode().getId());
-		return semestr;
-
 	}
 
 	@Override
@@ -111,11 +62,47 @@ public class SemestrServiceImpl implements SemestrService {
 		return semestrRepository.existsById(id);
 	}
 
+	
+
+	@Override
+	public int sumAllHoursById(Long id) {
+		Semestr s = getSemestrById(id);
+
+		return s.getCourceWorkHours() + s.getDiplomHour() + s.getPractice() + s.getLaboratory() + s.getLecture()
+				+ s.getSeminar();
+	}
+
+	/**
+	 * updating list semestr with node id
+	 */
+	@Override
+	public List<Semestr> updateListSemestrByNodeId(Long id, List<Semestr> s) {
+		
+		if(!nodeService.existsNode(id)) {
+			LOGGER.error("Node with Id:" + id + " wasn't found!");
+			throw new EntityNotFoundException("Node with Id:" + id + " wasn't found!");
+		}
+		Node n = nodeService.getNodeById(id);
+		for (Semestr semestr : s) {
+			semestr.setNode(n);
+		}
+		List<Semestr> lst = semestrRepository.saveAll(s);
+		LOGGER.info("List of semesters has been updated in node with id: " + lst.get(0).getNode().getId());
+		
+		return lst;
+		
+	}
+
 	/**
 	 * adding list of semesters with node id
 	 */
 	@Override
-	public List<Semestr> addListSemestr(Long id, List<Semestr> s) {
+	public List<Semestr> addListSemestrByNodeId(Long id, List<Semestr> s) {
+		
+		if(!nodeService.existsNode(id)) {
+			LOGGER.error("Node with Id:" + id + " wasn't found!");
+			throw new EntityNotFoundException("Node with Id:" + id + " wasn't found!");
+		}
 		Node n = nodeService.getNodeById(id);
 		for (Semestr semestr : s) {
 			semestr.setNode(n);
@@ -128,15 +115,8 @@ public class SemestrServiceImpl implements SemestrService {
 		}
 		List<Semestr> lst = semestrRepository.saveAll(s);
 		LOGGER.info("List of semesters has been added in node with id: " + lst.get(0).getNode().getId());
+		
 		return lst;
-	}
-
-	@Override
-	public int sumAllHoursById(Long id) {
-		Semestr s = getSemestrById(id);
-
-		return s.getCourceWorkHours() + s.getDiplomHour() + s.getPracHour() + s.getLaboratory() + s.getLecture()
-				+ s.getSeminar();
 	}
 
 }

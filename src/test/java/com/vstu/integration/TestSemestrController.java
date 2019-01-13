@@ -66,8 +66,6 @@ public class TestSemestrController {
 		    semestr.setIdFaculty(1);
 		    semestr.setDiplomHour(0);
 		    semestr.setDiplomZe(0);
-		    semestr.setPrac_hour(0);
-		    semestr.setPracZe(0);
 	}
 	
 	@Test
@@ -92,9 +90,7 @@ public class TestSemestrController {
 		           .andExpect(jsonPath("$.idTeacher").value(semestr.getIdTeacher()))
 		           .andExpect(jsonPath("$.idFaculty").value(semestr.getIdFaculty()))
 		           .andExpect(jsonPath("$.diplomHour").value(semestr.getDiplomHour()))
-		           .andExpect(jsonPath("$.diplomZe").value(semestr.getDiplomZe()))
-		           .andExpect(jsonPath("$.pracHour").value(semestr.getPracHour()))
-		           .andExpect(jsonPath("$.pracZe").value(semestr.getPracZe()));
+		           .andExpect(jsonPath("$.diplomZe").value(semestr.getDiplomZe()));
 		
 				   	
 	}
@@ -110,7 +106,7 @@ public class TestSemestrController {
 	
 	@Test
 	public void checkSum() throws Exception {
-		Integer sum=semestr.getCourceWorkHours() + semestr.getDiplomHour() + semestr.getPracHour() + semestr.getLaboratory() + semestr.getLecture()
+		Integer sum=semestr.getCourceWorkHours() + semestr.getDiplomHour() + semestr.getPractice() + semestr.getLaboratory() + semestr.getLecture()
 		+ semestr.getSeminar();
 		mockMvc.perform(get("/semestr/sum/{id}", 1L)
 				   .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

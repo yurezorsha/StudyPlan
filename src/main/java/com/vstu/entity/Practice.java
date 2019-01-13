@@ -11,19 +11,19 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- * The persistent class for the certification database table.
- * 
- */
 @Entity
-public class Certification implements Serializable {
+public class Practice implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	private String name;
+	
+	private int semestrNumber;
+	
+	private int countWeeks;
 	
 	private double ze;
 	
@@ -32,12 +32,13 @@ public class Certification implements Serializable {
 	@JoinColumn(name = "id_plan")
 	@JsonIgnore
 	private Plan plan;
-
-	public Certification() {
+	
+	public Practice() {
+		
 	}
 
 	public long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(long id) {
@@ -52,6 +53,22 @@ public class Certification implements Serializable {
 		this.name = name;
 	}
 
+	public int getSemestrNumber() {
+		return semestrNumber;
+	}
+
+	public void setSemestrNumber(int semestrNumber) {
+		this.semestrNumber = semestrNumber;
+	}
+
+	public int getCountWeeks() {
+		return countWeeks;
+	}
+
+	public void setCountWeeks(int countWeeks) {
+		this.countWeeks = countWeeks;
+	}
+
 	public double getZe() {
 		return ze;
 	}
@@ -61,11 +78,13 @@ public class Certification implements Serializable {
 	}
 
 	public Plan getPlan() {
-		return this.plan;
+		return plan;
 	}
 
 	public void setPlan(Plan plan) {
 		this.plan = plan;
 	}
+	
+	
 
 }

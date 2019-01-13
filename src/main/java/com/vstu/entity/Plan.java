@@ -1,6 +1,7 @@
 package com.vstu.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.ColumnResult;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
@@ -17,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vstu.entity.data.DataLoadDiploma;
 import com.vstu.entity.data.DataLoadPractice;
@@ -94,16 +97,40 @@ public class Plan implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private int setDataGroup;
-
+	private int setYearGroup;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Europe/Minsk")
+	private Date dateApprove;
+	
+	private int countSemesters;
+	
+	private int firstYear;
+	
+	private int secondYear;
+	
+	private String registrationNumber;
+	
+	private String registrationNumberStandard;
+	
+	private int protocolNumber;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Europe/Minsk")
+	private Date dateProtocol;
+	
+	@Lob
+	@JsonIgnore
+    private byte[] doc;
+	
 	// bi-directional many-to-one association to Certification
 	@OneToMany(mappedBy = "plan")
-	@JsonIgnore
+	private List<Practice> practices;
+	
+	// bi-directional many-to-one association to Certification
+	@OneToMany(mappedBy = "plan")
 	private List<Certification> certifications;
 
 	// bi-directional many-to-one association to Fakultativ
 	@OneToMany(mappedBy = "plan")
-	@JsonIgnore
 	private List<Fakultativ> fakultativs;
 
 	// bi-directional many-to-one association to Node
@@ -119,12 +146,13 @@ public class Plan implements Serializable {
 	@OneToMany(mappedBy = "plan")
 	@JsonIgnore
 	private List<Groups> group;
-
+	
+	
 	public Plan() {
 	}
 
 	public Plan(int date, Speciality speciality) {
-		this.setDataGroup = date;
+		this.setYearGroup = date;
 		this.speciality = speciality;
 	}
 
@@ -168,12 +196,92 @@ public class Plan implements Serializable {
 		this.speciality = speciality;
 	}
 
-	public int getSetDataGroup() {
-		return setDataGroup;
+	public int getSetYearGroup() {
+		return setYearGroup;
+	}
+	
+	public void setSetYearGroup(int setYearGroup) {
+		this.setYearGroup = setYearGroup;
 	}
 
-	public void setSetdatagroup(int setDataGroup) {
-		this.setDataGroup = setDataGroup;
+	public Date getDateApprove() {
+		return dateApprove;
+	}
+
+	public void setDateApprove(Date dateApprove) {
+		this.dateApprove = dateApprove;
+	}
+
+	public int getCountSemesters() {
+		return countSemesters;
+	}
+
+	public void setCountSemesters(int countSemesters) {
+		this.countSemesters = countSemesters;
+	}
+
+	public int getFirstYear() {
+		return firstYear;
+	}
+
+	public void setFirstYear(int firstYear) {
+		this.firstYear = firstYear;
+	}
+
+	public int getSecondYear() {
+		return secondYear;
+	}
+
+	public void setSecondYear(int secondYear) {
+		this.secondYear = secondYear;
+	}
+
+	public String getRegistrationNumber() {
+		return registrationNumber;
+	}
+
+	public void setRegistrationNumber(String registrationNumber) {
+		this.registrationNumber = registrationNumber;
+	}
+
+	public String getRegistrationNumberStandard() {
+		return registrationNumberStandard;
+	}
+
+	public void setRegistrationNumberStandard(String registrationNumberStandard) {
+		this.registrationNumberStandard = registrationNumberStandard;
+	}
+
+	public int getProtocolNumber() {
+		return protocolNumber;
+	}
+
+	public void setProtocolNumber(int protocolNumber) {
+		this.protocolNumber = protocolNumber;
+	}
+
+	public Date getDateProtocol() {
+		return dateProtocol;
+	}
+
+	public void setDateProtocol(Date dateProtocol) {
+		this.dateProtocol = dateProtocol;
+	}
+
+	public byte[] getDoc() {
+		return doc;
+	}
+
+	public void setDoc(byte[] doc) {
+		this.doc = doc;
+	}
+
+	public List<Practice> getPractices() {
+		return practices;
+	}
+
+	public void setPractices(List<Practice> practices) {
+		this.practices = practices;
 	}
 
 	public List<Groups> getGroup() {

@@ -50,14 +50,14 @@ public class TestPlanController {
 		
 		Plan plan = new Plan();
 		plan.setId(1);
-		plan.setSetdatagroup(2009);
+		plan.setSetYearGroup(2009);
 		plan.setSpeciality(specialityService.getSpecialityById(1L));
 		plan.setNodes(nodeService.getAllByPlanId(1L));
 		mockMvc.perform(get("/plan/{id}", 1)
 				   .contentType(MediaType.APPLICATION_JSON_VALUE))
 				   .andExpect(status().isOk())
 				   .andExpect(jsonPath("$.id").value(plan.getId()))
-				   .andExpect(jsonPath("$.setDataGroup").value(plan.getSetDataGroup()))
+				   .andExpect(jsonPath("$.setDataGroup").value(plan.getSetYearGroup()))
 				   .andExpect(jsonPath("$.speciality").isNotEmpty())
 				   .andExpect(jsonPath("$.nodes").isNotEmpty());
 				
@@ -91,14 +91,14 @@ public class TestPlanController {
 		
 		Plan plan = new Plan();
 		plan.setId(1);
-		plan.setSetdatagroup(2008);
+		plan.setSetYearGroup(2008);
 		plan.setSpeciality(specialityService.getSpecialityById(2L));
 		plan.setNodes(nodeService.getAllByPlanId(1L));
 		mockMvc.perform(put("/plan")
 				   .content(JsonUtil.toJson(plan))
 				   .contentType(MediaType.APPLICATION_JSON_VALUE))
 				   .andExpect(status().isOk())
-				   .andExpect(jsonPath("$.setDataGroup").value(plan.getSetDataGroup()))
+				   .andExpect(jsonPath("$.setDataGroup").value(plan.getSetYearGroup()))
 				   .andExpect(jsonPath("$.speciality.name").value(plan.getSpeciality().getName()));
 		          
 		           	

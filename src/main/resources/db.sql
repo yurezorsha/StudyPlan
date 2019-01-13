@@ -15,6 +15,7 @@ CREATE TABLE `speciality` (
   `id` int(10) NOT NULL auto_increment,
   `name` varchar(100) NOT NULL,
   `shifr` varchar(50), 
+  `qualification` varchar(50),
   
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
@@ -55,8 +56,16 @@ CREATE TABLE `subject` (
 CREATE TABLE `plan` (
   `id` int(10) NOT NULL auto_increment,
   `id_speciality` int(10),  
-  `set_data_group` int(10),
-  
+  `set_year_group` int(4),
+  `date_approve` date,
+  `count_semesters` int(2),
+  `first_year` int(4),
+  `second_year` int(4),
+  `registration_number` varchar(20),
+  `registration_number_standard` varchar(20),
+  `protocol_number` int(10),
+  `date_protocol` date,
+  `doc` longblob,
   
    PRIMARY KEY (`id`),
    KEY `FKpp1` (`id_speciality`),
@@ -65,6 +74,22 @@ CREATE TABLE `plan` (
   REFERENCES `speciality` (`id`)
   
    
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
+
+
+CREATE TABLE `practice` (
+  `id` int(10) NOT NULL auto_increment,  
+  `id_plan` int(10), 
+  `name` varchar(100), 
+  `semestr_number` int(2),
+  `count_weeks` int(2),
+  `ze` double,
+  
+   PRIMARY KEY (`id`),
+   KEY `FKprac` (`id_plan`),
+  CONSTRAINT `FKprac` 
+  FOREIGN KEY (`id_plan`) 
+  REFERENCES `plan` (`id`)  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 
 
@@ -105,8 +130,6 @@ CREATE TABLE `type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 
 
-
-
   CREATE TABLE `semestr` (
   `id` int(10) NOT NULL auto_increment,
   `number` int(10) NOT NULL,  
@@ -125,10 +148,7 @@ CREATE TABLE `type` (
   `id_faculty` int(10),
   `diplom_hour` int(10),
   `diplom_ze` int(10),
-  `prac_hour` int(10),
-  `prac_ze` int(10),
   
-    
      
   PRIMARY KEY (`id`),
   KEY `FKS` (`id_node`),
@@ -189,9 +209,10 @@ CREATE TABLE `creator_study_programm` (
 
 CREATE TABLE `certification` (
   `id` int(10) NOT NULL auto_increment,  
+  `name` varchar(200),
   `id_plan` int(10), 
-  
-  
+  `ze` double,
+    
    PRIMARY KEY (`id`),
    KEY `FKcerf` (`id_plan`),
   CONSTRAINT `FKcerf` 
@@ -204,7 +225,10 @@ CREATE TABLE `certification` (
 CREATE TABLE `fakultativ` (
   `id` int(10) NOT NULL auto_increment,  
   `id_plan` int(10), 
-  `name` varchar(100), 
+  `name` varchar(100),
+  `hours` int(2),
+  `semester_number` varchar(10),
+  
   
    PRIMARY KEY (`id`),
    KEY `FKfak` (`id_plan`),
@@ -246,7 +270,7 @@ CREATE TABLE `sub_competence` (
 
 
 CREATE TABLE `groups` (
-  `id` int(10) NOT NULL auto_increment,   
+  `id` int(10) NOT NULL,   
   `id_plan` int(10), 
   `count_students` int(10), 
   
@@ -267,9 +291,9 @@ INSERT INTO `group_components` VALUES (2,2);
 INSERT INTO `group_components` VALUES (3,3);
 INSERT INTO `group_components` VALUES (4,4);
 
-INSERT INTO `speciality` (`name`, `shifr`) VALUES 
-('Информационные системы и технологии', '1-40 05 01-01'),
-('Автоматизация технологических процессов и производств (легкая промышленность)', '1-53 01 01-05');
+INSERT INTO `speciality` (`name`, `shifr`, `qualification`) VALUES 
+('Информационные системы и технологии', '1-40 05 01-01','инженер-программист'),
+('Автоматизация технологических процессов и производств (легкая промышленность)', '1-53 01 01-05','инженер по автоматизации');
 
 INSERT INTO `group_units` (`name`, `id_group_components`) VALUES ('Социально-гуманитарный модуль 1', 1);
 
@@ -278,20 +302,32 @@ INSERT INTO `subject` (`name`,`shifr`,`id_unit`) VALUES ('Политология
 INSERT INTO `subject` (`name`,`shifr`,`id_unit`) VALUES ('Философия', 'shifr', 1);
 INSERT INTO `subject` (`name`,`shifr`,`id_unit`) VALUES ('Экономика', 'shifr', 1);
 
-INSERT INTO `plan` (`id_speciality`, `set_data_group`) VALUES (1, 2009);
+INSERT INTO `plan` (`id_speciality`,  `set_year_group`, `date_approve`,`count_semesters`,`first_year`,`second_year`, 
+                    `registration_number`, `registration_number_standard`, `protocol_number`,`date_protocol`) 
+                    VALUES (1, 2013,'2013-06-28', 9, 2013, 2014, 
+                    '22д-1-13/раб', 'I 53-1-003/тип', 10,'2013-06-28'); 
+                    
+INSERT INTO `practice` (`id`,  `id_plan`, `name`, `semestr_number`, `count_weeks`, `ze`) VALUES
+					   (1,1,'технологическая',7,3,2.5);
 
 INSERT INTO `node` (`id_subject`, `id_cathedra`, `id_plan`) VALUES (1, 0, 1);
 
 INSERT INTO `type` (`id`, `name`, `koff`) VALUES (1, 'зачет',0.3),(2, 'диф. зачет',0.35),(3, 'экзамен',0.4),(4, 'просмотр',0.4);
 
-INSERT INTO `semestr` (`number`,  `lecture`,   `laboratory`,  `practice`,   `seminar`,  `id_type`,  `rgr`,  `course_work_type`,  `id_node`,  `ze` ,  `cource_work_ze` ,  `cource_work_hours`, `id_teacher`, `id_faculty`, `diplom_hour`, `diplom_ze`, `prac_hour`, `prac_ze` ) 
+INSERT INTO `semestr` (`number`,  `lecture`,   `laboratory`,  `practice`,   `seminar`,  
+                      `id_type`,  `rgr`,  `course_work_type`,  `id_node`,  `ze` ,  
+                      `cource_work_ze` ,  `cource_work_hours`, `id_teacher`, 
+                      `id_faculty`, `diplom_hour`, `diplom_ze`) 
 VALUES   
-(1, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0),
- (2, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 1, 1),
-  (3, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 1, 1),
-   (4, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 1, 1, 0, 0);
+(1, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0),
+ (2, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0),
+  (3, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0),
+   (4, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 1, 1);
   
   
-INSERT INTO `groups` (`id_plan`, `count_students`) VALUES (1, 20), (1, 25);
+INSERT INTO `groups` (`id`,`id_plan`, `count_students`) VALUES (1,1, 20), (2,1, 25);
+
+INSERT INTO `competence` (`code`, `name_competence`) VALUES ('БПК-3', 'Быть способным использовать основные законы электротехники и владеть методами их применения, применять электронные элементы и приборы в системах автоматизации');
+
 
 

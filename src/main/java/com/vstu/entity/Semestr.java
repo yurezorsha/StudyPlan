@@ -23,7 +23,6 @@ public class Semestr implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private long id;
 
 	private int courceWorkHours;
@@ -53,10 +52,6 @@ public class Semestr implements Serializable {
 	private Type type;
 
 	private int ze;
-
-	private int pracHour;
-
-	private int pracZe;
 
 	private int diplomHour;
 
@@ -194,22 +189,6 @@ public class Semestr implements Serializable {
 
 	public void setNode(Node node) {
 		this.node = node;
-	}
-
-	public int getPracHour() {
-		return pracHour;
-	}
-
-	public void setPrac_hour(int pracHour) {
-		this.pracHour = pracHour;
-	}
-
-	public int getPracZe() {
-		return pracZe;
-	}
-
-	public void setPracZe(int pracZe) {
-		this.pracZe = pracZe;
 	}
 
 	public int getDiplomHour() {
