@@ -14,6 +14,8 @@ import com.vstu.entity.data.DataAllLoad;
 import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.PlanRepository;
+import com.vstu.service.interfaces.CertificationService;
+import com.vstu.service.interfaces.FakultativService;
 import com.vstu.service.interfaces.NodeService;
 import com.vstu.service.interfaces.PlanService;
 import com.vstu.service.interfaces.PracticeService;
@@ -31,12 +33,15 @@ public class PlanServiceImpl implements PlanService {
 
 	@Autowired
 	NodeService nodeService;
-
-	@Autowired
-	SemestrService semestrService;
 	
 	@Autowired
 	PracticeService practiceService;
+	
+	@Autowired
+	FakultativService fakultativService;
+	
+	@Autowired
+	CertificationService certificationService;
 
 	@Override
 	public List<Plan> getAllPlan() {
@@ -73,6 +78,8 @@ public class PlanServiceImpl implements PlanService {
 			Plan plan = planRepository.save(p);
 
 			practiceService.addListPracticeByPlanId(plan.getId(), p.getPractices());
+			fakultativService.addListFakultativByPlanId(plan.getId(), plan.getFakultativs());
+			certificationService.addListCertificationByPlanId(plan.getId(), plan.getCertifications());
 			
 			for (Node node : p.getNodes()) {
 				Node n = nodeService.addNode(plan.getId(), node);
@@ -97,6 +104,8 @@ public class PlanServiceImpl implements PlanService {
 		} else {
 			
 			practiceService.updateListPracticeByPlanId(p.getId(), p.getPractices());
+			fakultativService.updateListFakultativByPlanId(p.getId(),p.getFakultativs());
+			certificationService.updateListCertificationByPlanId(p.getId(), p.getCertifications());
 			
 			for (Node node : p.getNodes()) {
 				nodeService.updateNode(p.getId(), node);

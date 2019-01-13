@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vstu.entity.Plan;
 import com.vstu.entity.data.DataAllLoad;
-import com.vstu.repository.PlanRepository;
 import com.vstu.service.interfaces.PlanService;
 
 @RestController
@@ -26,9 +25,6 @@ public class PlanController {
 
 	@Autowired
 	PlanService planService;
-
-	@Autowired
-	PlanRepository planRepo;
 
 	@GetMapping("plan/{id}/data")
 	public ResponseEntity<DataAllLoad> getData(@PathVariable("id") Long id,

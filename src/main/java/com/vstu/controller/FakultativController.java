@@ -36,22 +36,16 @@ public class FakultativController {
 		return new ResponseEntity<List<Fakultativ>>(list, HttpStatus.OK);
 	}
 
-	@GetMapping("fakultativ")
-	public ResponseEntity<List<Fakultativ>> getAllFakultativ() {
-		List<Fakultativ> list = fakultativService.getAllFakultativ();
-		return new ResponseEntity<List<Fakultativ>>(list, HttpStatus.OK);
+	@PostMapping("fakultatives/{id}")
+	public ResponseEntity<List<Fakultativ>> addListFakultativByPlanId(@PathVariable("id") Long id, @RequestBody List<Fakultativ> f) {
+		List<Fakultativ> fakult = fakultativService.addListFakultativByPlanId(id, f);
+		return new ResponseEntity<List<Fakultativ>>(fakult, HttpStatus.CREATED);
 	}
 
-	@PostMapping("fakultativ")
-	public ResponseEntity<Fakultativ> addFakultativ(@RequestBody Fakultativ f) {
-		Fakultativ fakult = fakultativService.addFakultativ(f);
-		return new ResponseEntity<Fakultativ>(fakult, HttpStatus.CREATED);
-	}
-
-	@PutMapping("fakultativ")
-	public ResponseEntity<Fakultativ> updateFakultativ(@RequestBody Fakultativ f) {
-		Fakultativ fakult = fakultativService.updateFakultativ(f);
-		return new ResponseEntity<Fakultativ>(fakult, HttpStatus.CONFLICT);
+	@PutMapping("fakultatives/{id}")
+	public ResponseEntity<List<Fakultativ>> updateListFakultativByPlanID(@PathVariable("id") Long id, @RequestBody List<Fakultativ> f) {
+		List<Fakultativ> fakult = fakultativService.updateListFakultativByPlanId(id, f);
+		return new ResponseEntity<List<Fakultativ>>(fakult, HttpStatus.CONFLICT);
 
 	}
 

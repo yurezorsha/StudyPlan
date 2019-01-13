@@ -6,15 +6,13 @@ import com.vstu.entity.Fakultativ;
 
 public interface FakultativService {
 
-	List<Fakultativ> getAllFakultativ();
-
 	List<Fakultativ> getAllByPlanId(Long id);
 
 	Fakultativ getFakultativById(Long id);
 
-	Fakultativ addFakultativ(Fakultativ f);
+	List<Fakultativ> addListFakultativByPlanId(Long id, List<Fakultativ> f);
 
-	Fakultativ updateFakultativ(Fakultativ f);
+	List<Fakultativ> updateListFakultativByPlanId(Long id, List<Fakultativ> f);
 
 	void deleteFakultativ(Long id);
 

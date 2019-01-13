@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vstu.entity.Fakultativ;
+import com.vstu.entity.Plan;
 import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
 import com.vstu.repository.FakultativRepository;
 import com.vstu.service.interfaces.FakultativService;
+import com.vstu.service.interfaces.PlanService;
 
 /**
  * service for work with fakultativ table
@@ -22,11 +24,9 @@ public class FakultativServiceImpl implements FakultativService {
 
 	@Autowired
 	FakultativRepository fakultativRepository;
-
-	@Override
-	public List<Fakultativ> getAllFakultativ() {
-		return fakultativRepository.findAll();
-	}
+	
+	@Autowired
+	PlanService planService;
 
 	@Override
 	public List<Fakultativ> getAllByPlanId(Long id) {
@@ -44,30 +44,6 @@ public class FakultativServiceImpl implements FakultativService {
 	}
 
 	@Override
-	public Fakultativ addFakultativ(Fakultativ f) {
-		if (existsFakultativ(f.getId())) {
-			LOGGER.error("Fakultativ with Id: " + f.getId() + " already exists!");
-			throw new AlreadyExistException("Fakultativ with Id: " + f.getId() + " already exists!");
-		}
-
-		Fakultativ fakultativ = fakultativRepository.save(f);
-		LOGGER.info("Fakultativ with id: " + fakultativ.getId() + " has been added!");
-		return fakultativ;
-	}
-
-	@Override
-	public Fakultativ updateFakultativ(Fakultativ f) {
-		if (!existsFakultativ(f.getId())) {
-			LOGGER.error("Fakultativ with Id: " + f.getId() + " wasn't found!");
-			throw new EntityNotFoundException("Fakultativ with Id: " + f.getId() + " wasn't found!");
-		}
-
-		Fakultativ fakultativ = fakultativRepository.save(f);
-		LOGGER.info("Fakultativ with id: " + fakultativ.getId() + " has been updated!");
-		return fakultativ;
-	}
-
-	@Override
 	public void deleteFakultativ(Long id) {
 		if (!existsFakultativ(id)) {
 			LOGGER.error("Fakultativ with Id: " + id + " wasn't found!");
@@ -81,6 +57,48 @@ public class FakultativServiceImpl implements FakultativService {
 	@Override
 	public boolean existsFakultativ(Long id) {
 		return fakultativRepository.existsById(id);
+	}
+
+	/**
+	 * add list of fakultativs in plan with id
+	 * 
+	 */
+	@Override
+	public List<Fakultativ> addListFakultativByPlanId(Long id, List<Fakultativ> f) {
+		if (!planService.existsPlan(id)) {
+			LOGGER.error("Plan with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");
+		}
+		
+		Plan plan = planService.getPlanById(id);
+		for (Fakultativ fakultativ : f) {
+			fakultativ.setPlan(plan);
+		}
+
+		List<Fakultativ> fakultativ = fakultativRepository.saveAll(f);
+		LOGGER.info("List of fakultativ has been added in plan with Id: " + id);
+		return fakultativ;
+	}
+	
+    /**
+     * update list of fakultativs in plan with id
+     * 
+     */
+	@Override
+	public List<Fakultativ> updateListFakultativByPlanId(Long id, List<Fakultativ> f) {
+		if (!planService.existsPlan(id)) {
+			LOGGER.error("Plan with Id: " + id + " wasn't found!");
+			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");
+		}
+		
+		Plan plan = planService.getPlanById(id);
+		for (Fakultativ fakultativ : f) {
+			fakultativ.setPlan(plan);
+		}
+
+		List<Fakultativ> fakultativ = fakultativRepository.saveAll(f);
+		LOGGER.info("List of fakultativ has been updated in plan with Id: " + id);
+		return fakultativ;
 	}
 
 }

@@ -37,22 +37,16 @@ public class CertificationController {
 		return new ResponseEntity<List<Certification>>(list, HttpStatus.OK);
 	}
 
-	@GetMapping("certification")
-	public ResponseEntity<List<Certification>> getAllCertification() {
-		List<Certification> list = certificationService.getAllCertification();
-		return new ResponseEntity<List<Certification>>(list, HttpStatus.OK);
+	@PostMapping("certifications/{id}")
+	public ResponseEntity<List<Certification>> addCertification(@PathVariable("id") Long id, @RequestBody List<Certification> c) {
+		List<Certification> cert = certificationService.addListCertificationByPlanId(id, c);
+		return new ResponseEntity<List<Certification>>(cert, HttpStatus.CREATED);
 	}
 
-	@PostMapping("certification")
-	public ResponseEntity<Certification> addCertification(@RequestBody Certification c) {
-		Certification cert = certificationService.addCertification(c);
-		return new ResponseEntity<Certification>(cert, HttpStatus.CREATED);
-	}
-
-	@PutMapping("certification")
-	public ResponseEntity<Certification> updateCertification(@RequestBody Certification c) {
-		certificationService.updateCertification(c);
-		return new ResponseEntity<Certification>(c, HttpStatus.OK);
+	@PutMapping("certifications/{id}")
+	public ResponseEntity<List<Certification>> updateCertification(@PathVariable("id") Long id, @RequestBody List<Certification> c) {
+		List<Certification> cert = certificationService.updateListCertificationByPlanId(id, c);
+		return new ResponseEntity<List<Certification>>(c, HttpStatus.OK);
 
 	}
 

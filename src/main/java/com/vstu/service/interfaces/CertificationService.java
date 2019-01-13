@@ -6,15 +6,13 @@ import com.vstu.entity.Certification;
 
 public interface CertificationService {
 
-	List<Certification> getAllCertification();
-
 	List<Certification> getAllByPlanId(Long id);
 
 	Certification getCertificationById(Long id);
 
-	Certification addCertification(Certification c);
+	List<Certification> addListCertificationByPlanId(Long id, List<Certification> c);
 
-	Certification updateCertification(Certification c);
+	List<Certification> updateListCertificationByPlanId(Long id, List<Certification> c);
 
 	void deleteCertification(Long id);
 
