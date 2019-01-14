@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import com.vstu.service.interfaces.SemestrService;
  */
 @Service
 public class PlanServiceImpl implements PlanService {
+	public static final String MIME_APPLICATION_MSWORD = "application/msword";
 	private static final Logger LOGGER = LoggerFactory.getLogger(PlanServiceImpl.class);
 
 	@Autowired
@@ -192,9 +194,15 @@ public class PlanServiceImpl implements PlanService {
 	 */
 	@Override
 	public void uploadDocByPlanId(Long id, MultipartFile doc) {
+		
 		if(!existsPlan(id)) {
 			LOGGER.error("Plan with Id:" + id + " wasn't found!");
 			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");	
+		}
+		
+		if(!doc.getContentType().equals(MIME_APPLICATION_MSWORD)) {
+			LOGGER.error("File: " + doc.getOriginalFilename() + " does not MS Word file!");
+			throw new FileException("File: " + doc.getOriginalFilename() + " does not MS Word file!");
 		}
 		
 		Plan plan = getPlanById(id);
