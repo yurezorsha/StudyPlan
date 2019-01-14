@@ -1,11 +1,15 @@
 package com.vstu.service.impl;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vstu.entity.Node;
 import com.vstu.entity.Plan;
@@ -13,6 +17,7 @@ import com.vstu.entity.Practice;
 import com.vstu.entity.data.DataAllLoad;
 import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
+import com.vstu.exceptions.FileException;
 import com.vstu.repository.PlanRepository;
 import com.vstu.service.interfaces.CertificationService;
 import com.vstu.service.interfaces.FakultativService;
@@ -156,6 +161,56 @@ public class PlanServiceImpl implements PlanService {
 
 		} else
 			return null;
+	}
+
+	/**
+	 * download file by Plan id
+	 */
+	@Override
+	public byte[] downloadDocByPlanId(Long id) {
+		if(!existsPlan(id)) {
+			LOGGER.error("Plan with Id:" + id + " wasn't found!");
+			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");	
+		}
+		
+		Plan plan = getPlanById(id);
+		
+		if(plan.getDoc().length==0) {
+			LOGGER.error("File in plan with id: " +id+" wasn't found!");
+			throw new FileException("File in plan with id: " +id+" wasn't found!");	
+			
+		}
+		
+		return plan.getDoc();
+		
+		
+	}
+
+	
+	/**
+	 * upload file in plan with id 
+	 */
+	@Override
+	public void uploadDocByPlanId(Long id, MultipartFile doc) {
+		if(!existsPlan(id)) {
+			LOGGER.error("Plan with Id:" + id + " wasn't found!");
+			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");	
+		}
+		
+		Plan plan = getPlanById(id);
+		
+		try {
+			plan.setDoc(doc.getBytes());
+			plan.setFileName(doc.getOriginalFilename());
+		} catch (IOException e) {
+			LOGGER.error("Upload file error " + doc.getName());
+			throw new MultipartException("Upload file error " + doc.getName());
+			
+		
+		}
+		
+		planRepository.save(plan);
+		
 	}
 
 }

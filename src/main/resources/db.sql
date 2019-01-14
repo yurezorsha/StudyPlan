@@ -65,6 +65,7 @@ CREATE TABLE `plan` (
   `registration_number_standard` varchar(20),
   `protocol_number` int(10),
   `date_protocol` date,
+  `file_name` varchar(150),
   `doc` longblob,
   
    PRIMARY KEY (`id`),
@@ -309,7 +310,13 @@ INSERT INTO `plan` (`id_speciality`,  `set_year_group`, `date_approve`,`count_se
                     
 INSERT INTO `practice` (`id`,  `id_plan`, `name`, `semestr_number`, `count_weeks`, `ze`) VALUES
 					   (1,1,'технологическая',7,3,2.5);
-
+                       
+INSERT INTO `fakultativ`(`id`,`id_plan`,`name`, `hours`, `semester_number`) VALUES
+                         (1,1,'английский',20,'1,2');
+                         
+INSERT INTO `certification` (`id`, `name`, `id_plan`, `ze`) VALUES
+						    (1,'Государственный экзамен по направлению, специализации.',1, 5.5);
+                         
 INSERT INTO `node` (`id_subject`, `id_cathedra`, `id_plan`) VALUES (1, 0, 1);
 
 INSERT INTO `type` (`id`, `name`, `koff`) VALUES (1, 'зачет',0.3),(2, 'диф. зачет',0.35),(3, 'экзамен',0.4),(4, 'просмотр',0.4);

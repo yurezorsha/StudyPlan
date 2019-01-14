@@ -53,10 +53,10 @@ import com.vstu.entity.data.DataLoadSubject;
 						@ColumnResult(name = "semestrNumber", type = Integer.class),
 						@ColumnResult(name = "idGroup", type = Long.class),
 						@ColumnResult(name = "countStudents", type = Integer.class),
-						@ColumnResult(name = "idSubject", type = Long.class),
-						@ColumnResult(name = "nameSubject", type = String.class),
+						@ColumnResult(name = "idPractice", type = Long.class),
+						@ColumnResult(name = "namePractice", type = String.class),
 						@ColumnResult(name = "pracZe", type = Integer.class),
-						@ColumnResult(name = "pracHour", type = Integer.class) })
+						@ColumnResult(name = "pracCountWeeks", type = Integer.class) })
 
 		}),
 
@@ -73,21 +73,37 @@ import com.vstu.entity.data.DataLoadSubject;
 		}) })
 
 @NamedNativeQueries({
-		@NamedNativeQuery(name = "Plan.getDataLoadPractice", query = "SELECT g.id as idGroup, g.count_students as countStudents, sb.id as idSubject, s.prac_ze as pracZe, s.prac_hour as pracHour,"
-				+ " sb.name as nameSubject, s.number as semestrNumber"
-				+ " FROM plan p, groups g, node n, semestr s, subject sb "
-				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.prac_ze <> 0 and s.prac_hour <> 0)) ", resultSetMapping = "DataLoadPractice", resultClass = DataLoadPractice.class),
+		@NamedNativeQuery(name = "Plan.getDataLoadPractice", 
+				          query = "SELECT g.id as idGroup, g.count_students as countStudents, pr.id as idPractice,"
+				          + " pr.name as namePractice, pr.count_weeks as pracCountWeeks, "
+				          + " pr.semestr_number as semestrNumber, pr.ze as pracZe "
+				          + " FROM plan p, groups g, practice pr "
+				          + " WHERE p.id = :id and g.id_plan= :id and pr.id_plan=:id and "
+				          + " (pr.semestr_number = :num1 or pr.semestr_number = :num2) ",
+				          resultSetMapping = "DataLoadPractice",
+				          resultClass = DataLoadPractice.class),
 
-		@NamedNativeQuery(name = "Plan.getDataLoadDiploma", query = "SELECT g.id as idGroup, g.count_students as countStudents, sb.id as idSubject, s.diplom_ze as diplomZe, s.diplom_hour as diplomHour,"
-				+ " sb.name as nameSubject, s.number as semestrNumber"
-				+ " FROM plan p, groups g, node n, semestr s, subject sb "
-				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and  (s.diplom_ze <> 0 and s.diplom_hour <> 0)) ", resultSetMapping = "DataLoadDiploma", resultClass = DataLoadDiploma.class),
+		@NamedNativeQuery(name = "Plan.getDataLoadDiploma",
+						  query = "SELECT g.id as idGroup, g.count_students as countStudents, sb.id as idSubject,"
+						  + " s.diplom_ze as diplomZe, s.diplom_hour as diplomHour,"
+						  + " sb.name as nameSubject, s.number as semestrNumber"
+						  + " FROM plan p, groups g, node n, semestr s, subject sb "
+						  + "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and"
+						  + " (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2) and"
+						  + " (s.diplom_ze <> 0 and s.diplom_hour <> 0)) ",
+						  resultSetMapping = "DataLoadDiploma",
+						  resultClass = DataLoadDiploma.class),
 
-		@NamedNativeQuery(name = "Plan.getDataLoadSubject", query = "SELECT s.id_teacher as idTeacher, g.id as idGroup, g.count_students as countStudents, sb.id as idSubject,"
-				+ " sb.name as nameSubject, s.number as semestrNumber, s.lecture as countLecture, s.laboratory as countLaboratory,"
-				+ " s.practice as countPractice, s.seminar as countSeminar, t.name as type, s.cource_work_hours as courceWorkHours, (t.koff*g.count_students) as calcField"
-				+ " FROM plan p, groups g, node n, semestr s, subject sb, Type t "
-				+ "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and (s.number = :num1 or s.number = :num2)) and s.prac_hour = 0 and s.diplom_hour = 0 and t.id=s.id_type", resultSetMapping = "DataLoadSubject", resultClass = DataLoadSubject.class) })
+		@NamedNativeQuery(name = "Plan.getDataLoadSubject",
+		                  query = "SELECT s.id_teacher as idTeacher, g.id as idGroup, g.count_students as countStudents,"
+		                  + " sb.id as idSubject, sb.name as nameSubject, s.number as semestrNumber, s.lecture as countLecture,"
+		                  + " s.laboratory as countLaboratory, s.practice as countPractice, s.seminar as countSeminar,"
+		                  + " t.name as type, s.cource_work_hours as courceWorkHours, (t.koff*g.count_students) as calcField"
+				          + " FROM plan p, groups g, node n, semestr s, subject sb, Type t "
+				          + "WHERE p.id = :id and g.id_plan= :id  and n.id_plan=:id and (s.id_node=n.id and n.id_subject=sb.id and"
+				          + " (s.number = :num1 or s.number = :num2)) and s.diplom_hour = 0 and t.id=s.id_type",
+				          resultSetMapping = "DataLoadSubject",
+				          resultClass = DataLoadSubject.class) })
 
 @Entity
 public class Plan implements Serializable {
@@ -120,6 +136,9 @@ public class Plan implements Serializable {
 	@Lob
 	@JsonIgnore
     private byte[] doc;
+	
+	@JsonIgnore
+	private String fileName;
 	
 	// bi-directional many-to-one association to Certification
 	@OneToMany(mappedBy = "plan")
@@ -274,6 +293,15 @@ public class Plan implements Serializable {
 
 	public void setDoc(byte[] doc) {
 		this.doc = doc;
+	}
+	
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public List<Practice> getPractices() {

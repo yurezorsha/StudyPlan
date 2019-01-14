@@ -13,21 +13,21 @@ public class DataLoadPractice {
 	private Integer semestrNumber;
 	private Long idGroup;
 	private Integer countStudents;
-	private Long idSubject;
-	private String nameSubject;
+	private Long idPractice;
+	private String namePractice;
 	private Integer pracZe;
-	private Integer pracHour;
+	private Integer pracCountWeeks;
 
-	public DataLoadPractice(Integer semestrNumber, Long idGroup, Integer countStudents, Long idSubject,
-			String nameSubject, Integer pracZe, Integer pracHour) {
+	public DataLoadPractice(Integer semestrNumber, Long idGroup, Integer countStudents, Long idPractice,
+			String namePractice, Integer pracZe, Integer pracCountWeeks) {
 
 		this.semestrNumber = semestrNumber;
 		this.idGroup = idGroup;
 		this.countStudents = countStudents;
-		this.idSubject = idSubject;
-		this.nameSubject = nameSubject;
+		this.idPractice = idPractice;
+		this.namePractice = namePractice;
 		this.pracZe = pracZe;
-		this.pracHour = pracHour;
+		this.pracCountWeeks = pracCountWeeks;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.vstu.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vstu.entity.Plan;
 import com.vstu.entity.data.DataAllLoad;
@@ -68,6 +70,23 @@ public class PlanController {
 	public ResponseEntity<Void> deletePlan(@PathVariable("id") Long id) {
 		planService.deletePlan(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@PostMapping("plan/doc/upload/{id}")
+	public ResponseEntity<Void> uploadDocByPlanId(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file ) {
+		planService.uploadDocByPlanId(id, file);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@GetMapping("plan/doc/download/{id}")
+	public ResponseEntity<byte[]> uploadDocByPlanId(@PathVariable("id") Long id) {
+		byte[] file = planService.downloadDocByPlanId(id);
+		String  fileName=planService.getPlanById(id).getFileName();
+		
+		
+		return   ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+				.body(file);	
 	}
 
 }

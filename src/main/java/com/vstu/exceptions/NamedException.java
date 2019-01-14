@@ -1,5 +1,7 @@
 package com.vstu.exceptions;
 
+import java.io.IOException;
+
 public class NamedException extends RuntimeException {
 
     private final String name;
@@ -9,7 +11,7 @@ public class NamedException extends RuntimeException {
         this.name = clazz.getSimpleName();
     }
 
-    public String getName() {
+	public String getName() {
         return name;
     }
 }
