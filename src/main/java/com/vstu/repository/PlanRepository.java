@@ -17,6 +17,9 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
 
 	@Query("SELECT p.setYearGroup FROM Plan p WHERE p.id = :id")
 	public int getYearById(@Param("id") long id);
+	
+	@Query("SELECT CASE WHEN (p.fileName=null or p.doc=null) THEN false ELSE true END FROM Plan p WHERE p.id = :id")
+	boolean existsFileByPlanId(@Param("id") Long id);
 
 	public List getDataLoadSubject(@Param("id") Long id, @Param("num1") int num1, @Param("num2") int num2);
 

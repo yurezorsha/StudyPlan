@@ -2,6 +2,8 @@ package com.vstu.controller;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -79,8 +81,8 @@ public class PlanController {
 	}
 	
 	@GetMapping("plan/doc/download/{id}")
-	public ResponseEntity<byte[]> uploadDocByPlanId(@PathVariable("id") Long id) {
-		byte[] file = planService.downloadDocByPlanId(id);
+	public ResponseEntity<byte[]> downloadDocByPlanId(@PathVariable("id") Long id) {
+		byte[] file = planService.getDocByPlanId(id);
 		String  fileName=planService.getPlanById(id).getFileName();
 		
 		

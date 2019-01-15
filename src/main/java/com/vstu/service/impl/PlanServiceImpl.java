@@ -166,22 +166,22 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	/**
-	 * download file by Plan id
+	 * get file by Plan id
 	 */
 	@Override
-	public byte[] downloadDocByPlanId(Long id) {
+	public byte[] getDocByPlanId(Long id) {
 		if(!existsPlan(id)) {
 			LOGGER.error("Plan with Id:" + id + " wasn't found!");
 			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");	
 		}
 		
-		Plan plan = getPlanById(id);
-		
-		if(plan.getDoc().length==0) {
+		if(!planRepository.existsFileByPlanId(id)) {
 			LOGGER.error("File in plan with id: " +id+" wasn't found!");
 			throw new FileException("File in plan with id: " +id+" wasn't found!");	
 			
 		}
+		
+		Plan plan = getPlanById(id);
 		
 		return plan.getDoc();
 		

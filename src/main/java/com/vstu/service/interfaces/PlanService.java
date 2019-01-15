@@ -23,7 +23,7 @@ public interface PlanService {
 
 	boolean existsPlan(Long id);
 	
-    byte[] downloadDocByPlanId(Long id);
+    byte[] getDocByPlanId(Long id);
 	
 	void uploadDocByPlanId(Long id, MultipartFile doc);
 
