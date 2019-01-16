@@ -17,6 +17,7 @@ API REST SERVICE STUDY PLAN
 | [Group](#group)                 | api для работы с группами  |
 | [Node](#node)                  | api для работы с записями плана |
 | [Plan](#plan)                 | api для работы с планами |
+| [Practice](#practice)                 | api для работы с практиками |
 | [Semestr](#semestr)               | api для работы с семестрами  |
 | [Speciality](#speciality)            | api для работы со специальностями  |
 | [StudyProgram](#studyprogram)          | api для работы с учебной программой |
@@ -39,6 +40,8 @@ Certification
 | DELETE    | /certification/{id}   | Удалить Certification по id|
 | PUT       | /certifications/{id}  | Обновить список Certifications по id(Plan)|
 
+Формат ответа:
+GET localhost:8080/studyplan/certification/1
 ```javascript
 
 {
@@ -500,6 +503,30 @@ GET localhost:8080/studyplan/plan/1/data/?year=2014
         }
     ],
     "loadPractice": []
+}
+```
+
+Practice
+--------------
+
+| Запрос    | URL                  | Описание |
+| :----------:|:--------------------| ---------|
+| GET       | /practice/{id}    | Получить Practice по id |
+| GET       | /practices/{id}   | Получить список всех Practices по id(Plan)|
+| POST      | /practices/{id}   | Добавить список Practices по id(Plan) |
+| DELETE    | /practice/{id}   | Удалить Practice по id |
+| PUT       | /practices/{id}     | Обновить список Practices по id(Plan) |
+
+Формат ответа:
+GET localhost:8080/studyplan/practice/1
+
+```javascript
+{
+    "id": 1,
+    "name": "технологическая",
+    "semestrNumber": 7,
+    "countWeeks": 3,
+    "ze": 2.5
 }
 ```
 
