@@ -17,6 +17,7 @@ API REST SERVICE STUDY PLAN
 | [Group](#group)                 | api для работы с группами  |
 | [Node](#node)                  | api для работы с записями плана |
 | [Plan](#plan)                 | api для работы с планами |
+| [Practice](#practice)                 | api для работы с практиками |
 | [Semestr](#semestr)               | api для работы с семестрами  |
 | [Speciality](#speciality)            | api для работы со специальностями  |
 | [StudyProgram](#studyprogram)          | api для работы с учебной программой |
@@ -33,12 +34,22 @@ Certification
 
 | Запрос    | URL                  | Описание |
 | :----------:|:--------------------| ---------|
-| GET       | /certification/{id}   | Получить Certification по id |
+| GET       | /certification/{id}   | Получить Certification по id|
 | GET       | /certifications/{id}  | Получить все Certifications по id(Plan)|
-| GET       | /certification        | Получить список всех Certifications |
-| POST      | /certification        | Добавить Certification |
-| DELETE    | /certification/{id}   | Удалить Certification по id |
-| PUT       | /certification        | Обновить Certification |
+| POST      | /certifications/{id}  | Добавить список Certifications по id(Plan)|
+| DELETE    | /certification/{id}   | Удалить Certification по id|
+| PUT       | /certifications/{id}  | Обновить список Certifications по id(Plan)|
+
+Формат ответа:
+GET localhost:8080/studyplan/certification/1
+```javascript
+
+{
+    "id": 1,
+    "name": "Государственный экзамен по направлению, специализации.",
+    "ze": 5.5
+}
+```
 
 Competence
 --------------
@@ -107,11 +118,10 @@ Fakultativ
 | Запрос    | URL                  | Описание |
 | :----------:|:--------------------| ---------|
 | GET       | /fakultativ/{id}   | Получить Fakultativ по id |
-| GET       | /fakultatives/{id}  | Получить все Fakultatives по id(Plan) |
-| GET       | /fakultativ        | Получить список всех Fakultativs |
-| POST      | /fakultativ        | Добавить Fakultativ |
+| GET       | /fakultatives/{id} | Получить все Fakultatives по id(Plan) |
+| POST      | /fakultatives/{id} | Добавить список Fakultatives по id(Plan)|
 | DELETE    | /fakultativ/{id}   | Удалить Fakultativ по id |
-| PUT       | /fakultativ        | Обновить Fakultativ |
+| PUT       | /fakultatives/{id} | Обновить список Fakultatives по id(Plan) |
 
 Формат ответа:
 GET localhost:8080/studyplan/fakultativ/1
@@ -119,8 +129,9 @@ GET localhost:8080/studyplan/fakultativ/1
 ```javascript
 {
     "id": 1,
-    "name": "Факультатив 1",
-    "plan": null
+    "name": "английский",
+    "hours": 20,
+    "semesterNumber": 1
 }
 ```
 
@@ -253,13 +264,11 @@ Semestr
 | Запрос    | URL                  | Описание |
 | :----------:|:--------------------| ---------|
 | GET       | /semestr/{id}   | Получить Semestr по id |
-| GET       | /semestrs/{id}  | Получить все Semestrs по id(GroupComponent) |
-| GET       | /semestr        | Получить список всех Semestrs |
+| GET       | /semesters/{id}  | Получить все Semestrs по id(Node) |
 | GET       | /semestr/sum/{id}| Получить кол-во часов всех пар в Semestr с id |
-| POST      | /semestr/{id}   | Добавить Semestr в Node с id |
-| POST      | /semestrs/{id}       | Добавить список Semestr в Node с id|
+| POST      | /semesters/{id}   | Добавить список Semestrs в Node с id |
 | DELETE    | /semestr/{id}   | Удалить Semestr по id |
-| PUT       | /semestr /{id}  | Обновить Semestr в Node с id |
+| PUT       | /semesters /{id}  | Обновить Semestr в Node с id |
 
 Формат ответа:
 GET localhost:8080/studyplan/semestr/1
@@ -267,7 +276,7 @@ GET localhost:8080/studyplan/semestr/1
 ```javascript
 {
     "id": 1,
-    "courceWorkHours": 300,
+    "courceWorkHours": 10,
     "courceWorkZe": 1,
     "courseWorkType": "курсовой проект",
     "idFaculty": 1,
@@ -284,10 +293,8 @@ GET localhost:8080/studyplan/semestr/1
         "koff": 0.3
     },
     "ze": 5,
-    "prac_hour": 0,
-    "prac_ze": 0,
-    "diplom_hour": 0,
-    "diplom_ze": 0
+    "diplomHour": 0,
+    "diplomZe": 0
 }
 ```
 
@@ -337,6 +344,8 @@ Plan
 | GET       | /plans/{id}  | Получить все Plan по id(Speciality) |
 | GET       | /plan        | Получить список всех Plans |
 | GET       | /plan/{id}/data  | Получить учебную нагрузку по id(Plan) за год |
+| GET       | /plan/doc/download/{id}  | Скачать doc-файл Plan по id|
+| POST      | /plan/doc/upload/{id}  | Загрузить doc-файл Plan по id|
 | POST      | /plan        | Добавить Plan |
 | DELETE    | /plan/{id}   | Удалить Plan по id |
 | PUT       | /plan        | Обновить Plan |
@@ -349,12 +358,87 @@ GET localhost:8080/studyplan/plan/1
 ```javascript
 {
     "id": 1,
-    "set_data_group": 2009,
-    "nodes": [],
+    "setYearGroup": 2013,
+    "dateApprove": "2013-06-28",
+    "countSemesters": 9,
+    "firstYear": 2013,
+    "secondYear": 2014,
+    "registrationNumber": "22д-1-13/раб",
+    "registrationNumberStandard": "I 53-1-003/тип",
+    "protocolNumber": 10,
+    "dateProtocol": "2013-06-28",
+    "practices": [
+        {
+            "id": 1,
+            "name": "технологическая",
+            "semestrNumber": 7,
+            "countWeeks": 3,
+            "ze": 2.5
+        }
+    ],
+    "certifications": [
+        {
+            "id": 1,
+            "name": "Государственный экзамен по направлению, специализации.",
+            "ze": 5.5
+        }
+    ],
+    "fakultativs": [
+        {
+            "id": 1,
+            "name": "английский",
+            "hours": 20,
+            "semesterNumber": 1
+        }
+    ],
+    "nodes": [
+        {
+            "id": 1,
+            "idCathedra": 0,
+            "subject": {
+                "id": 1,
+                "name": "История",
+                "shifr": "shifr",
+                "groupUnit": {
+                    "id": 1,
+                    "name": "Социально-гуманитарный модуль 1",
+                    "groupComponent": {
+                        "id": 1,
+                        "name": "Государственный компонент"
+                    }
+                }
+            },
+            "semestrs": [
+                {
+                    "id": 1,
+                    "courceWorkHours": 10,
+                    "courceWorkZe": 1,
+                    "courseWorkType": "курсовой проект",
+                    "idFaculty": 1,
+                    "idTeacher": 1,
+                    "laboratory": 15,
+                    "lecture": 15,
+                    "number": 1,
+                    "practice": 15,
+                    "rgr": 1,
+                    "seminar": 15,
+                    "type": {
+                        "id": 1,
+                        "name": "зачет",
+                        "koff": 0.3
+                    },
+                    "ze": 5,
+                    "diplomHour": 0,
+                    "diplomZe": 0
+                }                
+            ]
+        }
+    ],
     "speciality": {
         "id": 1,
         "name": "Информационные системы и технологии",
-        "shifr": "1-40 05 01-01"
+        "shifr": "1-40 05 01-01",
+        "qualification": "инженер-программист"
     }
 }
 
@@ -362,124 +446,88 @@ GET localhost:8080/studyplan/plan/1
 
 Получения нагрузки за определенный год
 Формат ответа:
-GET localhost:8080/studyplan/plan/1/data/?year=2009
+GET localhost:8080/studyplan/plan/1/data/?year=2014
 
 ```javascript
-[
-    [
+{
+    "loadSubjects": [
         {
-            "id_teacher": 1,
-            "semestr_number": 1,
-            "count_lecture": 15,
-            "count_laboratory": 15,
-            "count_practice": 15,
-            "count_seminar": 15,
+            "idTeacher": 1,
+            "semestrNumber": 3,
+            "countLecture": 15,
+            "countLaboratory": 15,
+            "countPractice": 15,
+            "countSeminar": 15,
             "type": "зачет",
-            "cource_work_hours": 300,
-            "id_group": 1,
-            "count_students": 20,
-            "id_subject": 4,
-            "name_subject": "Экономика",
-            "calc_field": 6
+            "courceWorkHours": 10,
+            "idGroup": 1,
+            "countStudents": 20,
+            "idSubject": 1,
+            "nameSubject": "История",
+            "calcField": 6
         },
         {
-            "id_teacher": 1,
-            "semestr_number": 1,
-            "count_lecture": 15,
-            "count_laboratory": 15,
-            "count_practice": 15,
-            "count_seminar": 15,
+            "idTeacher": 1,
+            "semestrNumber": 3,
+            "countLecture": 15,
+            "countLaboratory": 15,
+            "countPractice": 15,
+            "countSeminar": 15,
             "type": "зачет",
-            "cource_work_hours": 0,
-            "id_group": 1,
-            "count_students": 20,
-            "id_subject": 2,
-            "name_subject": "Политология",
-            "calc_field": 6
-        },
-        {
-            "id_teacher": 1,
-            "semestr_number": 2,
-            "count_lecture": 15,
-            "count_laboratory": 15,
-            "count_practice": 15,
-            "count_seminar": 15,
-            "type": "зачет",
-            "cource_work_hours": 0,
-            "id_group": 1,
-            "count_students": 20,
-            "id_subject": 2,
-            "name_subject": "Политология",
-            "calc_field": 6
-        },
-        {
-            "id_teacher": 1,
-            "semestr_number": 1,
-            "count_lecture": 15,
-            "count_laboratory": 15,
-            "count_practice": 15,
-            "count_seminar": 15,
-            "type": "зачет",
-            "cource_work_hours": 300,
-            "id_group": 2,
-            "count_students": 25,
-            "id_subject": 4,
-            "name_subject": "Экономика",
-            "calc_field": 7.5000005
-        },
-        {
-            "id_teacher": 1,
-            "semestr_number": 1,
-            "count_lecture": 15,
-            "count_laboratory": 15,
-            "count_practice": 15,
-            "count_seminar": 15,
-            "type": "зачет",
-            "cource_work_hours": 0,
-            "id_group": 2,
-            "count_students": 25,
-            "id_subject": 2,
-            "name_subject": "Политология",
-            "calc_field": 7.5000005
-        },
-        {
-            "id_teacher": 1,
-            "semestr_number": 2,
-            "count_lecture": 15,
-            "count_laboratory": 15,
-            "count_practice": 15,
-            "count_seminar": 15,
-            "type": "зачет",
-            "cource_work_hours": 0,
-            "id_group": 2,
-            "count_students": 25,
-            "id_subject": 2,
-            "name_subject": "Политология",
-            "calc_field": 7.5000005
+            "courceWorkHours": 10,
+            "idGroup": 2,
+            "countStudents": 25,
+            "idSubject": 1,
+            "nameSubject": "История",
+            "calcField": 7.5000005
         }
     ],
-    [],
-    [
+    "loadDiploma": [
         {
-            "semestr_number": 2,
-            "id_group": 1,
-            "count_students": 20,
-            "id_subject": 4,
-            "name_subject": "Экономика",
-            "prac_ze": 1,
-            "prac_hour": 1
+            "semestrNumber": 4,
+            "idGroup": 1,
+            "countStudents": 20,
+            "idSubject": 1,
+            "nameSubject": "История",
+            "diplomZe": 1,
+            "diplomHour": 1
         },
         {
-            "semestr_number": 2,
-            "id_group": 2,
-            "count_students": 25,
-            "id_subject": 4,
-            "name_subject": "Экономика",
-            "prac_ze": 1,
-            "prac_hour": 1
+            "semestrNumber": 4,
+            "idGroup": 2,
+            "countStudents": 25,
+            "idSubject": 1,
+            "nameSubject": "История",
+            "diplomZe": 1,
+            "diplomHour": 1
         }
-    ]
-]
+    ],
+    "loadPractice": []
+}
+```
+
+Practice
+--------------
+
+| Запрос    | URL                  | Описание |
+| :----------:|:--------------------| ---------|
+| GET       | /practice/{id}    | Получить Practice по id |
+| GET       | /practices/{id}   | Получить список всех Practices по id(Plan)|
+| POST      | /practices/{id}   | Добавить список Practices по id(Plan) |
+| DELETE    | /practice/{id}   | Удалить Practice по id |
+| PUT       | /practices/{id}     | Обновить список Practices по id(Plan) |
+
+Формат ответа:
+GET localhost:8080/studyplan/practice/1
+
+```javascript
+{
+    "id": 1,
+    "name": "технологическая",
+    "semestrNumber": 7,
+    "countWeeks": 3,
+    "ze": 2.5
+}
 ```
 
 Speciality
