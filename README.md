@@ -33,12 +33,20 @@ Certification
 
 | Запрос    | URL                  | Описание |
 | :----------:|:--------------------| ---------|
-| GET       | /certification/{id}   | Получить Certification по id |
+| GET       | /certification/{id}   | Получить Certification по id|
 | GET       | /certifications/{id}  | Получить все Certifications по id(Plan)|
-| GET       | /certification        | Получить список всех Certifications |
-| POST      | /certification        | Добавить Certification |
-| DELETE    | /certification/{id}   | Удалить Certification по id |
-| PUT       | /certification        | Обновить Certification |
+| POST      | /certifications/{id}  | Добавить список Certifications по id(Plan)|
+| DELETE    | /certification/{id}   | Удалить Certification по id|
+| PUT       | /certifications/{id}  | Обновить список Certifications по id(Plan)|
+
+```javascript
+
+{
+    "id": 1,
+    "name": "Государственный экзамен по направлению, специализации.",
+    "ze": 5.5
+}
+```
 
 Competence
 --------------
@@ -107,11 +115,10 @@ Fakultativ
 | Запрос    | URL                  | Описание |
 | :----------:|:--------------------| ---------|
 | GET       | /fakultativ/{id}   | Получить Fakultativ по id |
-| GET       | /fakultatives/{id}  | Получить все Fakultatives по id(Plan) |
-| GET       | /fakultativ        | Получить список всех Fakultativs |
-| POST      | /fakultativ        | Добавить Fakultativ |
+| GET       | /fakultatives/{id} | Получить все Fakultatives по id(Plan) |
+| POST      | /fakultatives/{id} | Добавить список Fakultatives по id(Plan)|
 | DELETE    | /fakultativ/{id}   | Удалить Fakultativ по id |
-| PUT       | /fakultativ        | Обновить Fakultativ |
+| PUT       | /fakultatives/{id} | Обновить список Fakultatives по id(Plan) |
 
 Формат ответа:
 GET localhost:8080/studyplan/fakultativ/1
@@ -119,8 +126,9 @@ GET localhost:8080/studyplan/fakultativ/1
 ```javascript
 {
     "id": 1,
-    "name": "Факультатив 1",
-    "plan": null
+    "name": "английский",
+    "hours": 20,
+    "semesterNumber": 1
 }
 ```
 
