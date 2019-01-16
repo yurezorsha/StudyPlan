@@ -74,13 +74,13 @@ public class PlanController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@PostMapping("plan/doc/upload/{id}")
+	@PostMapping("plan/file/{id}")
 	public ResponseEntity<Void> uploadDocByPlanId(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file ) {
 		planService.uploadDocByPlanId(id, file);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@GetMapping("plan/doc/download/{id}")
+	@GetMapping("plan/file/{id}")
 	public ResponseEntity<byte[]> downloadDocByPlanId(@PathVariable("id") Long id) {
 		byte[] file = planService.getDocByPlanId(id);
 		String  fileName=planService.getPlanById(id).getFileName();
