@@ -49,12 +49,13 @@ GET localhost:8080/studyplan/certification/1
     "name": "Государственный экзамен по направлению, специализации.",
     "ze": 5.5
 }
-```
 | Поле    | Описание |
 | :----------:|:--------------------|
 | id       |  Получить Certification по id|
 | name       |  Получить Certification по id|
 | ze       |  Получить Certification по id|
+```
+
 
 
 Competence
