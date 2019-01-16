@@ -50,6 +50,12 @@ GET localhost:8080/studyplan/certification/1
     "ze": 5.5
 }
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       |  Получить Certification по id|
+| name       |  Получить Certification по id|
+| ze       |  Получить Certification по id|
+
 
 Competence
 --------------
@@ -345,8 +351,8 @@ Plan
 | GET       | /plans/{id}  | Получить все Plan по id(Speciality) |
 | GET       | /plan        | Получить список всех Plans |
 | GET       | /plan/{id}/data  | Получить учебную нагрузку по id(Plan) за год |
-| GET       | /plan/doc/download/{id}  | Скачать doc-файл Plan по id|
-| POST      | /plan/doc/upload/{id}  | Загрузить doc-файл Plan по id|
+| GET       | /plan/file/{id}  | Скачать doc-файл Plan по id|
+| POST      | /plan/file/{id} | Загрузить doc-файл Plan по id|
 | POST      | /plan        | Добавить Plan |
 | DELETE    | /plan/{id}   | Удалить Plan по id |
 | PUT       | /plan        | Обновить Plan |
