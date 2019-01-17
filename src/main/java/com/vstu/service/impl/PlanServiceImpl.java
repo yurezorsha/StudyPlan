@@ -8,6 +8,7 @@ import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,8 @@ import com.vstu.service.interfaces.SemestrService;
  */
 @Service
 public class PlanServiceImpl implements PlanService {
-	public static final String MIME_APPLICATION_MSWORD = "application/msword";
+	public static final String MIME_TYPE_DOC = "application/msword";
+	public static final String MIME_TYPE_DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 	private static final Logger LOGGER = LoggerFactory.getLogger(PlanServiceImpl.class);
 
 	@Autowired
@@ -200,7 +202,7 @@ public class PlanServiceImpl implements PlanService {
 			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");	
 		}
 		
-		if(!doc.getContentType().equals(MIME_APPLICATION_MSWORD)) {
+		if(!doc.getContentType().equals(MIME_TYPE_DOC) || !doc.getContentType().equals(MIME_TYPE_DOCX)) {
 			LOGGER.error("File: " + doc.getOriginalFilename() + " does not MS Word file!");
 			throw new FileException("File: " + doc.getOriginalFilename() + " does not MS Word file!");
 		}
