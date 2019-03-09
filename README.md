@@ -49,12 +49,12 @@ GET localhost:8080/studyplan/certification/1
     "name": "Государственный экзамен по направлению, специализации.",
     "ze": 5.5
 }
+```
 | Поле    | Описание |
 | :----------:|:--------------------|
-| id       |  Получить Certification по id|
-| name       |  Получить Certification по id|
-| ze       |  Получить Certification по id|
-```
+| id       |  Идентификатор аттестации|
+| name       |  Название аттестации|
+| ze       |  Количество зачетных единиц по семестру|
 
 
 
@@ -80,6 +80,12 @@ GET localhost:8080/studyplan/competence/1
     "nameCompetence": "Быть способным использовать основные законы электротехники и владеть методами их применения, применять электронные элементы и приборы в системах автоматизации"
 }
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       |  Идентификатор компетенции|
+| code       |  Код компетенции|
+| nameCompetence       |  Содержание компетенции|
+
 
 CreatorStudyProgram
 --------------
@@ -101,24 +107,16 @@ GET localhost:8080/studyplan/creatorstudyprogram/1
     "id": 1,
     "idTeacher": 1,
     "studyProgramm": {
-        "id": 1,
-        "dateApprove": "2020-08-20",
-        "subject": {
-            "id": 1,
-            "name": "История",
-            "shifr": "shifr",
-            "groupUnit": {
-                "id": 1,
-                "name": "Социально-гуманитарный модуль 1",
-                "groupComponent": {
-                    "id": 1,
-                    "name": "Государственный компонент"
-                }
-            }
-        }
+       
     }
 }
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       |  Идентификатор создателя учебной программы|
+| idTeacher       |  Идентификатор преподавателя|
+| studyProgramm       |  Ссылка на учебную программу|
+
 
 Fakultativ
 --------------
@@ -142,6 +140,13 @@ GET localhost:8080/studyplan/fakultativ/1
     "semesterNumber": 1
 }
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       | Идентификатор факультатива|
+| name       |  Название факультатива|
+| hours       |  Количесиво часов факультатива|
+| semesterNumber       |  Номер семестра, в котором есть факультатив|
+
 
 GroupComponent
 --------------
@@ -163,6 +168,12 @@ GET localhost:8080/studyplan/groupcomponent/1
     "name": "Государственный компонент"
 }
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       | Идентификатор государственного компонента|
+| name       |  Название государственного компонента|
+
+
 
 GroupUnit
 --------------
@@ -184,11 +195,17 @@ GET localhost:8080/studyplan/groupunit/1
     "id": 1,
     "name": "Социально-гуманитарный модуль 1",
     "groupComponent": {
-        "id": 1,
-        "name": "Государственный компонент"
+       
     }
 }
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       | Идентификатор группы модулей|
+| name       |  Название группы модулей|
+| groupComponent      |  Ссылка на групповой компонент|
+
+
 
 Subject
 --------------
@@ -211,15 +228,17 @@ GET localhost:8080/studyplan/subject/1
         "name": "История",
         "shifr": "shifr",
         "groupUnit": {
-            "id": 1,
-            "name": "Социально-гуманитарный модуль 1",
-            "groupComponent": {
-                "id": 1,
-                "name": "Государственный компонент"
-            }
+            
         }
     }
  ```
+ | Поле    | Описание |
+| :----------:|:--------------------|
+| id       | Идентификатор предмета|
+| name       |  Наименование предмета|
+| shifr      |  Шифр предмета|
+| groupUnit      |  Ссылка на группу модулей|
+ 
 
 Group
 --------------
@@ -243,6 +262,14 @@ GET localhost:8080/studyplan/group/3
     "count_students": 26
 }
 ```
+ | Поле    | Описание |
+| :----------:|:--------------------|
+| id       | Идентификатор группы|
+| plan       |  Ссылка на план|
+| count_students      |  Количество студентов в группе|
+
+
+
 
 Type
 --------------
@@ -265,6 +292,13 @@ GET localhost:8080/studyplan/type/1
     "koff": 0.3
 }
 ```
+ | Поле    | Описание |
+| :----------:|:--------------------|
+| id       | Идентификатор типа|
+| name       |  Наименование типа|
+| koff      |  Коэффициент за тип|
+
+
 
 Semestr
 --------------
@@ -296,15 +330,33 @@ GET localhost:8080/studyplan/semestr/1
     "rgr": 1,
     "seminar": 15,
     "type": {
-        "id": 1,
-        "name": "зачет",
-        "koff": 0.3
+       
     },
     "ze": 5,
     "diplomHour": 0,
     "diplomZe": 0
 }
 ```
+ | Поле    | Описание |
+| :----------:|:--------------------|
+| id       | Идентификатор семестра|
+| courceWorkHours       |  Количество часов по курсовой работе|
+| courceWorkZe      |  Количество зачетных единиц по курсовой работе|
+| courseWorkType       | Тип курсовой работы(курсовая работа или курсовой проект)|
+| idFaculty       |  Идентификатор факультета|
+| idTeacher      |  Идентификатор преподавателя|
+| laboratory       |  Количество лабораторных часов|
+| lecture      |  Количество лекционных часов|
+| number       |  Номер семестра|
+| practice      |  Количество практических часов|
+| rgr       | Количество расчетно-графических работ|
+| seminar      |  Коэффициент за тип|
+| type       | Ссылка на тип оценки знаний|
+| ze      |  Количество зачетных единиц по семестру|
+| diplomHour       | Количество часов диплома|
+| diplomZe       | Количество зачетных единиц диплома|
+
+
 
 Node
 --------------
@@ -327,21 +379,19 @@ GET localhost:8080/studyplan/node/2
     "id": 2,
     "idCathedra": 0,
     "subject": {
-        "id": 2,
-        "name": "Политология",
-        "shifr": "shifr",
-        "groupUnit": {
-            "id": 1,
-            "name": "Социально-гуманитарный модуль 1",
-            "groupComponent": {
-                "id": 1,
-                "name": "Государственный компонент"
-            }
-        }
+       
     },
     "semestrs": []
 }
 ```
+ | Поле    | Описание |
+| :----------:|:--------------------|
+| id       | Идентификатор записи|
+| idCathedra       |  Идентификатор кафедры|
+| subject      | Ссылка на предмет|
+| semestrs       | Массив семестров для предмета|
+
+
 
 Plan
 --------------
@@ -376,81 +426,43 @@ GET localhost:8080/studyplan/plan/1
     "protocolNumber": 10,
     "dateProtocol": "2013-06-28",
     "practices": [
-        {
-            "id": 1,
-            "name": "технологическая",
-            "semestrNumber": 7,
-            "countWeeks": 3,
-            "ze": 2.5
-        }
+       
     ],
     "certifications": [
-        {
-            "id": 1,
-            "name": "Государственный экзамен по направлению, специализации.",
-            "ze": 5.5
-        }
+        
     ],
     "fakultativs": [
-        {
-            "id": 1,
-            "name": "английский",
-            "hours": 20,
-            "semesterNumber": 1
-        }
+       
     ],
     "nodes": [
-        {
-            "id": 1,
-            "idCathedra": 0,
-            "subject": {
-                "id": 1,
-                "name": "История",
-                "shifr": "shifr",
-                "groupUnit": {
-                    "id": 1,
-                    "name": "Социально-гуманитарный модуль 1",
-                    "groupComponent": {
-                        "id": 1,
-                        "name": "Государственный компонент"
-                    }
-                }
-            },
-            "semestrs": [
-                {
-                    "id": 1,
-                    "courceWorkHours": 10,
-                    "courceWorkZe": 1,
-                    "courseWorkType": "курсовой проект",
-                    "idFaculty": 1,
-                    "idTeacher": 1,
-                    "laboratory": 15,
-                    "lecture": 15,
-                    "number": 1,
-                    "practice": 15,
-                    "rgr": 1,
-                    "seminar": 15,
-                    "type": {
-                        "id": 1,
-                        "name": "зачет",
-                        "koff": 0.3
-                    },
-                    "ze": 5,
-                    "diplomHour": 0,
-                    "diplomZe": 0
-                }                
-            ]
-        }
+        
     ],
     "speciality": {
-        "id": 1,
-        "name": "Информационные системы и технологии",
-        "shifr": "1-40 05 01-01",
-        "qualification": "инженер-программист"
+       
     }
 }
 
 ```
+
+ | Поле    | Описание |
+| :----------:|:--------------------|
+| id       | Идентификатор плана|
+| setYearGroup       |  Год создания плана для групп|
+| dateApprove      |  Дата утверждения плана|
+| countSemesters       | Количество семестров|
+| firstYear       | Год начала действия плана|
+| secondYear       |  Год конца действия плана|
+| registrationNumber      |  Регистрационный номер плана|
+| registrationNumberStandard       | Регистрационный номер типового плана|
+| protocolNumber       | Номер протокола утверждения плана|
+| dateProtocol       |  Дата протокола утверждения плана|
+| practices      |  Ссылка на практику|
+| certifications       | Ссылка на аттестацию|
+| fakultativs      |  Ссылка на факультатив|
+| nodes       | Массив записей|
+| speciality       | Ссылка на специальность|
+
+
 
 Получения нагрузки за определенный год
 Формат ответа:
@@ -510,9 +522,63 @@ GET localhost:8080/studyplan/plan/1/data/?year=2014
             "diplomHour": 1
         }
     ],
-    "loadPractice": []
+    "loadPractice": [
+        {
+            "semestrNumber": 2,
+            "idGroup": 1,
+            "countStudents": 20,
+            "idSubject": 4,
+            "nameSubject": "Экономика",
+            "pracZe": 1,
+            "pracHour": 1
+        }
+    ]
 }
 ```
+
+loadSubjects – нагрузка по предметам
+
+| Поле    | Описание |
+| :----------:|:--------------------|
+| idTeacher       | Идентификатор преподавателя|
+| semestrNumber       |  Номер семестра|
+| countLecture      |  Количество часов лекций|
+| countLaboratory       | Количество часов лабораторных работ|
+| countPractice       | Количество часов практических работ|
+| countSeminar       |  Количество часов семинаров|
+| type      |  Тип оценки знаний|
+| courceWorkHours       | Количество часов курсовой|
+| idGroup       | Идентификатор учебной группы|
+| countStudents       |  Количество студентов группы|
+| idSubject      |  Идентификатор предмета|
+| nameSubject       | Наименование предмета|
+| calcField      |  Расчетное поле (количество студентов/сумма часов)|
+
+loadDiploma – нагрузка по диплому
+
+| Поле    | Описание |
+| :----------:|:--------------------|
+| semestrNumber       |  Номер семестра|
+| idGroup      |  Количество часов лекций|
+| countStudents       |  Количество студентов группы|
+| idSubject      |  Идентификатор предмета|
+| nameSubject       | Наименование предмета|
+| diplomZe      |  Количество зачетных единиц диплома|
+| diplomHour      |  Количество часов диплома|
+
+loadPractice – нагрузка по практике
+
+| Поле    | Описание |
+| :----------:|:--------------------|
+| semestrNumber       |  Номер семестра|
+| idGroup      |  Количество часов лекций|
+| countStudents       |  Количество студентов группы|
+| idSubject      |  Идентификатор предмета|
+| nameSubject       | Наименование предмета|
+| pracZe      |  Количество зачетных единиц практики|
+| pracHour      |  Количество часов практики|
+
+
 
 Practice
 --------------
@@ -537,6 +603,17 @@ GET localhost:8080/studyplan/practice/1
     "ze": 2.5
 }
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       |  Идентификатор практики|
+| name      |  Наименование практики |
+| semestrNumber       |  Номер семестра, в котором есть практика|
+| idSubject      |  Идентификатор предмета|
+| countWeeks       | Продолжительность практики в неделях|
+| ze      |  Количество зачетных единиц практики|
+
+
+
 
 Speciality
 --------------
@@ -560,6 +637,15 @@ GET localhost:8080/studyplan/speciality/1
     "qualification": "инженер-программист"
 }
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       |  Идентификатор специальности|
+| name      |  Наименование специальности |
+| shifr       |  Шифр специальности|
+| qualification      |  Квалификация специалиста|
+
+
+
 
 StudyProgram
 --------------
@@ -582,20 +668,17 @@ GET localhost:8080/studyplan/studyprogram/1
     "id": 1,
     "dateApprove": "2020-08-20",
     "subject": {
-        "id": 1,
-        "name": "История",
-        "shifr": "shifr",
-        "groupUnit": {
-            "id": 1,
-            "name": "Социально-гуманитарный модуль 1",
-            "groupComponent": {
-                "id": 1,
-                "name": "Государственный компонент"
-            }
-        }
+       
     }
 }
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       |  Идентификатор учебной программы|
+| dateApprove      |  Дата утверждения учебной программы |
+| subject       |  Ссылка на предмет |
+
+
 
 SubCompetence
 --------------
@@ -616,25 +699,20 @@ GET localhost:8080/studyplan/subcompetence/1
 {
     "id": 1,
     "competence": {
-        "id": 1,
-        "nameCompetence": "Быть способным использовать основные законы электротехники и владеть методами их применения, применять электронные элементы и приборы в системах автоматизации"
+        
     },
     "subject": {
-        "id": 1,
-        "name": "История",
-        "shifr": "shifr",
-        "groupUnit": {
-            "id": 1,
-            "name": "Социально-гуманитарный модуль 1",
-            "groupComponent": {
-                "id": 1,
-                "name": "Государственный компонент"
-            }
-        }
+       
     }
 }
 
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       |  Идентификатор под-компетенции|
+| competence      |  Ссылка на компетенцию |
+| subject       |  Ссылка на предмет|
+
 
 
 WeeksSemestr
@@ -684,6 +762,13 @@ GET localhost:8080/studyplan/weekssemestr/1
 }
 
 ```
+| Поле    | Описание |
+| :----------:|:--------------------|
+| id       |  Идентификатор недели в семестре|
+| countWeeks      | Количество недель в семестре |
+| numberSemestr       |  Номер семестра|
+| semestr       |  Ссылка на семестр|
+
 
 Errors
 -------------
@@ -692,6 +777,7 @@ Errors
 | :----------:|:--------------------| ---------|
 | Not Found      | 404 | При попытке изменения или удаления несуществующей записи |
 | Conflict       | 409 | При создании существующей записи|
+| Internal Server Error       | 500 | При загрузке файла, превышающего размер 20Mb|
 
 Формат ответа: DELETE http://localhost:8080/studyplan/subject/15
 
@@ -705,7 +791,9 @@ Errors
 }
 ```
 
+
 Формат ответа: POST http://localhost:8080/studyplan/subject
+
 Тело запроса: 
 
 ```javascript
@@ -734,4 +822,37 @@ Errors
 }
 ```
 
+Формат ответа: POST http://localhost:8080/studyplan/plan/file/1
+
+```javascript
+{
+    "timestamp": "2019-01-17T13:37:30.109+0000",
+    "status": 500,
+    "error": "Internal Server Error",
+    "message": "Maximum upload size exceeded; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.FileUploadBase$FileSizeLimitExceededException: The field file exceeds its maximum permitted size of 1048576 bytes.",
+    "path": "/studyplan/plan/file/1"
+}
+```
+
+Формат ответа: POST http://localhost:8080/studyplan/plan/file/22
+
+```javascript
+{
+    "timestamp": "2019-01-17T13:52:32.305+0000",
+    "status": 404,
+    "error": "Not Found",
+    "message": "Plan with Id: 22 wasn't found!",
+    "path": "/studyplan/plan/file/22"
+}
+```
+Формат ответа: POST http://localhost:8080/studyplan/plan/file/1
+```javascript
+{
+    "timestamp": "2019-01-17T14:04:04.579+0000",
+    "status": 409,
+    "error": "Conflict",
+    "message": "File: Untitled Diagram 1.png does not MS Word file!",
+    "path": "/studyplan/plan/file/1"
+}
+```
 
