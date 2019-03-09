@@ -35,6 +35,7 @@ import com.vstu.service.interfaces.SemestrService;
 public class PlanServiceImpl implements PlanService {
 	public static final String MIME_TYPE_DOC = "application/msword";
 	public static final String MIME_TYPE_DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(PlanServiceImpl.class);
 
 	@Autowired
@@ -202,7 +203,8 @@ public class PlanServiceImpl implements PlanService {
 			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");	
 		}
 		
-		if(!doc.getContentType().equals(MIME_TYPE_DOC) || !doc.getContentType().equals(MIME_TYPE_DOCX)) {
+		LOGGER.error(doc.getOriginalFilename() +" " + doc.getContentType());
+		if(!doc.getContentType().equals(MIME_TYPE_DOC) && !doc.getContentType().equals(MIME_TYPE_DOCX)) {
 			LOGGER.error("File: " + doc.getOriginalFilename() + " does not MS Word file!");
 			throw new FileException("File: " + doc.getOriginalFilename() + " does not MS Word file!");
 		}
