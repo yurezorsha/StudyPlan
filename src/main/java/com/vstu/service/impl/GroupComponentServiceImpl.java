@@ -44,7 +44,6 @@ public class GroupComponentServiceImpl implements GroupComponentService {
 		}
 
 		GroupComponent groupComponent = groupComponentRepository.save(g);
-		;
 		LOGGER.info("GroupComponent with id: " + groupComponent.getId() + " has been added!");
 		return groupComponent;
 

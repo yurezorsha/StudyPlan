@@ -9,8 +9,7 @@ INSERT INTO `group_components`
 VALUES 
 (1,1),
 (2,2),
-(3,3),
-(4,4);
+(3,3);
        
 UPDATE subject 
 SET    id_unit = NULL;
@@ -43,12 +42,11 @@ VALUES
 
 UPDATE node
 SET    id_subject = NULL,
-       id_cathedra = NULL,
        id_plan = NULL;
        
 UPDATE semestr
 SET    id_type = NULL,
-       id_teacher=NULL,
+
        id_node=NULL;
        
 UPDATE weeks_semestr
@@ -89,8 +87,9 @@ VALUES
 (2, 'Автоматизация технологических процессов и производств (легкая промышленность)','1-53 01 01-05');
 
 INSERT INTO `plan` 
-(`id`,`id_speciality`, `set_data_group`) 
-VALUES (1, 1, 2009);
+(`id`,`id_speciality`, `set_year_group`,`count_semesters`, `first_year`,`second_year`, `date_approve`,
+`date_protocol`,`protocol_number`,`file_name`,`registration_number`,`registration_number_standard`)
+VALUES (1, 1, 2009,8,2009,2010,'2009-07-08','2009-07-08',123,null,12414,14124);
 
 INSERT INTO `node` 
 (`id`,`id_subject`, `id_cathedra`, `id_plan`) 
@@ -101,9 +100,9 @@ VALUES
 INSERT INTO `semestr` 
 (`id`,`number`,  `lecture`,   `laboratory`,  `practice`,   `seminar`,  `id_type`,  
 `rgr`,  `course_work_type`,  `id_node`,  `ze` ,  `cource_work_ze` ,  `cource_work_hours`, 
-`id_teacher`, `id_faculty`, `diplom_hour`, `diplom_ze`, `prac_hour`, `prac_ze` ) 
+`id_teacher`, `id_faculty`, `diplom_hour`, `diplom_ze` )
 VALUES   
-(1,1, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0, 0, 0);
+(1,1, 15, 15, 15, 15, 1, 1, 1, 1, 5, 1, 10, 1, 1, 0, 0);
 
 delete from groups;
 

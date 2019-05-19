@@ -1,6 +1,5 @@
 package com.vstu.exceptions;
 
-import java.io.IOException;
 
 public class NamedException extends RuntimeException {
 

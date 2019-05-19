@@ -1,5 +1,6 @@
 package com.vstu.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -92,13 +93,17 @@ public class FakultativServiceImpl implements FakultativService {
 		}
 		
 		Plan plan = planService.getPlanById(id);
-		for (Fakultativ fakultativ : f) {
-			fakultativ.setPlan(plan);
+		if(!f.isEmpty()) {
+			for (Fakultativ fakultativ : f) {
+				fakultativ.setPlan(plan);
+			}
+			List<Fakultativ> fakultativ = fakultativRepository.saveAll(f);
+			LOGGER.info("List of fakultativ has been updated in plan with Id: " + id);
+			return fakultativ;
 		}
 
-		List<Fakultativ> fakultativ = fakultativRepository.saveAll(f);
-		LOGGER.info("List of fakultativ has been updated in plan with Id: " + id);
-		return fakultativ;
+		return Collections.emptyList();
+		
 	}
 
 }

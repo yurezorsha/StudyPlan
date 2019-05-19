@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -35,17 +36,22 @@ import com.vstu.service.interfaces.GroupUnitService;
 @Sql(value= {"/testdb/create-test-before.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value= {"/testdb/delete-test-after.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 public class TestGroupComponentController {
+
 	@Autowired
 	private MockMvc mockMvc;
+
+	@Value("${test.access_token}")
+	private String token;
 		
 	@Test
 	public void testGetGroupComponentWithCorrectId() throws Exception {
 		
 		GroupComponent groupComponent=new GroupComponent() ;
 		groupComponent.setId(1);
-		groupComponent.setName("Государственный компонент");
+		groupComponent.setName("1");
 		
-		mockMvc.perform(get("/groupcomponent/{id}", 1)
+		mockMvc.perform(get("/api/groupcomponent/{id}", 1)
+				   .header("Authorization","Bearer "+token)
 				   .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				   .andExpect(status().isOk())
 				   .andExpect(jsonPath("$.id").value(groupComponent.getId()))
@@ -57,7 +63,8 @@ public class TestGroupComponentController {
 	@Test
 	public void testGetGroupComponentWithIncorrectId() throws Exception {
 		
-		mockMvc.perform(get("/groupcomponent/{id}", 100)
+		mockMvc.perform(get("/api/groupcomponent/{id}", 100)
+				   .header("Authorization","Bearer "+token)
 				   .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				   .andExpect(status().isNotFound());
 				  		
@@ -68,9 +75,10 @@ public class TestGroupComponentController {
 	public void testPostGroupComponent() throws Exception {
 		
 		GroupComponent groupComponent=new GroupComponent() ;
-		groupComponent.setName("2");
+		groupComponent.setName("4");
 		
-		mockMvc.perform(post("/groupcomponent")
+		mockMvc.perform(post("/api/groupcomponent")
+				   .header("Authorization","Bearer "+token)
 				   .content(JsonUtil.toJson(groupComponent))
 				   .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				   .andExpect(status().isCreated())
@@ -83,7 +91,8 @@ public class TestGroupComponentController {
 	@Test
 	public void testDeleteGroupComponent() throws Exception {
 		
-		mockMvc.perform(delete("/groupcomponent/{id}", 3L)
+		mockMvc.perform(delete("/api/groupcomponent/{id}", 3L)
+				   .header("Authorization","Bearer "+token)
 				   .contentType(MediaType.APPLICATION_JSON_VALUE)
 		           .accept(MediaType.APPLICATION_JSON))
 				   .andExpect(status().isOk());

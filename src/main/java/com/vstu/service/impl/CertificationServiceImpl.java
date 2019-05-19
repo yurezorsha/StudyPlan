@@ -1,5 +1,6 @@
 package com.vstu.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -97,17 +98,20 @@ public class CertificationServiceImpl implements CertificationService {
 			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");		
 		
 		}
-		
+
 		Plan plan = planService.getPlanById(id);
-		for (Certification certification : c) {
-			certification.setPlan(plan);
-			
+		if(!c.isEmpty()) {
+			for (Certification certification : c) {
+				certification.setPlan(plan);
+
+			}
+
+			List<Certification> certification = certificationRepository.saveAll(c);
+			LOGGER.info("List of certifications has been updated in plan with id: +" + id);
+
+			return certification;
 		}
-
-		List<Certification> certification = certificationRepository.saveAll(c);
-		LOGGER.info("List of certifications has been updated in plan with id: +"+id);
-
-		return certification;
+		return Collections.emptyList();
 	}
 
 }

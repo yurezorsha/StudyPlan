@@ -1,5 +1,6 @@
 package com.vstu.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -88,16 +89,19 @@ public class PracticeServiceImpl implements PracticeService{
 		}
 		
 		Plan plan=planService.getPlanById(id);
-		
-		for (Practice practice : p) {
-			practice.setPlan(plan);
-			
+
+		if(!p.isEmpty()) {
+			for (Practice practice : p) {
+				practice.setPlan(plan);
+
+			}
+
+			List<Practice> lst = practiceRepository.saveAll(p);
+			LOGGER.info("List of practices has been added in plan with id + "+ lst.get(0).getPlan().getId());
+			return lst;
 		}
 		
-		List<Practice> lst = practiceRepository.saveAll(p);
-		LOGGER.info("List of practices has been added in plan with id + "+ lst.get(0).getPlan().getId());
-		
-		return lst;
+		return Collections.emptyList();
 	}
 
 	@Override

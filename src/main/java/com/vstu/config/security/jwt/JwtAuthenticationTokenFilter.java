@@ -16,7 +16,7 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
     private final String TOKEN_HEADER = "Authorization";
 
     public JwtAuthenticationTokenFilter() {
-        super("/**");
+        super("/api/**");
     }
 
     @Override

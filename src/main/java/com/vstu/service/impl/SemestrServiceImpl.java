@@ -1,5 +1,6 @@
 package com.vstu.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -83,13 +84,18 @@ public class SemestrServiceImpl implements SemestrService {
 			throw new EntityNotFoundException("Node with Id:" + id + " wasn't found!");
 		}
 		Node n = nodeService.getNodeById(id);
-		for (Semestr semestr : s) {
-			semestr.setNode(n);
+		if(!s.isEmpty()) {
+			for (Semestr semestr : s) {
+				semestr.setNode(n);
+			}
+			List<Semestr> lst = semestrRepository.saveAll(s);
+			LOGGER.info("List of semesters has been updated in node with id: " + lst.get(0).getNode().getId());
+			return lst;
 		}
-		List<Semestr> lst = semestrRepository.saveAll(s);
-		LOGGER.info("List of semesters has been updated in node with id: " + lst.get(0).getNode().getId());
+
+		return Collections.emptyList();
 		
-		return lst;
+
 		
 	}
 

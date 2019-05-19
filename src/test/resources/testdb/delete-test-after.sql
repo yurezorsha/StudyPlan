@@ -30,12 +30,10 @@ SET    id_plan= NULL;
 
 UPDATE node
 SET    id_subject = NULL,
-       id_cathedra = NULL,
        id_plan = NULL;
 
 UPDATE semestr
 SET    id_type = NULL,
-       id_teacher=NULL,
        id_node=NULL;
        
 UPDATE weeks_semestr

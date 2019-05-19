@@ -8,8 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * The persistent class for the competence database table.
@@ -23,6 +25,7 @@ public class Competence implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
     private String code;
+    @Length(max = 500)
 	private String nameCompetence;
 
 	// bi-directional many-to-one association to SubCompetence
