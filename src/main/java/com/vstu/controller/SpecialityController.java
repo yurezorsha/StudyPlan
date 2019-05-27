@@ -26,7 +26,7 @@ public class SpecialityController {
 	@GetMapping("speciality")
 	public ResponseEntity<List<Speciality>> getAllSpeciality() {
 		List<Speciality> list = specialityService.getAllSpeciality();
-		return new ResponseEntity<List<Speciality>>(list, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 	@PostMapping("speciality")

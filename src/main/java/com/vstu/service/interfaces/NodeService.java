@@ -9,6 +9,8 @@ public interface NodeService {
 
 	List<Node> getAllByPlanId(Long id);
 
+	List<Node> addListNodesByPlanId(Long id, List<Node> nodes);
+
 	Node getNodeById(Long id);
 
 	Node addNode(Long id, Node n);

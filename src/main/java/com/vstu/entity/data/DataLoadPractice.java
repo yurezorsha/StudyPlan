@@ -30,4 +30,16 @@ public class DataLoadPractice {
 		this.pracCountWeeks = pracCountWeeks;
 	}
 
+	@Override
+	public String toString() {
+		return "DataLoadPractice{" +
+				"semestrNumber=" + semestrNumber +
+				", idGroup=" + idGroup +
+				", countStudents=" + countStudents +
+				", idPractice=" + idPractice +
+				", namePractice='" + namePractice + '\'' +
+				", pracZe=" + pracZe +
+				", pracCountWeeks=" + pracCountWeeks +
+				'}';
+	}
 }

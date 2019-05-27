@@ -84,17 +84,17 @@ public class PlanServiceImpl implements PlanService {
 			LOGGER.error("Plan with Id:" + p.getId() + " already exists!");
 			throw new AlreadyExistException("Plan with Id: " + p.getId() + " already exists!");
 		}
-		{
+
 			Plan plan = planRepository.save(p);
 
+			if(!p.getPractices().isEmpty())
 			practiceService.addListPracticeByPlanId(plan.getId(), p.getPractices());
+			if(!p.getFakultativs().isEmpty())
 			fakultativService.addListFakultativByPlanId(plan.getId(), plan.getFakultativs());
+			if(!p.getCertifications().isEmpty())
 			certificationService.addListCertificationByPlanId(plan.getId(), plan.getCertifications());
-			
-			for (Node node : p.getNodes()) {
-				Node n = nodeService.addNode(plan.getId(), node);
-			}
-		}
+			if(!p.getNodes().isEmpty())
+			nodeService.addListNodesByPlanId(plan.getId(),plan.getNodes());
 
 		LOGGER.info("Plan with Id:" + p.getId() + " has been added!");
 
@@ -151,21 +151,22 @@ public class PlanServiceImpl implements PlanService {
 	 **/
 	@Override
 	public DataAllLoad getLoad(long id, int year) {
-
 		int year1 = planRepository.getYearById(id);
 		int course = (year - year1) + 1;
-		if (course > 0 && course <= 5) {
-			int num2 = course * 2;
-			int num1 = num2 - 1;
-			DataAllLoad datadto = new DataAllLoad();
-			datadto.setLoadSubjects(planRepository.getDataLoadSubject(id, num1, num2));
-			datadto.setLoadDiploma(planRepository.getDataLoadDiploma(id, num1, num2));
-			datadto.setLoadPractice(planRepository.getDataLoadPractice(id, num1, num2));
+		if (course < 0 || course > 5) {
+			LOGGER.error("Course for this year does not exist!");
+			throw new EntityNotFoundException("Course for this year does not exist!");
+		}
+		int num2 = course * 2;
+		int num1 = num2 - 1;
+		DataAllLoad datadto = new DataAllLoad();
+		datadto.setLoadSubjects(planRepository.getDataLoadSubject(id, num1, num2));
+		datadto.setLoadDiploma(planRepository.getDataLoadDiploma(id, num1, num2));
+		datadto.setLoadPractice(planRepository.getDataLoadPractice(id, num1, num2));
 
-			return datadto;
+		LOGGER.info("Data for load completed!");
 
-		} else
-			return null;
+		return datadto;
 	}
 
 	/**

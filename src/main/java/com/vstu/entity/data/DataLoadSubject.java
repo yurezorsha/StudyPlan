@@ -41,4 +41,22 @@ public class DataLoadSubject {
 		this.calcField = calcField;
 	}
 
+	@Override
+	public String toString() {
+		return "DataLoadSubject{" +
+				"idTeacher=" + idTeacher +
+				", semestrNumber=" + semestrNumber +
+				", countLecture=" + countLecture +
+				", countLaboratory=" + countLaboratory +
+				", countPractice=" + countPractice +
+				", countSeminar=" + countSeminar +
+				", type='" + type + '\'' +
+				", courceWorkHours=" + courceWorkHours +
+				", idGroup=" + idGroup +
+				", countStudents=" + countStudents +
+				", idSubject=" + idSubject +
+				", nameSubject='" + nameSubject + '\'' +
+				", calcField=" + calcField +
+				'}';
+	}
 }

@@ -1,14 +1,14 @@
 package com.vstu.unit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vstu.entity.Plan;
-import com.vstu.entity.Speciality;
+import com.vstu.entity.*;
 import com.vstu.entity.data.DataAllLoad;
-import com.vstu.service.impl.PlanServiceImpl;
-import com.vstu.service.interfaces.PlanService;
-import org.hibernate.validator.constraints.br.TituloEleitoral;
+import com.vstu.repository.PlanRepository;
+import com.vstu.service.impl.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,11 +20,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import com.vstu.integration.*;
+
+import javax.persistence.EntityExistsException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -37,8 +41,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource("/application-test.properties")
 public class TestPlanControllerUnit {
 
-    @MockBean
+    @Mock
     private PlanServiceImpl planService;
+
+    @Mock
+    private PlanRepository planRepository;
+
+    @Mock
+    private PracticeServiceImpl practiceService;
+
+    @Mock
+    private FakultativServiceImpl fakulatativService;
+
+    @Mock
+    private CertificationServiceImpl certificationService;
+
+    @Mock
+    private NodeServiceImpl nodeService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -72,7 +91,7 @@ public class TestPlanControllerUnit {
         when(planService.getAllPlan()).thenReturn(plans);
 
         ResultActions m = mockMvc.perform(get("/api/plan")
-                .header("Authorization","Bearer "+token))
+                .header("Authorization", "Bearer " + token))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(plan1.getId())).andExpect(jsonPath("$[0].setYearGroup").value(plan1.getSetYearGroup()))
@@ -94,11 +113,12 @@ public class TestPlanControllerUnit {
         when(planService.getPlanById(1L)).thenReturn(plan1);
 
         ResultActions m = mockMvc.perform(get("/api/plan/{id}", 1L)
-                .header("Authorization","Bearer "+token))
+                .header("Authorization", "Bearer " + token))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(plan1.getId()))
-                .andExpect(jsonPath("$.setYearGroup").value(plan1.getSetYearGroup()));;
+                .andExpect(jsonPath("$.setYearGroup").value(plan1.getSetYearGroup()));
+
 
         m.andDo(print());
     }
@@ -126,12 +146,12 @@ public class TestPlanControllerUnit {
         when(planService.getAllBySpecialityId(1L)).thenReturn(plans);
 
         ResultActions m = mockMvc.perform(get("/api/plans/{id}", 1L)
-                .header("Authorization","Bearer "+token)
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(plan1.getId()))
                 .andExpect(jsonPath("$[0].setYearGroup").value(plans.get(0).getSetYearGroup()))
-                .andExpect(jsonPath("$[0].speciality.id").value(plans.get(0).getSpeciality().getId()))				.andExpect(jsonPath("$[0].speciality.name").value(plans.get(0).getSpeciality().getName()))		.andExpect(jsonPath("$[0].speciality.shifr").value(plans.get(0).getSpeciality().getShifr()));
+                .andExpect(jsonPath("$[0].speciality.id").value(plans.get(0).getSpeciality().getId())).andExpect(jsonPath("$[0].speciality.name").value(plans.get(0).getSpeciality().getName())).andExpect(jsonPath("$[0].speciality.shifr").value(plans.get(0).getSpeciality().getShifr()));
         m.andDo(print());
     }
 
@@ -144,11 +164,67 @@ public class TestPlanControllerUnit {
         when(planService.updatePlan(plan)).thenReturn(plan);
 
         ResultActions m = mockMvc.perform(put("/api/plan")
-                .header("Authorization","Bearer "+token)
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .content(objectMapper.writeValueAsString(plan)))
                 .andExpect(status().isOk());
         m.andDo(print());
+    }
+
+    @Test
+    public void testPostWhenNotExists() throws Exception {
+        Subject subject = new Subject();
+        subject.setName("subject");
+        Node node = new Node();
+        node.setSubject(subject);
+        Practice practice = new Practice();
+        practice.setName("Practice");
+        Fakultativ fakultativ = new Fakultativ();
+        fakultativ.setName("fakultativ");
+        Certification certification = new Certification();
+        certification.setName("Certif");
+
+        Plan plan = new Plan();
+        plan.setId(10L);
+        plan.setSetYearGroup(2018);
+        plan.setCountSemesters(10);
+        plan.setPractices(Arrays.asList(practice));
+        plan.setFakultativs(Arrays.asList(fakultativ));
+        plan.setCertifications(Arrays.asList(certification));
+        plan.setNodes(Arrays.asList(node));
+
+        when(planRepository.existsById(2L)).thenReturn(false);
+        when(planService.addPlan(plan)).thenReturn(plan);
+        when(practiceService.addListPracticeByPlanId(2L, Arrays.asList(practice))).thenReturn(Arrays.asList(practice));
+        when(fakulatativService.addListFakultativByPlanId(2L, Arrays.asList(fakultativ))).thenReturn(Arrays.asList(fakultativ));
+        when(certificationService.addListCertificationByPlanId(2L,Arrays.asList(certification))).thenReturn(Arrays.asList(certification));
+        when(nodeService.addListNodesByPlanId(2L,Arrays.asList(node))).thenReturn(Arrays.asList(node));
+        ResultActions m = mockMvc.perform(post("/api/plan")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(JsonUtil.toJson(plan)))
+                .andExpect(status().isCreated());
+
+        m.andReturn().getResponse().getContentAsString();
+    }
+
+
+    @Test
+    public void testPostWhenExists() throws Exception {
+
+        Plan plan = new Plan();
+        plan.setId(2);
+        plan.setSetYearGroup(2018);
+        plan.setCountSemesters(10);
+
+
+        ResultActions m = mockMvc.perform(post("/api/plan")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(JsonUtil.toJson(plan)))
+                .andExpect(status().isConflict());
+
+        m.andReturn().getResponse().getContentAsString();
     }
 
     @Test
@@ -157,8 +233,8 @@ public class TestPlanControllerUnit {
         plan.setId(1);
         plan.setSetYearGroup(2018);
 
-        mockMvc.perform(delete("/api/plan/{id}",1L)
-                .header("Authorization","Bearer "+token)
+        mockMvc.perform(delete("/api/plan/{id}", 1L)
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -175,7 +251,7 @@ public class TestPlanControllerUnit {
         when(planService.getLoad(1, 2018)).thenReturn(datadto);
 
         ResultActions m = mockMvc.perform(get("/api/plan/{id}/data?year=2018", 1L)
-                .header("Authorization","Bearer "+token)
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk());
         m.andDo(print());

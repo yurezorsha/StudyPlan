@@ -30,4 +30,16 @@ public class DataLoadDiploma {
 		this.diplomHour = diplomHour;
 	}
 
+	@Override
+	public String toString() {
+		return "DataLoadDiploma{" +
+				"semestrNumber=" + semestrNumber +
+				", idGroup=" + idGroup +
+				", countStudents=" + countStudents +
+				", idSubject=" + idSubject +
+				", nameSubject='" + nameSubject + '\'' +
+				", diplomZe=" + diplomZe +
+				", diplomHour=" + diplomHour +
+				'}';
+	}
 }

@@ -55,6 +55,29 @@ public class NodeServiceImpl implements NodeService {
 		return nodeRepository.findById(id).get();
 	}
 
+	@Override
+	public List<Node> addListNodesByPlanId(Long id, List<Node> nodes) {
+		Plan p = planService.getPlanById(id);
+		/*if (nodeRepository.findBySubjectNameAndPlanId(p.getId(), n.getSubject().getName()) != null) {
+			LOGGER.error("Node with subject: " + n.getSubject().getName() + " already exists in plan with Id: "
+					+ id);
+
+			throw new AlreadyExistException("Node with subject: " + n.getSubject().getName()
+					+ " already exists in plan with Id: " + id);
+		} else {*/
+			for(Node node: nodes) {
+				node.setPlan(p);
+				node = nodeRepository.save(node);
+				semestrService.addListSemestrByNodeId(node.getId(), node.getSemestrs());
+			}
+
+
+		//}
+		//LOGGER.info("Node with id: " + n.getId() + " has been added in plan with id: " + n.getPlan().getId());
+
+		return nodes;
+	}
+
 	/**
 	 * adding node with plan id
 	 */

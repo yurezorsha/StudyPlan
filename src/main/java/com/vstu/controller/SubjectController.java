@@ -28,7 +28,7 @@ public class SubjectController {
 	@GetMapping("subject")
 	public ResponseEntity<List<Subject>> getAllSubject() {
 		List<Subject> list = subjectService.getAllSubject();
-		return new ResponseEntity<List<Subject>>(list, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 	@GetMapping("subjects/{id}")

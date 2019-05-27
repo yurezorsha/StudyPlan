@@ -116,8 +116,7 @@ public class TestCompetenceController {
         competence.setCode("test");
         competence.setNameCompetence("test");
 
-        mockMvc.perform(put("/api/competence")
-                .header("Authorization", "Bearer " + token)
+        mockMvc.perform(put("/api/competence").header("Authorization", "Bearer " + token)
                 .content(JsonUtil.toJson(competence))
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
