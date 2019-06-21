@@ -2,6 +2,9 @@ package com.vstu.service.impl;
 
 import java.util.List;
 
+import com.vstu.entity.Plan;
+import com.vstu.entity.data.GroupDTO;
+import com.vstu.service.interfaces.PlanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,11 @@ public class GroupServiceImpl implements GroupService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GroupServiceImpl.class);
 
 	@Autowired
-	GroupsRepository groupRepository;
+	private GroupsRepository groupRepository;
+
+	@Autowired
+	private PlanService planService;
+
 
 	@Override
 	public List<Groups> getAllGroups() {
@@ -44,16 +51,16 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public Groups addGroups(Groups g) {
-		if (existsGroups(g.getId())) {
-			LOGGER.error("Groups with Id: " + g.getId() + " already exists!");
-			throw new AlreadyExistException("Groups with Id: " + g.getId() + " already exists!");
-		}
-
-		Groups groups = groupRepository.save(g);
+	public Groups addGroups(GroupDTO groupDTO) {
+		Plan plan = planService.getPlanById(groupDTO.getIdPlan());
+		Groups groups = new Groups();
+		groups.setCountStudents(groupDTO.getCountStudents());
+		groups.setPlan(plan);
+		groups= groupRepository.save(groups);
 		LOGGER.info("Groups with Id: " + groups.getId() + " has been added!");
 		return groups;
 	}
+
 
 	@Override
 	public Groups updateGroups(Groups g) {

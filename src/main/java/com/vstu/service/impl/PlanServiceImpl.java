@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import com.vstu.entity.*;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.vstu.entity.Node;
-import com.vstu.entity.Plan;
-import com.vstu.entity.Practice;
 import com.vstu.entity.data.DataAllLoad;
 import com.vstu.exceptions.AlreadyExistException;
 import com.vstu.exceptions.EntityNotFoundException;
@@ -135,6 +133,14 @@ public class PlanServiceImpl implements PlanService {
 			LOGGER.error("Plan with Id: " + id + " wasn't found!");
 			throw new EntityNotFoundException("Plan with Id: " + id + " wasn't found!");
 		}
+		List<Node> nodes = nodeService.getAllByPlanId(id);
+		nodes.forEach(n->nodeService.deleteNode(n.getId()));
+		List<Certification> certifications = certificationService.getAllByPlanId(id);
+		certifications.forEach(c->certificationService.deleteCertification(c.getId()));
+		List<Fakultativ> fakultativs = fakultativService.getAllByPlanId(id);
+		fakultativs.forEach(f->fakultativService.deleteFakultativ(f.getId()));
+		List<Practice> practices = practiceService.getAllByPlanId(id);
+		practices.forEach(p->practiceService.deletePractice(p.getId()));
 
 		planRepository.deleteById(id);
 		LOGGER.error("Plan with Id: " + id + " has been deleted!");

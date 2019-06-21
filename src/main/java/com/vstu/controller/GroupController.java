@@ -2,6 +2,7 @@ package com.vstu.controller;
 
 import java.util.List;
 
+import com.vstu.entity.data.GroupDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +38,8 @@ public class GroupController {
 	}
 
 	@PostMapping("group")
-	public ResponseEntity<Groups> addGroups(@RequestBody Groups gr) {
-		Groups g = groupService.addGroups(gr);
+	public ResponseEntity<Groups> addGroups(@RequestBody GroupDTO groupDTO) {
+		Groups g = groupService.addGroups(groupDTO);
 		return new ResponseEntity<Groups>(g, HttpStatus.CREATED);
 	}
 

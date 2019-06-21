@@ -112,12 +112,12 @@ public class SemestrServiceImpl implements SemestrService {
 		Node n = nodeService.getNodeById(id);
 		for (Semestr semestr : s) {
 			semestr.setNode(n);
-			if (semestrRepository.existsByNumberAndNodeId(semestr.getNumber(), n.getId())) {
+			/*if (semestrRepository.existsByNumberAndNodeId(semestr.getNumber(), n.getId())) {
 				LOGGER.error("Semestr with number: " + semestr.getNumber() + " already exists in node with id: "
 						+ n.getId());
 				throw new AlreadyExistException("Semestr with number: " + semestr.getNumber()
 						+ " already exists in node with id: " + n.getId());
-			}
+			}*/
 		}
 		List<Semestr> lst = semestrRepository.saveAll(s);
 		LOGGER.info("List of semesters has been added in node with id: " + lst.get(0).getNode().getId());

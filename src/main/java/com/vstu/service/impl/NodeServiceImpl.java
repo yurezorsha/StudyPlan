@@ -128,6 +128,8 @@ public class NodeServiceImpl implements NodeService {
 			LOGGER.error("Node with Id:" + id + " wasn't found!");
 			throw new EntityNotFoundException("Node with Id:" + id + " wasn't found!");
 		}
+		List<Semestr> semestrs =semestrService.getAllByNodeId(id);
+		semestrs.forEach(s->semestrService.deleteSemestr(s.getId()));
 
 		nodeRepository.deleteById(id);
 		LOGGER.info("Node with Id:" + id + " has been deleted!");

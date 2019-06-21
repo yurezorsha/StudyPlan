@@ -47,10 +47,10 @@ public class GroupUnitServiceImpl implements GroupUnitService {
 
 	@Override
 	public GroupUnit addGroupUnit(GroupUnit g) {
-		if (groupUnitRepository.existsByName(g.getName())) {
+		/*if (groupUnitRepository.existsByName(g.getName())) {
 			LOGGER.error("GroupUnit with name: " + g.getName() + " already exists!");
 			throw new AlreadyExistException("GroupUnit with name: " + g.getName() + " already exists!");
-		}
+		}*/
 		GroupUnit groupUnit = groupUnitRepository.save(g);
 		LOGGER.info(" GroupUnit with id: " + groupUnit.getId() + " has been added!");
 		return groupUnit;

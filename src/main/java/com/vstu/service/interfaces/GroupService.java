@@ -3,6 +3,7 @@ package com.vstu.service.interfaces;
 import java.util.List;
 
 import com.vstu.entity.Groups;
+import com.vstu.entity.data.GroupDTO;
 
 public interface GroupService {
 
@@ -12,7 +13,7 @@ public interface GroupService {
 
 	Groups getGroupsById(Long id);
 
-	Groups addGroups(Groups gr);
+	Groups addGroups(GroupDTO groupDTO);
 
 	Groups updateGroups(Groups gr);
 
